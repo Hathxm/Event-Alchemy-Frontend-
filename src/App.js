@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Store from './Redux/Store';
+import { Provider } from "react-redux";
+import UserWrapper from './Components/User/UserWrapper/UserWrapper';
+import ManagerWrapper from './Components/Manager/ManagerWrapper/ManagerWrapper';
+import AdminWrapper from './Components/Admin/AdminWrapper/AdminWrapper';
+import VendorWrapper from './Components/Vendor/VendorWrapper/VendorWrapper';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the CSS for toastify
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Provider store={Store}>
+          <Routes>
+            <Route path="/*" element={<UserWrapper />} />
+            <Route path="/manager/*" element={<ManagerWrapper />} />
+            <Route path="/admin/*" element={<AdminWrapper />} />
+            <Route path="/vendor/*" element={<VendorWrapper />} />
+          </Routes>
+          <ToastContainer />
+        </Provider>
+      </Router>
+    </>
   );
 }
 
