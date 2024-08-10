@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const AddManagerForm = ({ addManager }) => {
   const [showModal, setShowModal] = useState(false);
@@ -16,7 +18,7 @@ const AddManagerForm = ({ addManager }) => {
   };
 
   useEffect(() => {
-    const response = axios.get('superadmin/eventmanagement')
+    const response = axios.get(`${BASEUrl}superadmin/eventmanagement`)
       .then(response => {
         setEvents(response.data); // Assuming response.data is an array of events
       })

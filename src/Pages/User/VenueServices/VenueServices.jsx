@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 // Base URL for API requests
 const baseURL = "http://127.0.0.1:8000";
@@ -108,7 +109,7 @@ const VenueServices = () => {
   useEffect(() => {
     const fetchVenueServices = async () => {
       try {
-        const response = await axios.get(baseURL + "/venue_services", {
+        const response = await axios.get(`${BASEUrl}venue_services`, {
           params: { id },
         });
         setServices(response.data);

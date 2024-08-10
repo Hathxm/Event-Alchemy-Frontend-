@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ChatComponent from '../../../Components/User/ChatComponent/ChatComponent';
 import { Link  } from 'react-router-dom';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 export default function UserBookings() {
     const [bookings, setBookings] = useState([]);
@@ -11,11 +13,11 @@ export default function UserBookings() {
     const token = localStorage.getItem('access');
 
     useEffect(() => {
-        const baseURL = "http://127.0.0.1:8000";
+       
 
         const fetchBookingsForUser = async () => {
             try {
-                const response = await axios.post(`${baseURL}/fetch_bookings`, null, {
+                const response = await axios.post(`${BASEUrl}fetch_bookings`, null, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -139,8 +141,7 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
 
         try {
             const token = localStorage.getItem("access");
-            const response = await axios.post(
-                '/cancel-booking',
+            const response = await axios.post(`${BASEUrl}cancel-booking`,
                 {
                     bookingId: booking.id,
                     phone,

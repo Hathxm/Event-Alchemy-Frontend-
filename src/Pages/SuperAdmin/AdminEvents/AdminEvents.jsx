@@ -4,8 +4,9 @@ import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTable
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS for toast notifications
 import Form from './AddEventsForm';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+
 
 const AdminEvents = () => {
   const [eventData, setEventData] = useState([]);
@@ -14,7 +15,7 @@ const AdminEvents = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('superadmin/eventmanagement/');
+        const response = await axios.get(`${BASEUrl}superadmin/eventmanagement/`);
         setEventData(response.data);
       } catch (error) {
         console.error('Error fetching event details:', error);
@@ -32,7 +33,7 @@ const AdminEvents = () => {
         formData.append('image', newEvent.image);
       }
 
-      const response = await axios.post('superadmin/eventmanagement/', formData, {
+      const response = await axios.post(`${BASEUrl}superadmin/eventmanagement/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -54,7 +55,7 @@ const AdminEvents = () => {
   const toggleEventStatus = async (eventId, currentStatus) => {
     try {
       const newStatus = !currentStatus;
-      await axios.patch('superadmin/eventmanagement/', { eventId: eventId, is_deleted: newStatus });
+      await axios.patch(`${BASEUrl}superadmin/eventmanagement/`, { eventId: eventId, is_deleted: newStatus });
 
       // Update the eventData state
       setEventData(prevEventData =>

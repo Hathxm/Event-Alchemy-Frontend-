@@ -18,7 +18,7 @@ const ManagerVendors = () => {
     useEffect(() => {
         const fetchVendors = async () => {
             try {
-                const response = await axios.post(`${BASEUrl}managers/vendor_detail`, 
+                const response = await axios.post(`${BASEUrl}managers/vendor_details`, 
                 {
                     manager_name: managerDetails.name,
                 });
@@ -115,6 +115,20 @@ const ManagerVendors = () => {
             ),
         },
         {
+            header: 'Rating',
+            accessor: (item) => (
+                <div className="flex items-center">
+                    <span className="text-gray-900 whitespace-no-wrap">
+                        {item.avg_rating ? item.avg_rating.toFixed(1) : 'No rating'}
+                    </span>
+                    <span className="text-yellow-500 ml-2">
+                        ★
+                    </span>
+                </div>
+            ),
+        },
+        
+        {
             header: 'Action',
             accessor: (item) => (
                 <button
@@ -124,7 +138,9 @@ const ManagerVendors = () => {
                     {item.is_deleted ? 'Unblock' : 'Block'}
                 </button>
             ),
-        }
+        },
+
+      
     ], [toggleVendorStatus]);
 
     const filteredData = useMemo(() => {

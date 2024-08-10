@@ -3,10 +3,9 @@ import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS for toast notifications
-import Form from '../AdminManagers/AddManagerForm';
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 const AdminUsers = () => {
-  const baseURL = 'http://127.0.0.1:8000/';
   const [userData, setUserData] = useState([]);
   const [filter, setFilter] = useState({ status: 'All', search: '' });
   const [pageSize, setPageSize] = useState(10);
@@ -14,7 +13,7 @@ const AdminUsers = () => {
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
       const newStatus = !currentStatus;
-      await axios.patch(baseURL + 'superadmin/usermanagement', { userId: userId, is_active: newStatus });
+      await axios.patch(`${BASEUrl}superadmin/usermanagement`, { userId: userId, is_active: newStatus });
 
       // Update the userData state
       setUserData(prevUserData =>
@@ -35,7 +34,7 @@ const AdminUsers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(baseURL + 'superadmin/userdetails');
+        const response = await axios.get(`${BASEUrl}superadmin/userdetails`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -52,7 +51,7 @@ const AdminUsers = () => {
           <div className="flex-shrink-0 w-10 h-10">
             <img
               className="w-full h-full rounded-full"
-              src={item.profile_pic ? `http://127.0.0.1:8000${item.profile_pic}` : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
+              src={item.profile_pic ? `${item.profile_pic}` : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
               alt=""
             />
           </div>
@@ -109,16 +108,17 @@ const AdminUsers = () => {
     return matchesStatus && matchesSearch;
   }).slice(0, pageSize);
 
+ 
   return (
     <>
-      <div className="flex-grow flex justify-center items-center">
+      <div className="flex-grow flex justify-center items-center overflow-x-hidden">
         <div className="container mx-auto px-4 sm:px-7">
           <div className="py-8">
             <div>
-              <h2 className="text-2xl font-semibold leading-tight">Users</h2>
+              <h2 className="text-2xl font-semibold leading-tight text-center sm:text-left">Users</h2>
             </div>
-            <div className="my-2 flex sm:flex-row flex-col">
-              <div className="relative ml-2">
+            <div className="my-2 flex flex-col sm:flex-row sm:justify-between">
+              <div className="relative mt-2 sm:mt-0">
                 <input
                   placeholder="Search"
                   className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
@@ -127,8 +127,8 @@ const AdminUsers = () => {
                 />
               </div>
             </div>
-            <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-              <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+            <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-hidden">
+              <div className="inline-block min-w-full shadow rounded-lg ">
                 <AdminTableComponent data={filteredData} columns={columns} />
               </div>
             </div>

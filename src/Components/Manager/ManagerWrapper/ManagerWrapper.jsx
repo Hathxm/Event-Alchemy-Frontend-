@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
@@ -26,6 +26,7 @@ const ManagerWrapper = () => {
     const dispatch = useDispatch();
     const authentication_user = useSelector(state => state.authentication_user);
     const [manager_id,set_manager_id] = useState(null)
+    const location = useLocation();
 
 
     // const baseURL = 'http://127.0.0.1:8000/';
@@ -75,13 +76,13 @@ const ManagerWrapper = () => {
 
     useEffect(() => {
   
-        if (!authentication_user.isAdmin) {
+        if (!authentication_user.name) {
             checkAuth();
         }
         if (authentication_user.isAdmin) {
             fetchUserData();
         }
-    },[authentication_user.name]);
+    },[location.pathname]);
 
     
     

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const PasswordResetRequestForm = () => {
     const [email, setEmail] = useState('');
@@ -8,7 +9,7 @@ const PasswordResetRequestForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/auth/password_reset/', { email });
+            const response = await axios.post(`${BASEUrl}auth/password_reset/`, { email });
             setMessage('Password reset email sent. Please check your inbox.');
         } catch (error) {
             console.error('Error:', error);

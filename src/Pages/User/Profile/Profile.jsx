@@ -4,6 +4,8 @@ import axios from 'axios';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import EditUserForm from './EditUserForm';
 import { toast } from 'react-toastify';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const Profile = () => {
     const baseURL = 'http://127.0.0.1:8000';
@@ -23,7 +25,7 @@ const Profile = () => {
 
     const fetchUserData = async () => {
         try {
-            const res = await axios.get(baseURL + '/userdetails/', {
+            const res = await axios.get(`${BASEUrl}userdetails/`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept': 'application/json',
@@ -66,7 +68,7 @@ const Profile = () => {
         }
 
         try {
-            const response = await axios.patch(baseURL + '/updateprofile', formData, {
+            const response = await axios.patch(`${BASEUrl}updateprofile`, formData, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -111,7 +113,7 @@ const Profile = () => {
 
     const handlePasswordResetRequest = async () => {
         try {
-            await axios.post(baseURL + '/auth/password_reset/', { email: formState.email });
+            await axios.post(`${BASEUrl}auth/password_reset/`, { email: formState.email });
           
             toast.success('Password reset email sent. Please check your inbox.', {
                 position: "bottom-right",

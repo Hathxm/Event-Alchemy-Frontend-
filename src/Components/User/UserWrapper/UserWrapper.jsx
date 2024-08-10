@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import LandingPage from '../../../Pages/User/LandingPage/LandingPage';
 import Signup from '../../../Pages/User/Signup/Signup';
@@ -24,11 +25,14 @@ import Contact from '../../../Pages/User/Contact/Contact';
 import ForgotPassword from '../../../Pages/User/UserForgotPassword/ForgotPassword';
 import ChangePassOTP from '../../../Pages/User/ChangePassOTP/ChangePassOTP';
 import Ratings from '../../../Pages/User/Ratings/Ratings';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 
 function UserWrapper() {
   const dispatch = useDispatch();
   const authentication_user = useSelector(state => state.authentication_user);
+  const location = useLocation();
 
   const checkAuth = async () => {
     // Logic to check authentication
@@ -47,12 +51,12 @@ function UserWrapper() {
 
   };
 
-  const baseURL = 'http://127.0.0.1:8000/';
+  
   const token = localStorage.getItem('access');
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(baseURL + 'userdetails/', {
+      const res = await axios.get(BASEUrl + 'userdetails/', {
         headers: {
           'authorization': `Bearer ${token}`,
           'Accept': 'application/json',
@@ -74,7 +78,7 @@ function UserWrapper() {
   };
 
   useEffect(() => {
-    if (!authentication_user.isAuthenticated) {
+    if (!authentication_user.name) {
      
       checkAuth();
     
@@ -83,7 +87,7 @@ function UserWrapper() {
    
       fetchUserData();
     }
-  }, [authentication_user.name]);
+  }, [location.pathname]);
 
   
 

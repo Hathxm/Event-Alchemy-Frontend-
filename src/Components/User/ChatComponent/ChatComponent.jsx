@@ -3,6 +3,8 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { FiSend, FiPaperclip, FiEye, FiDownload } from 'react-icons/fi';
 import axios from 'axios';
 import moment from 'moment';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const ChatComponent = ({ userId, managerId, username, sendername }) => {
     const [messages, setMessages] = useState([]);
@@ -11,10 +13,10 @@ const ChatComponent = ({ userId, managerId, username, sendername }) => {
     const wsRef = useRef(null);
     const chatEndRef = useRef(null);
     const fileInputRef = useRef(null);
-    const base_url = 'http://127.0.0.1:8000';
+   
 
     useEffect(() => {
-        wsRef.current = new W3CWebSocket(`ws://127.0.0.1:8000/ws/chat/${userId}/${managerId}`);
+        wsRef.current = new W3CWebSocket(`${BASEUrl}ws/chat/${userId}/${managerId}`);
  
         wsRef.current.onopen = () => {
             console.log('Connected to the chat server');

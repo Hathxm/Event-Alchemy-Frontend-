@@ -6,8 +6,9 @@ import { faMountain, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { toast } from 'react-toastify';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
-const baseURL = "http://127.0.0.1:8000"; // Your base URL
+
 
 export default function Checkout() {
   const token = localStorage.getItem('access');
@@ -32,7 +33,7 @@ export default function Checkout() {
   useEffect(() => {
     const fetchSelectedServicesDetails = async () => {
       try {
-        const response = await axios.get(`${baseURL}/selected_services`, {
+        const response = await axios.get(`${BASEUrl}selected_services`, {
           params: { id: id, ids: selectedServices.join(',') },
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -141,7 +142,7 @@ export default function Checkout() {
             orderId: response.razorpay_order_id,
         };
 
-        await axios.post(`${baseURL}/create_order`, paymentData, {
+        await axios.post(`${BASEUrl}create_order`, paymentData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

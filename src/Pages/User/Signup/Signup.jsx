@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import FormComponent from '../../../Components/User/SignupForm/SignupForm';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
 const base_url = "http://127.0.0.1:8000/";
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
 
   const signupFields = [
     { name: 'username', type: 'text', placeholder: 'Username', validate: (value) => value.length > 0 && value.length < 6 ? 'Username must be at least 6 characters long' : '' },
@@ -21,7 +21,7 @@ const SignupForm = () => {
   const handleSignup = async (formData, setErrors) => {
     try {
       console.log("Submitting form data:", formData);
-      const response = await axios.post(base_url + "signup", formData);
+      const response = await axios.post(BASEUrl + "signup", formData);
       console.log("Received response:", response);
 
       if (response.data.error) {

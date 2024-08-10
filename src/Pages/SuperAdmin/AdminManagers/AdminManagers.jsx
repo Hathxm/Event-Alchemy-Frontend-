@@ -4,8 +4,10 @@ import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTable
 import AddManagerForm from './AddManagerForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const AdminManagers = () => {
   const [userData, setUserData] = useState([]);
@@ -14,7 +16,7 @@ const AdminManagers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('superadmin/managersdetails/');
+        const response = await axios.get(`${BASEUrl}superadmin/managersdetails/`);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -26,7 +28,7 @@ const AdminManagers = () => {
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
       const newStatus = !currentStatus;
-      await axios.patch('superadmin/managermanagement', { userId: userId, is_active: newStatus });
+      await axios.patch(`${BASEUrl}superadmin/managermanagement`, { userId: userId, is_active: newStatus });
   
       // Update the userData state
       setUserData(prevUserData =>
@@ -50,7 +52,7 @@ const AdminManagers = () => {
       await axios.post('superadmin/addmanager/', newManager);
   
       // Fetch updated manager details
-      const res = await axios.get('superadmin/managersdetails/');
+      const res = await axios.get(`${BASEUrl}superadmin/managersdetails/`);
       setUserData(res.data);
   
       // Display success toast notification
@@ -77,12 +79,12 @@ const AdminManagers = () => {
           <div className="flex-shrink-0 w-10 h-10">
             <img
               className="w-full h-full rounded-full"
-              src={item.profile_pic ? `http://127.0.0.1:8000/${item.profile_pic}` : 'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
+              src={item.profile_pic ? `${item.profile_pic}` : 'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
               alt=""
             />
           </div>
           <div className="ml-3">
-            <p className="text-gray-900 whitespace-no-wrap">{item.username}</p>
+            <a className="text-gray-900 whitespace-no-wrap"> <Link to={`/admin/manager-profile/${item.id}`}>{item.username}</Link></a>
           </div>
         </div>
       ),

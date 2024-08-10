@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import FormComponent from '../../../Components/User/LoginForm/LoginForm'
-
+const BASEUrl = process.env.REACT_APP_BASE_URL
 const base_url = "http://127.0.0.1:8000/";
 
 const LoginForm = () => {
@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   const handleLogin = async (formData, navigate, setErrors) => {
     try {
-      const response = await axios.post(`${base_url}vendor/login`, formData);
+      const response = await axios.post(`${BASEUrl}vendor/login`, formData);
 
       if (response.data.error) {
         const { error } = response.data;

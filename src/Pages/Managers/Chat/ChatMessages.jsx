@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { FiSend, FiPaperclip, FiDownload, FiEye } from 'react-icons/fi';
 import moment from 'moment';
-const BASEUrl = process.env.REACT_APP_BASE_URL
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 const ChatMessages = ({ activeChat }) => {
     const [messages, setMessages] = useState([]);
@@ -68,14 +68,33 @@ const ChatMessages = ({ activeChat }) => {
         }
     };
 
-    const sendMessage = (e) => {
+    const encodeFileToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
+    const sendMessage = async (e) => {
         e.preventDefault();
         if ((message.trim() || selectedFile) && activeChat) {
+            let fileData = null;
+            if (selectedFile) {
+                try {
+                    fileData = await encodeFileToBase64(selectedFile);
+                } catch (error) {
+                    console.error('Error encoding file to base64:', error);
+                }
+            }
+
             const newMessage = {
                 message: message,
                 chatId: activeChat.id,
                 sendername: activeChat.manager_name,
-                file: selectedFile,
+                file_data: fileData,
+                file_name: selectedFile?.name,
                 status: 'sent' // Add status here
             };
             if (socketRef.current) {
@@ -252,17 +271,28 @@ const ChatMessages = ({ activeChat }) => {
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="flex-1 rounded px-2 py-1 text-gray-800 border"
-                    placeholder="Type a message"
+                    placeholder="Type a message..."
+                    className="flex-1 px-2 py-1 border rounded"
                 />
+
+{selectedFile && (
+                                    <div className="ml-3 flex items-center space-x-2">
+                                        <span className="text-gray-800">{selectedFile.name}</span>
+                                        <button onClick={() => setSelectedFile(null)} className="text-red-500">Remove</button>
+                                    </div>
+                                )}
+                
                 <input
                     type="file"
-                    ref={fileInputRef}
                     onChange={handleFileChange}
-                    className="hidden"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
                 />
-                <button type="submit" className="ml-2">
-                    <FiSend className="w-6 h-6 text-teal-600" />
+                <button
+                    type="submit"
+                    className="ml-2 px-4 py-1 bg-teal-600 text-white rounded"
+                >
+                    <FiSend className="w-6 h-6" />
                 </button>
             </form>
         </div>

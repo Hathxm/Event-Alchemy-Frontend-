@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FormComponentRight from '../../../Components/User/SignupForm/SignupForm';
-
+const BASEUrl = process.env.REACT_APP_BASE_URL
 const base_url = "http://127.0.0.1:8000/";
 
 const SignupForm = () => {
@@ -45,7 +45,7 @@ const SignupForm = () => {
 
   const handleSignup = async (formData, setErrors) => {
     try {
-      const response = await axios.post(base_url + "vendor/signup", formData);
+      const response = await axios.post(BASEUrl + "vendor/signup", formData);
 
       if (response.data.error) {
         const { error } = response.data;

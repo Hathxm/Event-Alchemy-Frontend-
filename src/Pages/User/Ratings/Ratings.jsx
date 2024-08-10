@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const baseURL = "http://127.0.0.1:8000";
 
@@ -32,7 +33,7 @@ const Ratings = () => {
     useEffect(() => {
       const fetchBookingData = async () => {
         try {
-          const response = await axios.get(`${baseURL}/rate-booking`, {
+          const response = await axios.get(`${BASEUrl}rate-booking`, {
             params: { booking_id: id },
             headers: { 'Authorization': `Bearer ${token}` }
           });
@@ -67,7 +68,7 @@ const Ratings = () => {
         service_ratings: serviceRatings
       };
   
-      axios.post(`${baseURL}/rate-booking`, data, {
+      axios.post(`${BASEUrl}rate-booking`, data, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
         .then(response => {

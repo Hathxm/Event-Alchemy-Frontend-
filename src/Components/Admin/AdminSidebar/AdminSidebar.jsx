@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NotificationModal from "../AdminNotificationModal/AdminNotificationModal";
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
-import { useNavigate } from "react-router-dom";
+import { Bell, Users, UserCheck, Calendar, LogOut, Settings } from 'lucide-react';
+
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const AdminSidebar = ({ children }) => {
   const dispatch = useDispatch();
-  const authentication_user = useSelector(
-    (state) => state.authentication_user
-  );
+  const authentication_user = useSelector((state) => state.authentication_user);
   const user_basic_details = useSelector((state) => state.user_basic_details);
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  
   const logout = () => {
     localStorage.clear();
     dispatch(
@@ -36,7 +36,7 @@ const AdminSidebar = ({ children }) => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get("/superadmin/vendor-requests"); // Replace with your API endpoint
+      const response = await axios.get(`${BASEUrl}superadmin/vendor-requests`); // Replace with your API endpoint
       setNotifications(response.data);
     } catch (error) {
       console.error("Error fetching vendor requests:", error);
@@ -55,7 +55,7 @@ const AdminSidebar = ({ children }) => {
 
   const handleReject = async (vendorId) => {
     try {
-      await axios.post(`/superadmin/vendor-requests/${vendorId}/reject/`); // Replace with your reject endpoint
+      await axios.post(`${BASEUrl}superadmin/vendor-requests/${vendorId}/reject/`); // Replace with your reject endpoint
       // Update UI by removing the rejected vendor
       setNotifications(notifications.filter((vendor) => vendor.id !== vendorId));
     } catch (error) {
@@ -77,46 +77,57 @@ const AdminSidebar = ({ children }) => {
     <div>
       <div className="h-screen w-full bg-white relative flex overflow-hidden">
         <aside className="h-full w-16 flex flex-col space-y-10 items-center justify-center relative bg-gray-800 text-white">
-          <div className="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white">
-            <img
-              src="https://cdn-icons-png.flaticon.com/256/609/609803.png"
-              alt="icon"
-            />
-          </div>
+          <NavLink
+            to="/admin/settings"
+            className={({ isActive }) =>
+              `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
+                isActive ? "bg-white text-gray-800" : ""
+              }`
+            }
+          >
+            <Settings />
+          </NavLink>
 
-          <div className="h-10 w-10 flex justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white">
-            <Link to="/admin/managers">
-              <img
-                src="https://cdn-icons-png.flaticon.com/256/4205/4205906.png"
-                alt="managers"
-              />
-            </Link>
-          </div>
+          <NavLink
+            to="/admin/managers"
+            className={({ isActive }) =>
+              `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
+                isActive ? "bg-white text-gray-800" : ""
+              }`
+            }
+          >
+            <Users />
+          </NavLink>
 
-          <div className="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white">
-            <Link to="/admin/users">
-              <img
-                src="https://cdn-icons-png.flaticon.com/256/3177/3177440.png"
-                alt="users"
-              />
-            </Link>
-          </div>
+          <NavLink
+            to="/admin/users"
+            className={({ isActive }) =>
+              `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
+                isActive ? "bg-white text-gray-800" : ""
+              }`
+            }
+          >
+            <UserCheck />
+          </NavLink>
 
-          <div className="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white">
-            <Link to="/admin/events">
-              <img
-                src="https://cdn-icons-png.flaticon.com/256/3269/3269019.png"
-                alt="events"
-              />
-            </Link>
-          </div>
+          <NavLink
+            to="/admin/events"
+            className={({ isActive }) =>
+              `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
+                isActive ? "bg-white text-gray-800" : ""
+              }`
+            }
+          >
+            <Calendar />
+          </NavLink>
 
-
-          <div onClick={logout} className="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white">
-            <img src='https://cdn-icons-png.flaticon.com/256/16395/16395630.png' alt="Logout"/>
+          <div
+            onClick={logout}
+            className="h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white"
+          >
+            <LogOut />
           </div>
         </aside>
-   
 
         <div className="w-full h-full flex flex-col justify-between">
           <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800">
@@ -126,7 +137,7 @@ const AdminSidebar = ({ children }) => {
                   onClick={toggleModal}
                   className="h-10 w-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-700 focus:outline-none"
                 >
-                  🔔
+                  <Bell />
                 </button>
                 {notifications.length > 0 && (
                   <span className="absolute top-0 right-1 inline-block w-4 h-4 text-xs text-white bg-red-500 rounded-full">
@@ -171,3 +182,4 @@ const AdminSidebar = ({ children }) => {
 };
 
 export default AdminSidebar;
+

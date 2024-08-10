@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const AddVendorService = ({ addvendorservice }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +20,7 @@ const AddVendorService = ({ addvendorservice }) => {
   };
 
   useEffect(() => {
-    axios.get('/vendor/services')
+    axios.get(`${BASEUrl}vendor/services`)
       .then(response => {
         setLocations(response.data.locations);
         setServices(response.data.services);

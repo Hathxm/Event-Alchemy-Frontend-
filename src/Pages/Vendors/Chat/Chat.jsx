@@ -3,6 +3,8 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { FiSend, FiSearch, FiMoreHorizontal, FiPaperclip, FiDownload, FiEye } from 'react-icons/fi';
 import axios from 'axios';
 import moment from 'moment';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 const VendorChatComponent = ({ user_id }) => {
     const [messages, setMessages] = useState([]);
@@ -20,7 +22,7 @@ const VendorChatComponent = ({ user_id }) => {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('access');
-                const response = await axios.get(base_url + '/vendor/chats/prev_msgs', {
+                const response = await axios.get(`${BASEUrl}vendor/chats/prev_msgs`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -38,7 +40,7 @@ const VendorChatComponent = ({ user_id }) => {
         if (activeChat) {
             const manager_id = activeChat.manager;
             const user_id = activeChat.user;
-            const wsUrl = `ws://127.0.0.1:8000/ws/chat/${user_id}/${manager_id}`;
+            const wsUrl = `${BASEUrl}ws/chat/${user_id}/${manager_id}`;
 
             socketRef.current = new W3CWebSocket(wsUrl);
 

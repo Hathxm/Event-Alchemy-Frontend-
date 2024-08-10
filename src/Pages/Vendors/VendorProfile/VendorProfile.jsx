@@ -5,7 +5,7 @@ import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSl
 import EditUserForm from '../../User/Profile/EditUserForm';
 // import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const VendorProfile = () => {
     const baseURL = 'http://127.0.0.1:8000';
@@ -25,7 +25,7 @@ const VendorProfile = () => {
 
     const fetchUserData = async () => {
         try {
-            const res = await axios.get(baseURL + '/vendor/details', {
+            const res = await axios.get(`${BASEUrl}vendor/details`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Accept': 'application/json',
@@ -68,7 +68,7 @@ const VendorProfile = () => {
         }
 
         try {
-            const response = await axios.patch(baseURL + '/vendor/updateprofile/', formData, {
+            const response = await axios.patch(`${BASEUrl}vendor/updateprofile/`, formData, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -113,7 +113,7 @@ const VendorProfile = () => {
 
     const handlePasswordResetRequest = async () => {
         try {
-            await axios.post(baseURL + '/auth/password_reset/', { email: formState.email });
+            await axios.post(`${BASEUrl}auth/password_reset`, { email: formState.email });
           
             toast.success('Password reset email sent. Please check your inbox.', {
                 position: "bottom-right",

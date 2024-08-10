@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
-const base_url = "http://127.0.0.1:8000/";
+
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const AdminLogin = () => {
     ) {
       try {
         // Make a POST request to your backend API endpoint
-        const response = await axios.post(base_url + "superadmin/login/", trimmedFormData);
+        const response = await axios.post(`${BASEUrl}superadmin/login/`  , trimmedFormData);
 
         // Handle the response
         console.log('Login response:', response.data);

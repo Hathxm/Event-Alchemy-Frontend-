@@ -1,14 +1,15 @@
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 
-const baseURL = 'http://127.0.0.1:8000/';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
-const updateAdminToken = async () => {
+
+const updateUserToken = async () => {
     const refreshToken = localStorage.getItem("refresh");
     console.log("Refresh Token:", refreshToken);
 
     try {
-        const res = await axios.post(baseURL + 'token/refresh', { 'refresh': refreshToken });
+        const res = await axios.post(BASEUrl + 'token/refresh', { 'refresh': refreshToken });
      
 
         if (res.status === 200) {
@@ -28,7 +29,7 @@ const fetchisAdmin = async () => {
     const token = localStorage.getItem('access');
 
     try {
-        const res = await axios.get(baseURL + 'userdetails/', {
+        const res = await axios.get(BASEUrl + 'userdetails/', {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
@@ -43,7 +44,7 @@ const fetchisAdmin = async () => {
     }
 };
 
-const isAuthUser = async () => {
+const   isAuthUser = async () => {
     let accessToken = localStorage.getItem("access");
 
     if (!accessToken) {
@@ -57,7 +58,7 @@ const isAuthUser = async () => {
         let checkAdmin = await fetchisAdmin();
         return { 'name': decoded.username, isAuthenticated: checkAdmin.is_active, isAdmin: false, isSuperAdmin: checkAdmin.is_superuser  };
     } else {
-        const updateSuccess = await updateAdminToken();
+        const updateSuccess = await updateUserToken();
 
         if (updateSuccess) {
             accessToken = localStorage.getItem("access");

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const VendorsOTP = () => {
-  const baseUrl = "http://127.0.0.1:8000/";
+
   const [otp, setOtp] = useState('');
   const [errors, setErrors] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -34,7 +35,7 @@ const VendorsOTP = () => {
         // Check if the OTP is expired
         if (minutesDifference <= 2) {
           // Make a POST request to verify OTP
-          const response = await axios.post(`${baseUrl}otp`, {
+          const response = await axios.post(`${BASEUrl}otp`, {
             username: storedUsername,
             email: storedEmail,
             password: storedPassword,
@@ -80,7 +81,7 @@ const VendorsOTP = () => {
         return;
       }
 
-      const response = await axios.post(`${baseUrl}resendotp`, { email: resendEmail });
+      const response = await axios.post(`${BASEUrl}resendotp`, { email: resendEmail });
 
       setShowResendButton(false);
       setRemainingTime(120);

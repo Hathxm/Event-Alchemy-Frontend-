@@ -5,8 +5,10 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { Link } from 'react-router-dom';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
-const base_url = "http://127.0.0.1:8000/";
+
+
 
 const FormComponentRight = ({
   fields,
@@ -83,7 +85,7 @@ const FormComponentRight = ({
     const token = credentialResponse.credential;
     console.log(token)
     try {
-      const response = await axios.post(base_url + google_signup_url, { token });
+      const response = await axios.post(BASEUrl + google_signup_url, { token });
       console.log("Received response:", response);
 
       // If user exists, log them in and navigate to the homepage

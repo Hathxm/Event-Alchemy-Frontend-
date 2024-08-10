@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FiSearch, FiMoreHorizontal } from 'react-icons/fi';
-const BASEUrl = process.env.REACT_APP_BASE_URL
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 const ChatRooms = ({ onSelectChat }) => {
     const [chats, setChats] = useState([]);
-  
+    const [filteredChats, setFilteredChats] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const fetchChats = async () => {
         try {
@@ -16,13 +17,13 @@ const ChatRooms = ({ onSelectChat }) => {
                 },
             });
             setChats(response.data);
+            setFilteredChats(response.data);
         } catch (error) {
             console.error('Error fetching chats:', error);
         }
     };
 
     useEffect(() => {
-        // Fetch chats initially
         fetchChats();
 
         // Set up an interval to fetch chats every 30 seconds
@@ -32,13 +33,29 @@ const ChatRooms = ({ onSelectChat }) => {
         return () => clearInterval(intervalId);
     }, []);
 
+    useEffect(() => {
+        // Filter chats based on search term
+        if (searchTerm) {
+            const filtered = chats.filter(chat =>
+                chat.user_name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredChats(filtered);
+        } else {
+            setFilteredChats(chats);
+        }
+    }, [searchTerm, chats]);
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className="w-1/3 border-r flex flex-col bg-gray-100">
             <div className="py-2 px-3 bg-gray-200 flex justify-between items-center">
-                <div className="flex items-center">
+                <div className="flex items-center ">
                     <img
                         className="w-10 h-10 rounded-full"
-                        src="http://andressantibanez.com/res/avatar.png"
+                        src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
                         alt="User Avatar"
                     />
                 </div>
@@ -52,10 +69,12 @@ const ChatRooms = ({ onSelectChat }) => {
                     type="text"
                     className="w-full px-2 py-2 text-sm border rounded"
                     placeholder="Search or start new chat"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
                 />
             </div>
             <div className="flex-1 overflow-auto">
-                {chats.map((chat) => (
+                {filteredChats.map((chat) => (
                     <div
                         key={chat.id}
                         onClick={() => onSelectChat(chat)}
@@ -71,9 +90,8 @@ const ChatRooms = ({ onSelectChat }) => {
                         <div className="ml-4 flex-1 border-b border-gray-300 py-2">
                             <div className="flex justify-between">
                                 <p className="text-gray-800">{chat.user_name || 'Unknown User'}</p>
-                                <p className="text-xs text-gray-500">12:45 pm</p>
                             </div>
-                            <p className={`text-sm ${chat.hasUnreadMessages ? 'font-bold' : 'text-gray-600'}`}>
+                            <p className="text-sm">
                                 {chat.last_message?.message || 'No messages yet'}
                             </p>
                         </div>
@@ -83,6 +101,5 @@ const ChatRooms = ({ onSelectChat }) => {
         </div>
     );
 };
- 
-export default ChatRooms;
 
+export default ChatRooms;

@@ -3,6 +3,7 @@ import axios from "axios";
 import { LineChart, Line, CartesianGrid, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import AdminTableComponent from "../../../Components/Admin/AdminTable/AdminTableComponent";
 import AddVendorService from './AddVendorService';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 export default function Component() {
   const [chartData, setChartData] = useState([]);
@@ -16,7 +17,7 @@ export default function Component() {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem('access');
-        const response = await axios.get('http://127.0.0.1:8000/vendor/vendor_services', {
+        const response = await axios.get(`${BASEUrl}vendor/vendor_services`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json',
@@ -89,7 +90,7 @@ export default function Component() {
   useEffect(() => {
     const fetchChartData = async (year) => {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/vendor/dashboard', { year }, {
+        const response = await axios.post(`${BASEUrl}vendor/dashboard`, { year }, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access')}`,
           }
@@ -115,7 +116,7 @@ export default function Component() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/vendor/vendor_services', {
+        const response = await axios.get(`${BASEUrl}vendor/vendor_services`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access')}`,
           }
@@ -136,7 +137,7 @@ export default function Component() {
   const addService = async (newService) => {
     try {
       const token = localStorage.getItem('access');
-      const res = await axios.post('/vendor/addservice', newService, {
+      const res = await axios.post(`${BASEUrl}vendor/addservice`, newService, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',

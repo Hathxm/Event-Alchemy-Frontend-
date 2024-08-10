@@ -1,14 +1,13 @@
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
-
-const baseURL = 'http://127.0.0.1:8000/';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const updateAdminToken = async () => {
     const refreshToken = localStorage.getItem("refresh");
     console.log("Refresh Token:", refreshToken);
 
     try {
-        const res = await axios.post(baseURL + 'token/refresh', { 'refresh': refreshToken });
+        const res = await axios.post(BASEUrl + 'token/refresh', { 'refresh': refreshToken });
      
 
         if (res.status === 200) {
@@ -28,7 +27,7 @@ const fetchisAdmin = async () => {
     const token = localStorage.getItem('access');
 
     try {
-        const res = await axios.get(baseURL + 'managers/details/', {
+        const res = await axios.get(BASEUrl + 'managers/details/', {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',

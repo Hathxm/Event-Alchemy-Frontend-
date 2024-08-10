@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LayoutGrid } from "../../../Components/User/ImageLayout/ImageGrid.tsx";
 import { toast } from 'react-toastify';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
 const base_url = "http://127.0.0.1:8000";
@@ -32,7 +33,7 @@ const VenueDetails = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axios.get(base_url+'/venue_details', {
+        const response = await axios.get(`${BASEUrl}venue_details`, {
           params: { id: id }
         });
         setVenueDetails(response.data);
@@ -67,7 +68,7 @@ const VenueDetails = () => {
     }
 
     try {
-      const response = await axios.post(base_url+'/check_availability', {
+      const response = await axios.post(`${BASEUrl}check_availability`, {
         venue_id: id,
         date: value
       });
