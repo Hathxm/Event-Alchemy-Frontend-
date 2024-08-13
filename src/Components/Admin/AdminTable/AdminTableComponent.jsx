@@ -27,19 +27,7 @@ const AdminTableComponent = memo(({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-        <span className="text-xs xs:text-sm text-gray-900">
-          Showing 1 to {data.length} of {data.length} Entries
-        </span>
-        <div className="inline-flex mt-2 xs:mt-0">
-          <button className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-l">
-            Prev
-          </button>
-          <button className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-r">
-            Next
-          </button>
-        </div>
-      </div>
+   
     </div>
   );
 });

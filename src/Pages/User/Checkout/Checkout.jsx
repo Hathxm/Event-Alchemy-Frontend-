@@ -59,7 +59,7 @@ export default function Checkout() {
   }, []);
 
   useEffect(() => {
-    if (bookingDetails && services.length > 0) {
+    if (bookingDetails) {
       calculateAmountToPay();
     }
   }, [bookingDetails, services]);

@@ -26,7 +26,7 @@ const ManagerWrapper = () => {
     const dispatch = useDispatch();
     const authentication_user = useSelector(state => state.authentication_user);
     const [manager_id,set_manager_id] = useState(null)
-    const location = useLocation();
+    const location = useLocation()
 
 
     // const baseURL = 'http://127.0.0.1:8000/';
@@ -76,13 +76,13 @@ const ManagerWrapper = () => {
 
     useEffect(() => {
   
-        if (!authentication_user.name) {
+        if (!authentication_user.isAdmin) {
             checkAuth();
         }
         if (authentication_user.isAdmin) {
             fetchUserData();
         }
-    },[location.pathname]);
+    },[location.pathname,authentication_user]);
 
     
     

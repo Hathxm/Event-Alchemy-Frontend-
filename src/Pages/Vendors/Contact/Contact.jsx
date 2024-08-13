@@ -1,42 +1,83 @@
-import React from 'react';
-import { CartesianGrid, XAxis, Area, AreaChart, Line, LineChart, Tooltip } from 'recharts';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { CartesianGrid, XAxis, Area, AreaChart, Tooltip } from 'recharts';
+import { toast, ToastContainer } from 'react-toastify';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [status, setStatus] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    
+    try {
+      const response = await axios.post(`${BASEUrl}vendor/contact`, formData);
+      if (response.status === 200) {
+       
+        toast.success("Your message has been sent, please wait till we reach out.");
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+        });
+      } else {
+        setStatus('Failed to send message');
+        toast.error("There was an issue sending your message. Please try again later.");
+      }
+    } catch (error) {
+      setStatus('Failed to send message');
+      toast.error("There was an error with the request. Please try again later.");
+    }
+  };
+  // 
   return (
     <div className="w-full">
+       <ToastContainer/>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-200">
         <div className="container mx-auto grid items-center justify-center gap-8 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-4">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get in Touch</h1>
             <p className="max-w-[600px] text-gray-600 md:text-xl lg:text-base xl:text-xl">
-              Have a question or want to work together? Fill out the form below and we'll get back to you as soon as
-              possible.
+              Have a question or want to work together? Fill out the form below and we'll get back to you as soon as possible.
             </p>
           </div>
+         
           <div className="bg-white shadow-md rounded-lg p-6">
-            <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                  <input id="name" placeholder="John Doe" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  <input id="name" value={formData.name} onChange={handleChange} placeholder="John Doe" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                  <input id="email" type="email" placeholder="john@example.com" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  <input id="email" type="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
               </div>
-              <div className="space-y-2">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
-                <input id="phone" type="tel" placeholder="(123) 456-7890" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-              </div>
+         
               <div className="space-y-2">
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                <textarea id="message" rows={4} placeholder="How can we help you?" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                <textarea id="message" rows={4} value={formData.message} onChange={handleChange} placeholder="How can we help you?" className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
               </div>
               <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
                 Submit
               </button>
-            </div>
+              {status && <p className="text-green-600">{status}</p>}
+            </form>
           </div>
         </div>
       </section>
@@ -173,7 +214,7 @@ function PhoneIcon(props) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+      <path d="M6.62 10.79a15.78 15.78 0 0 0 6.4 6.39l2.2-2.2a1 1 0 0 1 1.2-.17l2.9 1.17a1 1 0 0 0 1.19-.53l1.67-3.34a1 1 0 0 0-.22-1.1L15.4 3.41a1 1 0 0 0-1.19-.22l-3.34 1.67a1 1 0 0 0-.53 1.19l1.17 2.9a1 1 0 0 1-.17 1.2l-2.2 2.2a15.78 15.78 0 0 0-6.39-6.4A15.78 15.78 0 0 0 1.21 4.21a1 1 0 0 1 .22-1.1l3.34-1.67a1 1 0 0 0 1.19-.22l2.2 2.2a1 1 0 0 1 1.2.17l1.17 2.9a1 1 0 0 0 1.19.53l3.34-1.67a1 1 0 0 0 1.1.22L21 9.62a1 1 0 0 0 .22 1.1l-1.67 3.34a1 1 0 0 0 .53 1.19l2.9 1.17a1 1 0 0 1 1.2-.17l2.2-2.2a15.78 15.78 0 0 0 6.39-6.4" />
     </svg>
   );
 }

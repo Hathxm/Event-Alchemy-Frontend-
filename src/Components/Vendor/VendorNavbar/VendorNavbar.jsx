@@ -42,7 +42,7 @@ const VendorNavbar = ({ children, vendor_id }) => {
 console.log(vendor_id)
   return (
     <>
-      <nav className="bg-orange-500">
+      <nav className="bg-black">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 relative">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -103,7 +103,7 @@ console.log(vendor_id)
                   <>
                     <button
                       type="button"
-                      className="relative rounded-full  p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="relative rounded-full  p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       onClick={ChatPage}
                     >
                       <span className="sr-only">Chat</span>
@@ -112,7 +112,7 @@ console.log(vendor_id)
 
                     <button
                       type="button"
-                      className="relative rounded-full text-black-400 p-1 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="relative rounded-full text-gray-400 p-1 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       onClick={toggleModal}
                     >
                       <span className="sr-only" >Notifications</span>
@@ -143,7 +143,7 @@ console.log(vendor_id)
 
                     <button
                       type="button"
-                      className="relative rounded-full  p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="relative rounded-full  p-1 text-red-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       onClick={logout}
                     >
                       <span className="sr-only">Logout</span>

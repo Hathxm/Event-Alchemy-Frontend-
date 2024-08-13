@@ -10,20 +10,20 @@ import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the CSS f
 
 function App() {
   return (
-    <>
+    <Provider store={Store}>
+           
       <Router>
-        <Provider store={Store}>
-          <Routes>
-            <Route path="/*" element={<UserWrapper />} />
-            <Route path="/manager/*" element={<ManagerWrapper />} />
-            <Route path="/admin/*" element={<AdminWrapper />} />
-            <Route path="/vendor/*" element={<VendorWrapper />} />
-          </Routes>
-          <ToastContainer />
-        </Provider>
+        <Routes>
+          <Route path="/*" element={<UserWrapper />} />
+          <Route path="/manager/*" element={<ManagerWrapper />} />
+          <Route path="/admin/*" element={<AdminWrapper />} />
+          <Route path="/vendor/*" element={<VendorWrapper />} />
+        </Routes>
       </Router>
-    </>
+      <ToastContainer />
+    </Provider>
   );
 }
 
 export default App;
+

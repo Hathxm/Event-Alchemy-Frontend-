@@ -29,7 +29,7 @@ const ManagerDashboard = () => {
   const [totalBookings, setTotalBookings] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [avgBookingValue, setAvgBookingValue] = useState(0);
-  const [repeatBookings, setRepeatBookings] = useState(0);
+  const [wallet_amt, setwallet_amt] = useState(0);
   const [bookings, setBookings] = useState([]); // Assuming bookings data is available
 
   // Fetch dashboard data
@@ -46,6 +46,7 @@ const ManagerDashboard = () => {
         const yearlyDataResponse = response.data.yearly_revenue;
         const bookings = response.data.bookings;
         setBookings(bookings);
+        setwallet_amt(response.data.wallet); 
 
         // Define month names
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -85,7 +86,7 @@ const ManagerDashboard = () => {
         setTotalBookings(totalBookings);
         setTotalRevenue(totalRevenue);
         setAvgBookingValue(avgBookingValue);
-        setRepeatBookings(45); // Placeholder value
+       // Placeholder value
 
       } else {
         toast.error('Failed to fetch revenue data.');
@@ -120,7 +121,11 @@ const ManagerDashboard = () => {
 
       if (response.status === 200) {
         toast.success('Booking marked as completed.');
-        // Optionally, you could update the bookings state or refetch the data here
+        setBookings(prevBookings =>
+          prevBookings.map(booking =>
+            booking.id === bookingId ? { ...booking, booking_status: 'Hosted' } : booking
+          )
+        );
       } else {
         toast.error('Failed to mark booking as completed.');
       }
@@ -172,7 +177,7 @@ const ManagerDashboard = () => {
                   <h3 className="text-sm font-medium">Total Bookings</h3>
                   <FontAwesomeIcon icon={faCalendarAlt} className="w-4 h-4 text-gray-500" />
                 </div>
-                <div className="text-2xl font-bold">{totalBookings}</div>
+                <div className="text-2xl font-bold">{bookings.length}</div>
                 <p className="text-xs text-gray-500">+12.5% from last year</p>
               </div>
               <div className="bg-white rounded-lg shadow-md p-4">
@@ -180,7 +185,7 @@ const ManagerDashboard = () => {
                   <h3 className="text-sm font-medium">Total Revenue</h3>
                   <FontAwesomeIcon icon={faDollarSign} className="w-4 h-4 text-gray-500" />
                 </div>
-                <div className="text-2xl font-bold">${totalRevenue.toLocaleString()}</div>
+                <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</div>
                 <p className="text-xs text-gray-500">+18.2% from last year</p>
               </div>
               <div className="bg-white rounded-lg shadow-md p-4">
@@ -188,15 +193,15 @@ const ManagerDashboard = () => {
                   <h3 className="text-sm font-medium">Average Booking Value</h3>
                   <FontAwesomeIcon icon={faCreditCard} className="w-4 h-4 text-gray-500" />
                 </div>
-                <div className="text-2xl font-bold">${avgBookingValue.toFixed(2)}</div>
+                <div className="text-2xl font-bold">₹{avgBookingValue.toFixed(2)}</div>
                 <p className="text-xs text-gray-500">+7.3% from last year</p>
               </div>
               <div className="bg-white rounded-lg shadow-md p-4">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-sm font-medium">Repeat Bookings</h3>
+                  <h3 className="text-sm font-medium">Wallet Amount</h3>
                   <FontAwesomeIcon icon={faUsers} className="w-4 h-4 text-gray-500" />
                 </div>
-                <div className="text-2xl font-bold">{repeatBookings}</div>
+                <div className="text-2xl font-bold">₹{wallet_amt}</div>
                 <p className="text-xs text-gray-500">+4.6% from last year</p>
               </div>
             </div>
@@ -243,15 +248,19 @@ const ManagerDashboard = () => {
                         {booking.booking_status}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        {booking.booking_status === "Pending" && (
-                          <button
-                            onClick={() => handleCompleteBooking(booking.id)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          >
-                            Complete
-                          </button>
-                        )}
-                      </td>
+  {booking.booking_status === "Pending" && (
+    <button
+      onClick={() => handleCompleteBooking(booking.id)}
+      className={`px-4 py-2 ${
+        booking.booking_status === "Hosted"
+          ? "bg-green-600 hover:bg-green-700"
+          : "bg-blue-600 hover:bg-blue-700"
+      } text-white rounded`}
+    >
+      {booking.booking_status === "Hosted" ? "Hosted" : "Complete"}
+    </button>
+  )}
+</td>
                     </tr>
                   ))}
                 </tbody>

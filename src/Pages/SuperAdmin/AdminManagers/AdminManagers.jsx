@@ -49,7 +49,7 @@ const AdminManagers = () => {
   const addManager = async (newManager) => {
     try {
       // Send a POST request to add the new manager
-      await axios.post('superadmin/addmanager/', newManager);
+      await axios.post(`${BASEUrl}superadmin/addmanager/`, newManager);
   
       // Fetch updated manager details
       const res = await axios.get(`${BASEUrl}superadmin/managersdetails/`);

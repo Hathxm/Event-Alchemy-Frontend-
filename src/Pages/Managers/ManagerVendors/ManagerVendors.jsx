@@ -64,6 +64,11 @@ const ManagerVendors = () => {
     };
 
     const columns = useMemo(() => [
+
+        { 
+            header: 'Service ID',
+            accessor: (item) => (<p className="text-gray-900 whitespace-no-wrap">{item.id}</p>)
+        },
         {
             header: 'Vendor',
             accessor: (item) => (
@@ -81,6 +86,9 @@ const ManagerVendors = () => {
                 </div>
             ),
         },
+
+      
+
         { 
             header: 'Service',
             accessor: (item) => (<p className="text-gray-900 whitespace-no-wrap">{item.service_name}</p>)
@@ -127,7 +135,7 @@ const ManagerVendors = () => {
                 </div>
             ),
         },
-        
+
         {
             header: 'Action',
             accessor: (item) => (

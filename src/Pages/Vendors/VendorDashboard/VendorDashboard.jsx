@@ -3,7 +3,8 @@ import axios from "axios";
 import { LineChart, Line, CartesianGrid, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import AdminTableComponent from "../../../Components/Admin/AdminTable/AdminTableComponent";
 import AddVendorService from './AddVendorService';
-const BASEUrl = process.env.REACT_APP_BASE_URL
+
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 export default function Component() {
   const [chartData, setChartData] = useState([]);
@@ -31,8 +32,6 @@ export default function Component() {
     };
     fetchUserData();
   }, []);
-
- 
 
   const columns = useMemo(() => [
     {
@@ -77,7 +76,6 @@ export default function Component() {
         <div className='flex'>
           <button className="px-4 py-2 rounded-lg bg-blue-500 text-white">Edit</button>
           <button
-            // onClick={() => toggleUserStatus(item.id, item.is_active)}
             className={`px-4 py-2 rounded-lg ${item.is_active ? 'bg-red-500 hover:bg-red-700 ml-2' : 'bg-green-500 hover:bg-green-700'} text-white ml-2`}
           >
             {item.is_active ? 'Block' : 'Unblock'}
@@ -103,8 +101,7 @@ export default function Component() {
         });
         setChartData(chartData);
         setYearlyData(response.data.years || []);
-        console.log(response.data.yearly_revenue)
-        setBookings(response.data.bookings)
+        setBookings(response.data.bookings);
       } catch (error) {
         console.error("Error fetching chart data:", error);
       }
@@ -163,19 +160,19 @@ export default function Component() {
             </div>
             <div className="card-content">
               <div className="h-64">
-              <select
-  id="year-select"
-  value={selectedYear}
-  onChange={handleYearChange}
-  className="mb-4 p-2 border rounded-md"
->
-  <option value="" disabled>Select a year</option>
-  {yearlyData.map((item, index) => (
-    <option key={index} value={item.year}>
-      {item.year}
-    </option>
-  ))}
-</select>
+                <select
+                  id="year-select"
+                  value={selectedYear}
+                  onChange={handleYearChange}
+                  className="mb-4 p-2 border rounded-md"
+                >
+                  <option value="" disabled>Select a year</option>
+                  {yearlyData.map((item, index) => (
+                    <option key={index} value={item.year}>
+                      {item.year}
+                    </option>
+                  ))}
+                </select>
                 <ResponsiveContainer>
                   <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -208,8 +205,7 @@ export default function Component() {
                   <table className="table w-full">
                     <thead>
                       <tr>
-                      <th>ID</th>
-
+                        <th>ID</th>
                         <th>Event</th>
                         <th>Date</th>
                         <th>Client</th>
@@ -224,7 +220,6 @@ export default function Component() {
                       {bookings.slice(0, 5).map((booking, index) => (
                         <tr key={index}>
                           <td className="font-medium">{booking.id}</td>
-
                           <td className="font-medium">{booking.event_name}</td>
                           <td>
                             <time dateTime={booking.date}>{booking.date}</time>
@@ -240,9 +235,8 @@ export default function Component() {
                               </button>
                               <div className="dropdown-content">
                                 <p className="dropdown-label">Actions</p>
-                                <button className="dropdown-item">View Details</button>
-                                <button className="dropdown-item">Edit Booking</button>
-                                <button className="dropdown-item">Cancel Booking</button>
+                                <button className="dropdown-item">View</button>
+                                <button className="dropdown-item">Manage</button>
                               </div>
                             </div>
                           </td>
@@ -253,25 +247,27 @@ export default function Component() {
                 </div>
               </div>
             </div>
-            <div className="card-footer" />
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end mt-4 px-4">
-        <AddVendorService addvendorservice={addService} />
-      </div>
+<div className="mx-auto text-center">  
+  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Services Posted </h1>
+  </div>
+     
+      <div className="flex justify-end my-6 px-4">
+  <AddVendorService addvendorservice={addService} />
+</div>
 
-      <div className="flex justify-center mt-4">
-        <div className="inline-block min-w-full max-w-5xl shadow rounded-lg overflow-hidden">
-          <div className="relative">
-          </div>
-          <AdminTableComponent data={userData} columns={columns} />
-        </div>
-      </div>
+<div className="flex justify-center px-4 mb-10">
+  <AdminTableComponent columns={columns} data={userData} />
+</div>
+
+     
     </>
   );
 }
+
 
 function CalendarIcon(props) {
   return (

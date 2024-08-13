@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState,useEffect } from 'react';
+import axios from 'axios';
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
 
@@ -10,6 +12,7 @@ const VendorHomePage = () => {
 
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
         // Example of using static images
@@ -22,6 +25,18 @@ const VendorHomePage = () => {
     
        
       }, []);
+
+      useEffect(() => {
+        // Fetch reviews from API
+        axios.get(`${BASEUrl}vendor/home-reviews`) // Adjust the API endpoint and query params as needed
+          .then(response => {
+            setReviews(response.data); // Assume response.data contains the reviews array
+          })
+          .catch(error => {
+            console.error('Error fetching reviews:', error);
+          });
+      }, []);
+
     
     
     useEffect(() => {
@@ -38,6 +53,12 @@ const VendorHomePage = () => {
           <div className="grid gap-6 lg:grid-cols-[1fr_550px] lg:gap-12 xl:grid-cols-[1fr_650px]">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
+                    <img
+                                    className="h-64 w-auto" 
+                                    src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                                    alt="Your Company"
+                                    style={{ marginLeft: '100px' }}
+                                />
                 <h1 className="text-3xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
                   Showcase Your Services on Our Open Platform
                 </h1>
@@ -113,60 +134,33 @@ const VendorHomePage = () => {
 
 
       <h1 className="text-3xl font-bold tracking-tight sm:text-5xl xl:text-6xl mx-auto mt-2 mb-4">
-                  What Our Customers Say .. 
-                </h1>
+        What Our Customers Say ..
+      </h1>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-            <div className="grid gap-4">
+          {reviews.map((review, index) => (
+            <div key={index} className="grid gap-4">
               <div className="flex items-center gap-4">
                 <Avatar className="border w-12 h-12">
                   <AvatarImage src="/placeholder-user.jpg" alt="@username" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-semibold">John Doe</p>
-                  <p className="text-sm text-gray-600">Event Planner, Acme Events</p>
+                  <p className="font-semibold">{review.customer_name}</p>
+                  <p className="text-sm text-gray-600">{review.manager_name},{review.event_name} Planner </p>
                 </div>
               </div>
               <p className="text-gray-600">
-                "Our experience with this platform has been fantastic. The vendor selection and booking process is seamless, and we've been able to find the perfect services for all our events."
+               {review.review}
               </p>
             </div>
-            <div className="grid gap-4">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-12 h-12">
-                  <AvatarImage src="/placeholder-user.jpg" alt="@username" />
-                  <AvatarFallback>SM</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-semibold">Sarah Miller</p>
-                  <p className="text-sm text-gray-600">Wedding Planner, Blissful Beginnings</p>
-                </div>
-              </div>
-              <p className="text-gray-600">
-                "As a vendor, this platform has been a game-changer for my business. The exposure and booking opportunities have significantly increased my revenue and client base."
-              </p>
-            </div>
-            <div className="grid gap-4">
-              <div className="flex items-center gap-4">
-                <Avatar className="border w-12 h-12">
-                  <AvatarImage src="/placeholder-user.jpg" alt="@username" />
-                  <AvatarFallback>KS</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-semibold">Karen Sato</p>
-                  <p className="text-sm text-gray-600">Caterer, Gourmet Delights</p>
-                </div>
-              </div>
-              <p className="text-gray-600">
-                "This platform has been a game-changer for my catering business. The ability to showcase my services, manage bookings, and get paid securely has been a huge time-saver and has helped me grow my business significantly."
-              </p>
-            </div>
-          </div>
+             ))}
+      
+          </div> 
         </div>
       </section>
-
+    
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <div className="space-y-4">

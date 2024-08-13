@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-const BASEUrl = process.env.REACT_APP_BASE_URL
 
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 const NotificationModal = ({ onClose, user_id }) => {
   const [notifications, setNotifications] = useState([]);
-  const client = new W3CWebSocket(`${BASEUrl}ws/notifications/${user_id}`);
+  const clientRef = useRef(null); // Use ref to persist WebSocket client
 
   useEffect(() => {
-    client.onopen = () => {
+    clientRef.current = new W3CWebSocket(`${BASEUrl}ws/notifications/${user_id}`);
+
+    clientRef.current.onopen = () => {
       console.log('WebSocket connection established');
     };
 
-    client.onclose = () => {
+    clientRef.current.onclose = () => {
       console.log('WebSocket connection closed');
+      // Optionally, add reconnection logic here
     };
 
-    client.onmessage = (message) => {
+    clientRef.current.onmessage = (message) => {
       const newNotification = JSON.parse(message.data);
-      setNotifications(prev => [newNotification, ...prev]);
+      setNotifications(prev => [newNotification, ...prev]); // Add new notification to the state
     };
 
-    client.onerror = (error) => {
+    clientRef.current.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
 
     return () => {
-      client.close();
+      clientRef.current.close();
     };
   }, [user_id]);
 

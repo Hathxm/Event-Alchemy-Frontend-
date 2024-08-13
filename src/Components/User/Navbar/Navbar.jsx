@@ -24,14 +24,6 @@ function Navbar({ children }) {
         navigate('/login');
     };
 
-    const ChatPage = () => {
-        navigate('/chat');
-    };
-
-    const BookingsPage = () => {
-        navigate('/bookings');
-    };
-
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -106,23 +98,29 @@ function Navbar({ children }) {
                                 !authentication_user.isAdmin &&
                                 !authentication_user.isSuperAdmin ? (
                                     <>
-                                        <button
-                                            type="button"
-                                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                            onClick={ChatPage}
+                                        <NavLink
+                                            to="/chat"
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'relative rounded-full bg-gray-700 p-1 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                                    : 'relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                            }
                                         >
                                             <span className="sr-only">Chat</span>
                                             <MessageCircle className="h-6 w-6" />
-                                        </button>
+                                        </NavLink>
 
-                                        <button
-                                            type="button"
-                                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                            onClick={BookingsPage}
+                                        <NavLink
+                                            to="/bookings"
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'relative rounded-full bg-gray-700 p-1 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                                    : 'relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                            }
                                         >
                                             <span className="sr-only">Bookings</span>
                                             <Calendar className="h-6 w-6" />
-                                        </button>
+                                        </NavLink>
 
                                         <div className="relative">
                                             <NavLink to="/userprofile">
@@ -205,55 +203,35 @@ function Navbar({ children }) {
                                 !authentication_user.isAdmin &&
                                 !authentication_user.isSuperAdmin ? (
                                     <>
-                                        <button
-                                            type="button"
-                                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                            onClick={ChatPage}
+                                        <NavLink
+                                            to="/chat"
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'relative rounded-full bg-gray-700 p-1 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                                    : 'relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                            }
                                         >
                                             <span className="sr-only">Chat</span>
                                             <MessageCircle className="h-6 w-6" />
-                                        </button>
+                                        </NavLink>
 
-                                        <button
-                                            type="button"
-                                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                            onClick={BookingsPage}
+                                        <NavLink
+                                            to="/bookings"
+                                            className={({ isActive }) =>
+                                                isActive
+                                                    ? 'relative rounded-full bg-gray-700 p-1 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                                    : 'relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
+                                            }
                                         >
                                             <span className="sr-only">Bookings</span>
                                             <Calendar className="h-6 w-6" />
-                                        </button>
-
-                                        <NavLink to="/userprofile">
-                                            <button
-                                                type="button"
-                                                className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                                id="user-menu-button"
-                                                aria-haspopup="true"
-                                            >
-                                                <span className="sr-only">Open user menu</span>
-                                                {authentication_user.isAuthenticated &&
-                                                    !authentication_user.isAdmin &&
-                                                    !authentication_user.isSuperAdmin && (
-                                                        <img
-                                                            className="h-8 w-8 rounded-full"
-                                                            src={`${user_basic_details.profile_pic}`}
-                                                            alt=""
-                                                        />
-                                                    )}
-                                            </button>
                                         </NavLink>
-
-                                        <button
-                                            type="button"
-                                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                                            onClick={logout}
-                                        >
-                                            <span className="sr-only">Logout</span>
-                                            <LogOut className="h-6 w-6" />
-                                        </button>
                                     </>
                                 ) : (
-                                    <NavLink to="/login" className="text-white no-underline">
+                                    <NavLink
+                                        to="/login"
+                                        className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium no-underline"
+                                    >
                                         Signup | Login
                                     </NavLink>
                                 )}

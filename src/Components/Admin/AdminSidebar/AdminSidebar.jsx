@@ -45,7 +45,7 @@ const AdminSidebar = ({ children }) => {
 
   const handleAccept = async (vendorId) => {
     try {
-      await axios.post(`/superadmin/vendor-requests/${vendorId}/accept/`); // Replace with your accept endpoint
+      await axios.post(`${BASEUrl}superadmin/vendor-requests/${vendorId}/accept/`); // Replace with your accept endpoint
       // Update UI by removing the accepted vendor
       setNotifications(notifications.filter((vendor) => vendor.id !== vendorId));
     } catch (error) {
@@ -146,7 +146,7 @@ const AdminSidebar = ({ children }) => {
                 )}
               </div>
               <div className="flex flex-col items-end">
-                {authentication_user.isAdmin ? (
+                {authentication_user.isSuperAdmin ? (
                   <>
                     <div className="text-md font-medium">
                       {user_basic_details.name}
