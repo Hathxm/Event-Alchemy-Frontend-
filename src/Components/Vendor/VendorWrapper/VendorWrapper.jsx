@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import VendorLogin from '../../../Pages/Vendors/VendorLogin/VendorLogin';
 import VendorSignup from  '../../../Pages/Vendors/VendorSignup/VendorSignup'
@@ -17,6 +17,8 @@ import VendorPrivateRoute from '../VendorPrivateRoute';
 import ContactPage from '../../../Pages/Vendors/Contact/Contact';
 import VendorForgotPassword from '../../../Pages/Vendors/VendorForgotPassword/ForgotPassword';
 import ChangePassOTP from '../../../Pages/Vendors/ChangePassOTP/ChangePassOTP';
+const BASEUrl = process.env.REACT_APP_BASE_URL
+
 
 
 
@@ -27,6 +29,8 @@ const VendorWrapper = () => {
   const dispatch = useDispatch();
   const authentication_user = useSelector(state => state.authentication_user);
   const [vendor_id, set_vendor_id] = useState(null)
+  const location = useLocation();
+
 
 
   const checkAuth = async () => {
@@ -51,7 +55,7 @@ const VendorWrapper = () => {
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(baseURL + 'vendor/details', {
+      const res = await axios.get(BASEUrl + 'vendor/details', {
         headers: {
           'authorization': `Bearer ${token}`,
           'Accept': 'application/json',
@@ -74,7 +78,7 @@ const VendorWrapper = () => {
   };
 
   useEffect(() => {
-    if (!authentication_user.isAuthenticated) {
+    if (!authentication_user.name) {
      
       checkAuth();
     
@@ -82,7 +86,7 @@ const VendorWrapper = () => {
     if (authentication_user.isAuthenticated) {
       fetchUserData();
     }
-  }, [authentication_user.name]);
+  }, [location.pathname]);
 
   return (
     <Routes>

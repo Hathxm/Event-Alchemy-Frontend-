@@ -76,7 +76,7 @@ const ManagerWrapper = () => {
 
     useEffect(() => {
   
-        if (!authentication_user.isAdmin) {
+        if (!authentication_user.name) {
             checkAuth();
         }
         if (authentication_user.isAdmin) {

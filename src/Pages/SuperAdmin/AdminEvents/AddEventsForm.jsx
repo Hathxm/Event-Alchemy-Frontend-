@@ -5,9 +5,9 @@ const EventForm = ({ addEvent }) => {
     const [formData, setFormData] = useState({
         eventName: "",
         eventDescription: "",
-        eventImage: [],
+        eventImage: null,  // Changed to a single file instead of an array
     });
-    const [fileNames, setFileNames] = useState([]);
+    const [fileName, setFileName] = useState("");  // Store the name of the single file
     const fileInputRef = useRef(null);
 
     const toggleModal = () => {
@@ -16,31 +16,27 @@ const EventForm = ({ addEvent }) => {
             setFormData({
                 eventName: "",
                 eventDescription: "",
-                eventImage: [],
+                eventImage: null,
             });
-            setFileNames([]);
+            setFileName("");
         }
     };
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
-        if (type === "file") {
-            const selectedFiles = Array.from(files);
+        if (type === "file" && files.length > 0) {
+            const selectedFile = files[0];  // Only take the first file
             setFormData((prevState) => ({
                 ...prevState,
-                [name]: selectedFiles,
+                eventImage: selectedFile,
             }));
-            setFileNames(selectedFiles.map((file) => file.name));
+            setFileName(selectedFile.name);  // Set the single file name
         } else {
             setFormData((prevState) => ({
                 ...prevState,
                 [name]: value,
             }));
         }
-    };
-
-    const handleFileClick = () => {
-        fileInputRef.current.click();
     };
 
     const handleSubmit = (e) => {
@@ -58,28 +54,27 @@ const EventForm = ({ addEvent }) => {
 
     return (
         <div>
-            
-      <button
-        className="flex items-center justify-center flex-1 h-full p-2 bg-blue-400 text-white shadow rounded-full"
-        onClick={toggleModal}
-      >
-        <div className="relative">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </div>
-      </button>
+            <button
+                className="flex items-center justify-center flex-1 h-full p-2 bg-blue-400 text-white shadow rounded-full"
+                onClick={toggleModal}
+            >
+                <div className="relative">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                    </svg>
+                </div>
+            </button>
 
             {showModal && (
                 <div
@@ -155,12 +150,11 @@ const EventForm = ({ addEvent }) => {
                                                     className="sr-only"
                                                     onChange={handleChange}
                                                     ref={fileInputRef}
-                                                    multiple
                                                     required
                                                 />
                                             </label>
                                             <p className="text-xs text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                                            {fileNames.length > 0 && <p className="text-xs text-green-600">Selected files: {fileNames.join(', ')}</p>}
+                                            {fileName && <p className="text-xs text-green-600">Selected file: {fileName}</p>}
                                         </div>
                                     </div>
                                 </div>
@@ -182,3 +176,4 @@ const EventForm = ({ addEvent }) => {
 };
 
 export default EventForm;
+

@@ -25,6 +25,7 @@ import Contact from '../../../Pages/User/Contact/Contact';
 import ForgotPassword from '../../../Pages/User/UserForgotPassword/ForgotPassword';
 import ChangePassOTP from '../../../Pages/User/ChangePassOTP/ChangePassOTP';
 import Ratings from '../../../Pages/User/Ratings/Ratings';
+
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 

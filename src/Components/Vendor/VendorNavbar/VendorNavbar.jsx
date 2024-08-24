@@ -129,14 +129,14 @@ console.log(vendor_id)
                         >
                           <span className="sr-only">Open user menu</span>
                           {authentication_user.isAuthenticated &&
-                            !authentication_user.isAdmin &&
-                            !authentication_user.isSuperAdmin && (
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src={`${user_basic_details.profile_pic}`}
-                                alt=""
-                              />
-                            )}
+  !authentication_user.isAdmin &&
+  !authentication_user.isSuperAdmin && (
+    <img
+      className="h-8 w-8 rounded-full"
+      src={user_basic_details.profile_pic ? user_basic_details.profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
+      alt="User Profile"
+    />
+)}
                         </button>
                       </Link>
                     </div>
@@ -222,7 +222,7 @@ console.log(vendor_id)
                             !authentication_user.isSuperAdmin && (
                               <img
                                 className="h-8 w-8 rounded-full"
-                                src={`${user_basic_details.profile_pic}`}
+                                src={user_basic_details.profile_pic ? user_basic_details.profile_pic :'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
                                 alt=""
                               />
                             )}

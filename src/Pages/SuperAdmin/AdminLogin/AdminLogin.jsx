@@ -96,7 +96,7 @@ const AdminLogin = () => {
           })
         );
 
-        navigate('/admin/dashboard');
+        navigate('/admin/events');
 
       } catch (error) {
         // Handle any errors

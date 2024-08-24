@@ -40,7 +40,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
             to="/manager/dashboard"
             className={({ isActive }) => 
               `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
-                isActive ? 'text-gray-800 bg-white' : 'text-white'
+                isActive ? 'text-gray-800 bg-white' : 'text-gray-800'
               }`
             }
           >
@@ -51,7 +51,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
             to="/manager/services"
             className={({ isActive }) => 
               `h-10 w-10 flex justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
-                isActive ? 'text-gray-800 bg-white' : 'text-white'
+                isActive ? 'text-gray-800 bg-white' : 'text-gray-800'
               }`
             }
           >
@@ -62,7 +62,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
             to="/manager/locations"
             className={({ isActive }) => 
               `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
-                isActive ? 'text-gray-800 bg-white' : 'text-white'
+                isActive ? 'text-gray-800 bg-white' : 'text-gray-800'
               }`
             }
           >
@@ -73,7 +73,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
             to="/manager/chat"
             className={({ isActive }) => 
               `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
-                isActive ? 'text-gray-800 bg-white' : 'text-white'
+                isActive ? 'text-gray-800 bg-white' : 'text-gray-800'
               }`
             }
           >
@@ -84,7 +84,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
             to="/manager/vendors"
             className={({ isActive }) => 
               `h-10 w-10 flex items-center justify-center rounded-lg cursor-pointer hover:text-gray-800 hover:bg-white hover:duration-300 hover:ease-linear focus:bg-white ${
-                isActive ? 'text-gray-800 bg-white' : 'text-white'
+                isActive ? 'text-gray-800 bg-white' : 'text-gray-800'
               }`
             }
           >
@@ -102,35 +102,45 @@ const ManagerSidebar = ({ children, manager_id }) => {
         </aside>
 
         <div className="w-full h-full flex flex-col justify-between">
-          <header className="h-16 w-full flex items-center relative justify-end px-5 space-x-10 bg-blue-400">
-            <div className="flex flex-shrink-0 items-center space-x-4 text-white">
-              <div className="flex flex-col items-end">
-                {authentication_user.isAdmin ? (
-                  <>
-                    <div className="text-md font-medium">{user_basic_details.name}</div>
-                    <div className="text-sm font-regular">{user_basic_details.manager_type} Manager</div>
-                  </>
-                ) : (
-                  <div className="text-md font-medium">Unknown</div>
-                )}
-              </div>
+        <header className="h-16 w-full flex items-center justify-end px-5 space-x-10 bg-blue-400">
+  <div className="flex items-center space-x-4 text-white">
+    <div className="relative">
+      <button
+        onClick={toggleModal}
+        className="h-10 w-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-700 focus:outline-none"
+      >
+        <Bell />
+      </button>
+      {notifications.length > 0 && (
+        <span className="absolute top-0 right-1 inline-block w-4 h-4 text-xs text-white bg-red-500 rounded-full">
+          <p className="ml-1">{notifications.length}</p>
+        </span>
+      )}
+    </div>
 
-             
+    {authentication_user.isAdmin && (
+      <Link to="/manager/profile">
+        <div className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400">
+          <img
+               src={user_basic_details.profile_pic ? user_basic_details.profile_pic :'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
+            alt="Profile"
+            className="h-full w-full rounded-full object-cover"
+          />
+        </div>
+      </Link>
+    )}
 
-              {/* Notification Icon */}
-              <button
-                  onClick={toggleModal}
-                  className="h-10 w-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-700 focus:outline-none"
-                >
-                  <Bell className="h-6 w-6" />
-                </button>
-                {notifications.length > 0 && (
-                  <span className="absolute top-0 right-1 inline-block w-4 h-4 text-xs text-white bg-red-500 rounded-full">
-                    <p className="ml-1">{notifications.length}</p>
-                  </span>
-                )}
-            </div>
-          </header>
+    <div className="flex flex-col items-end">
+      {authentication_user.isAdmin && (
+        <>
+          <div className="text-md font-medium">{user_basic_details.name}</div>
+          <div className="text-md font-medium">{user_basic_details.manager_type} Manager</div>
+        </>
+      )}
+    </div>
+  </div>
+</header>
+
 
           <main className="max-w-full h-full flex relative overflow-y overflow-x-hidden">
             <div className="h-full w-full">

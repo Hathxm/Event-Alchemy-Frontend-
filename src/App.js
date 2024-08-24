@@ -6,7 +6,7 @@ import ManagerWrapper from './Components/Manager/ManagerWrapper/ManagerWrapper';
 import AdminWrapper from './Components/Admin/AdminWrapper/AdminWrapper';
 import VendorWrapper from './Components/Vendor/VendorWrapper/VendorWrapper';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the CSS for toastify
+
 
 function App() {
   return (

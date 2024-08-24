@@ -14,87 +14,79 @@ import AdminEvents from '../../../Pages/SuperAdmin/AdminEvents/AdminEvents';
 import SuperAdminPrivateRoute from '../SuperAdminPrivateRoute';
 import Manager_Profile_Rating from '../../../Pages/SuperAdmin/AdminManagers/ProfileWithRatings';
 
-const BASEUrl = process.env.REACT_APP_BASE_URL
-
-
-
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 const AdminWrapper = () => {
-    const dispatch = useDispatch();
-    const authentication_user = useSelector(state => state.authentication_user);
-    const location = useLocation();
-  
-    const checkAuth = async () => {
-      // Logic to check authentication
+  const dispatch = useDispatch();
+  const authentication_user = useSelector(state => state.authentication_user);
+  const location = useLocation()
+
+
+  // const baseURL = 'http://127.0.0.1:8000/';
+  const token = localStorage.getItem('access');
+
+  const checkAuth = async () => {
+     
       const isAuthenticated = await isAuthAdmin();
       console.log(isAuthenticated)
-      dispatch(
-        set_Authentication({
-          name: isAuthenticated.name,
-          isAuthenticated: isAuthenticated.isAuthenticated,
-          isAdmin: isAuthenticated.isAdmin,
-          isSuperAdmin: isAuthenticated.isSuperAdmin,
 
-        })
-      );
-  
-    };
-  
-    // const baseURL = 'http://127.0.0.1:8000/';
-    const token = localStorage.getItem('access');
-  
-    const fetchUserData = async () => {
-      try {
-        const res = await axios.get(`${BASEUrl}superadmin/details/`, {
-          headers: {
-            'authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
-        dispatch(
-          set_user_basic_details({
-            name: res.data.username,
-            profile_pic: res.data.profile_pic,
-            manager_type:null
+    
+      
+      dispatch(
+          set_Authentication({
+              name: isAuthenticated.username,
+              isAuthenticated: isAuthenticated.isAuthenticated,
+              isAdmin: isAuthenticated.isAdmin,
+              isSuperAdmin: isAuthenticated.isSuperAdmin,
+
           })
-        );
+      );
+  };
+
+  const fetchUserData = async () => {
+      try {
+          const res = await axios.get(`${BASEUrl}superadmin/details/`, {
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+          });
+
+          dispatch( 
+              set_user_basic_details({
+                  name: res.data.username,
+                  profile_pic: res.data.profile_pic,
+                  manager_type: res.data.event_name,
+                  email:res.data.email
+              })
+          );
+     
       } catch (error) {
-        console.log(error);
+          console.log("Error in fetchUserData:", error);
       }
-    };
-  
-    useEffect(() => {
+  };
+
+  useEffect(() => {
+
       if (!authentication_user.name) {
-        checkAuth();
+          checkAuth();
       }
       if (authentication_user.isSuperAdmin) {
-        fetchUserData();
+          fetchUserData();
       }
-    },[location.pathname] );
-  
-  return (
-    <div>
-        <Routes>
-      
-     
-      <Route path="/login" element={<AdminLogin/>} />
-      <Route path="/dashboard" element={<SuperAdminPrivateRoute> <AdminSidebar><AdminHome/></AdminSidebar> </SuperAdminPrivateRoute> } />
-      <Route path="/users" element={<SuperAdminPrivateRoute><AdminSidebar><AdminUsers/></AdminSidebar></SuperAdminPrivateRoute> } />
-      <Route path="/managers" element={<SuperAdminPrivateRoute><AdminSidebar><AdminManagers/></AdminSidebar></SuperAdminPrivateRoute> } />
-      <Route path="/manager-profile/:id" element={<SuperAdminPrivateRoute><AdminSidebar><Manager_Profile_Rating/></AdminSidebar></SuperAdminPrivateRoute> } />
-      <Route path="/events" element={<SuperAdminPrivateRoute><AdminSidebar><AdminEvents/></AdminSidebar></SuperAdminPrivateRoute> } />
+  },[location.pathname]);
+    return (
+        <div>
+            <Routes>
+                <Route path="/login" element={<AdminLogin />} />
+                <Route path="/dashboard" element={<SuperAdminPrivateRoute><AdminSidebar><AdminHome /></AdminSidebar></SuperAdminPrivateRoute>} />
+                <Route path="/users" element={<SuperAdminPrivateRoute><AdminSidebar><AdminUsers /></AdminSidebar></SuperAdminPrivateRoute>} />
+                <Route path="/managers" element={<SuperAdminPrivateRoute><AdminSidebar><AdminManagers /></AdminSidebar></SuperAdminPrivateRoute>} />
+                <Route path="/manager-profile/:id" element={<SuperAdminPrivateRoute><AdminSidebar><Manager_Profile_Rating /></AdminSidebar></SuperAdminPrivateRoute>} />
+                <Route path="/events" element={<SuperAdminPrivateRoute><AdminSidebar><AdminEvents /></AdminSidebar></SuperAdminPrivateRoute>} />
+            </Routes>
+        </div>
+    );
+};
 
-
-
-
-
- 
-     
- 
-  </Routes>
-      
-    </div>
-  )
-}
-
-export default AdminWrapper
+export default AdminWrapper;

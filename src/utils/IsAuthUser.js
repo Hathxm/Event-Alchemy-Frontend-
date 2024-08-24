@@ -64,7 +64,7 @@ const   isAuthUser = async () => {
             accessToken = localStorage.getItem("access");
             let decoded = jwtDecode(accessToken);
             let checkAdmin = await fetchisAdmin();
-            console.log('update success');
+            console.log(decoded);
             return { 'name': decoded.username, isAuthenticated: checkAdmin.is_active, isAdmin: false, isSuperAdmin: checkAdmin.is_superuser  };
         } else {
             return { 'name': null, isAuthenticated: false, isAdmin: false , isSuperAdmin:false};

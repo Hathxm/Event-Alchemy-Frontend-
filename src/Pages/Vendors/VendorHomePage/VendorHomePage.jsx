@@ -17,9 +17,10 @@ const VendorHomePage = () => {
     useEffect(() => {
         // Example of using static images
         const staticImages = [
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/user-landing-page-img.png',
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutexperts.jpg',
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutevents.avif',
+          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/MG_4006-1024x683.jpg',
+          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/luxury_elegant_white_gold_living_room_design_3_by_mahamerutechnoart_dg1jlyz-fullview.jpg',
+          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/7610-interior-design-questionnaire.jpg',
+          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/contactpageimg.jpg'
         ];
         setImages(staticImages);
     

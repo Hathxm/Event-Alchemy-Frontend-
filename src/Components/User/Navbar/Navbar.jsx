@@ -136,7 +136,7 @@ function Navbar({ children }) {
                                                         !authentication_user.isSuperAdmin && (
                                                             <img
                                                                 className="h-8 w-8 rounded-full"
-                                                                src={`${user_basic_details.profile_pic}`}
+                                                                src={user_basic_details.profile_pic ? user_basic_details.profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
                                                                 alt=""
                                                             />
                                                         )}
