@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-// const BASEUrl = process.env.REACT_APP_BASE_URL;
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 const socket = process.env.REACT_APP_SOCKET_URL;
 
 
