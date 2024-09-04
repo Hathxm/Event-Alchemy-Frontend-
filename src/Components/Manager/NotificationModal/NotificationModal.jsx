@@ -11,7 +11,7 @@ const NotificationModal = ({ onClose, user_id }) => {
 
   useEffect(() => {
     console.log("socket url is",socket)
-    clientRef.current = new W3CWebSocket(`${socket}ws/notifications/${user_id}`);
+    clientRef.current = new W3CWebSocket(`${BASEUrl}ws/notifications/${user_id}`);
 
     clientRef.current.onopen = () => {
      
