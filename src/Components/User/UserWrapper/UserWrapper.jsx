@@ -88,7 +88,7 @@ function UserWrapper() {
    
       fetchUserData();
     }
-  }, [location.pathname]);
+  }, [location.pathname,authentication_user]);
 
   
 

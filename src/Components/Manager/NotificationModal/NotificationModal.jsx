@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const BASEUrl = process.env.REACT_APP_BASE_URL;
+// const BASEUrl = process.env.REACT_APP_BASE_URL;
+const socket = process.env.REACT_APP_SOCKET_URL;
+
 
 const NotificationModal = ({ onClose, user_id }) => {
   const [notifications, setNotifications] = useState([]);
   const clientRef = useRef(null); // Use ref to persist WebSocket client
 
   useEffect(() => {
-    clientRef.current = new W3CWebSocket(`${BASEUrl}ws/notifications/${user_id}`);
+    console.log("socket url is",socket)
+    clientRef.current = new W3CWebSocket(`${socket}ws/notifications/${user_id}`);
 
     clientRef.current.onopen = () => {
+     
       console.log('WebSocket connection established');
-    };
+    };  
 
     clientRef.current.onclose = () => {
       console.log('WebSocket connection closed');

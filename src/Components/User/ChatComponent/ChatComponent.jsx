@@ -4,6 +4,9 @@ import { FiSend, FiPaperclip, FiEye, FiDownload } from 'react-icons/fi';
 import axios from 'axios';
 import moment from 'moment';
 const BASEUrl = process.env.REACT_APP_BASE_URL
+const socket = process.env.REACT_APP_SOCKET_URL;
+
+
 
 
 const ChatComponent = ({ userId, managerId, username, sendername }) => {
@@ -16,7 +19,7 @@ const ChatComponent = ({ userId, managerId, username, sendername }) => {
    
 
     useEffect(() => {
-        wsRef.current = new W3CWebSocket(`${BASEUrl}ws/chat/${userId}/${managerId}`);
+        wsRef.current = new W3CWebSocket(`${socket}ws/chat/${userId}/${managerId}`);
  
         wsRef.current.onopen = () => {
             console.log('Connected to the chat server');

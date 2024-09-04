@@ -3,6 +3,7 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { FiSend, FiPaperclip, FiDownload, FiEye } from 'react-icons/fi';
 import moment from 'moment';
 const BASEUrl = process.env.REACT_APP_BASE_URL;
+const socket = process.env.REACT_APP_SOCKET_URL;
 
 const ChatMessages = ({ activeChat }) => {
     const [messages, setMessages] = useState([]);
@@ -16,7 +17,7 @@ const ChatMessages = ({ activeChat }) => {
         if (activeChat) {
             const user_id = activeChat.user;
             const manager_id = activeChat.manager;
-            const wsUrl = `${BASEUrl}ws/chat/${user_id}/${manager_id}`;
+            const wsUrl = `${socket}ws/chat/${user_id}/${manager_id}`;
 
             socketRef.current = new W3CWebSocket(wsUrl);
 

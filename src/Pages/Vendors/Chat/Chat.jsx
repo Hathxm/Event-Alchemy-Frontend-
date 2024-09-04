@@ -4,6 +4,8 @@ import { FiSend, FiSearch, FiMoreHorizontal, FiPaperclip, FiDownload, FiEye } fr
 import axios from 'axios';
 import moment from 'moment';
 const BASEUrl = process.env.REACT_APP_BASE_URL
+const socket = process.env.REACT_APP_SOCKET_URL;
+
 
 
 const VendorChatComponent = ({ user_id }) => {
@@ -40,7 +42,7 @@ const VendorChatComponent = ({ user_id }) => {
         if (activeChat) {
             const manager_id = activeChat.manager;
             const user_id = activeChat.user;
-            const wsUrl = `${BASEUrl}ws/chat/${user_id}/${manager_id}`;
+            const wsUrl = `${socket}ws/chat/${user_id}/${manager_id}`;
 
             socketRef.current = new W3CWebSocket(wsUrl);
 

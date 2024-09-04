@@ -119,6 +119,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
     </div>
 
     {authentication_user.isAdmin && (
+      <> 
       <Link to="/manager/profile">
         <div className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400">
           <img
@@ -128,16 +129,18 @@ const ManagerSidebar = ({ children, manager_id }) => {
           />
         </div>
       </Link>
+
+<div className="flex flex-col items-end">
+  
+      
+<div className="text-md font-medium">{user_basic_details.name}</div>
+<div className="text-md font-medium">{user_basic_details.manager_type} Manager</div>
+
+</div>
+</>
     )}
 
-    <div className="flex flex-col items-end">
-      {authentication_user.isAdmin && (
-        <>
-          <div className="text-md font-medium">{user_basic_details.name}</div>
-          <div className="text-md font-medium">{user_basic_details.manager_type} Manager</div>
-        </>
-      )}
-    </div>
+  
   </div>
 </header>
 
