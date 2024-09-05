@@ -19,7 +19,7 @@ const ChatComponent = ({ userId, managerId, username, sendername }) => {
    
 
     useEffect(() => {
-        wsRef.current = new W3CWebSocket(`${socket}ws/chat/${userId}/${managerId}`);
+        wsRef.current = new WebSocket(`${BASEUrl}ws/chat/${userId}/${managerId}`);
  
         wsRef.current.onopen = () => {
             console.log('Connected to the chat server');
