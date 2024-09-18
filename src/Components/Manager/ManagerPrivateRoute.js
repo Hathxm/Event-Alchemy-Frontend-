@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import isAuthAdmin from '../../utils/IsAuthManager';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function AdminPrivateRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setLoading] = useState(true);
+  const isAuthenticated = useSelector((state) => state.authentication_user);
+  console.log(isAuthenticated)
   
-    useEffect(() => {
-      const fetchData = async () => {
-        const authInfo = await isAuthAdmin();
-        setIsAuthenticated(authInfo);
-        setLoading(false);
-      };
-  
-      fetchData();
-    }, []);
+    
 
-  if (isLoading) {
-    // Handle loading state, you might show a loading spinner
-    return <div>Loading...</div>;
-  }
 
   
    
   
 
   if (!isAuthenticated.isAuthenticated || !isAuthenticated.isAdmin || isAuthenticated.isSuperAdmin ) {
+    toast.error("User not Authenticated Please Log In",{
+      position: "top-right",
+      autoClose: 5000,
+    })
     // If not authenticated, redirect to login page with the return URL
     return <Navigate to="/manager/login" />;
   }

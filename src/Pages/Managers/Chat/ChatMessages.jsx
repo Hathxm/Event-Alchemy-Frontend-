@@ -145,7 +145,7 @@ const ChatMessages = ({ activeChat }) => {
                         <div className="flex items-center">
                             <img
                                 className="w-10 h-10 rounded-full"
-                                src={activeChat.user_profile_pic}
+                                src={activeChat.user_profile_pic ? activeChat.user_profile_pic:'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
                                 alt="Active Chat Avatar"
                             />
                             <div className="ml-3">

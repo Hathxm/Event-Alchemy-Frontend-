@@ -172,7 +172,7 @@ const VendorHomePage = () => {
               Join our platform and start connecting with event organizers today. It's free to sign up and list your services.
             </p>
             <Link to="/vendor/dashboard">
-              <button className="w-full max-w-[300px] bg-blue-500 text-white px-6 py-2 rounded-full shadow hover:bg-blue-600">
+              <button className="w-full max-w-[300px] bg-blue-500 text-white px-6 py-2 rounded-full shadow hover:bg-blue-600 mt-2">
                 Post A Service !
               </button>
             </Link>

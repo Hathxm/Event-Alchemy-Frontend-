@@ -4,12 +4,10 @@ import { set_Authentication } from '../../../Redux/AuthenticationSlice/Authentic
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import LandingPage from '../../../Pages/User/LandingPage/LandingPage';
 import Signup from '../../../Pages/User/Signup/Signup';
 import OTP from'../../../Pages/User/OTP/OTP';
 import UserLogin from '../../../Pages/User/UserLogin/Login';
-import isAuthUser from '../../../utils/IsAuthUser';
 import Navbar from '../Navbar/Navbar';
 import UserPrivateRoute from '../UserPrivateRoute';
 import Profile from '../../../Pages/User/Profile/Profile';
@@ -25,7 +23,8 @@ import Contact from '../../../Pages/User/Contact/Contact';
 import ForgotPassword from '../../../Pages/User/UserForgotPassword/ForgotPassword';
 import ChangePassOTP from '../../../Pages/User/ChangePassOTP/ChangePassOTP';
 import Ratings from '../../../Pages/User/Ratings/Ratings';
-
+import axios from '../../../axiosinstance/axiosinstance';
+import { useState } from 'react';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
@@ -34,36 +33,26 @@ function UserWrapper() {
   const dispatch = useDispatch();
   const authentication_user = useSelector(state => state.authentication_user);
   const location = useLocation();
-
-  const checkAuth = async () => {
-    // Logic to check authentication
-    const isAuthenticated = await isAuthUser();
-    console.log(isAuthenticated)
-   
-    dispatch(
-      set_Authentication({
-        name: isAuthenticated.username,
-        isAuthenticated: isAuthenticated.isAuthenticated,
-        isAdmin: isAuthenticated.isAdmin,
-        isSuperAdmin: isAuthenticated.isSuperAdmin,
-       
-      })
-    );
-
-  };
-
+  const [isLoading, setIsLoading] = useState(true);
+  
   
   const token = localStorage.getItem('access');
 
   const fetchUserData = async () => {
     try {
-      const res = await axios.get(BASEUrl + 'userdetails/', {
-        headers: {
-          'authorization': `Bearer ${token}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
+      const res = await axios.get(BASEUrl + 'userdetails/')
+     
+      console.log(res.data)
+
+      dispatch(
+        set_Authentication({
+          name: res.data.username,
+          isAuthenticated: res.data.is_active,
+          isAdmin: false,
+          isSuperAdmin: res.data.is_superuser,
+         
+        })
+      );
       
       dispatch(
         set_user_basic_details({
@@ -73,22 +62,26 @@ function UserWrapper() {
           manager_type:null
         })
       );
+      setIsLoading(false);  // No token means no need to wait
+
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    if (!authentication_user.name) {
-     
-      checkAuth();
-    
+    //  localStorage.clear()
+     if (token) {
+      fetchUserData();  // Fetch user data if token exists
+    } else {
+      setIsLoading(false);  // No token means no need to wait
     }
-    if (authentication_user.isAuthenticated) {
-   
-      fetchUserData();
-    }
-  }, [location.pathname,authentication_user]);
+  }, [location.pathname, authentication_user]);
+
+  // Show loading indicator or null while fetching user data
+  if (isLoading) {
+    return <div>Loading...</div>;  // You can replace this with a better loading UI
+  }
 
   
 

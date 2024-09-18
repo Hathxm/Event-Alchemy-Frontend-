@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
+import axios from "../../../axiosinstance/axiosinstance";
 import { LineChart, Line, CartesianGrid, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import AdminTableComponent from "../../../Components/Admin/AdminTable/AdminTableComponent";
 import AddVendorService from './AddVendorService';
+import EditVendorService from "./EditVendorService";
+import { toast } from "react-toastify";
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
@@ -13,11 +15,14 @@ export default function Component() {
   const [services, setServices] = useState([]);
   const [userData, setUserData] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [editingService, setEditingService] = useState(null);
+  const token = localStorage.getItem("access")
 
   useEffect(() => {
     const fetchUserData = async () => {
+      
       try {
-        const token = localStorage.getItem('access');
+        
         const response = await axios.get(`${BASEUrl}vendor/vendor_services`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,6 +37,38 @@ export default function Component() {
     };
     fetchUserData();
   }, []);
+
+  const handleEditClick = (service) => {
+    setEditingService(service);
+  };
+
+  const toggleServiceStatus = async (serviceId, currentStatus) => {
+    try {
+      const newStatus = !currentStatus;
+      await axios.patch(`${BASEUrl}vendor/dlt-service`, { serviceId, is_active: newStatus }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      // Update the userData state
+      setUserData(prevUserData =>
+        prevUserData.map(service =>
+          service.id === serviceId ? { ...service, is_active: newStatus } : service
+        )
+      );
+  
+      // Show success toast
+      toast.success(`Service has been ${newStatus ? 'unblocked' : 'blocked'} successfully.`);
+    } catch (error) {
+      console.error('Error toggling service status:', error);
+      // Show error toast
+      toast.error('Failed to toggle service status.');
+    }
+  }
+
 
   const columns = useMemo(() => [
     {
@@ -72,16 +109,17 @@ export default function Component() {
     },
     {
       header: 'Action',
-      accessor: (item) => (
-        <div className='flex'>
-          <button className="px-4 py-2 rounded-lg bg-blue-500 text-white">Edit</button>
-          <button
-            className={`px-4 py-2 rounded-lg ${item.is_active ? 'bg-red-500 hover:bg-red-700 ml-2' : 'bg-green-500 hover:bg-green-700'} text-white ml-2`}
-          >
-            {item.is_active ? 'Block' : 'Unblock'}
-          </button>
-        </div>
-      )
+    accessor: (item) => (
+      <div className='flex'>
+        <button className="px-4 py-2 rounded-lg bg-blue-500 text-white" onClick={() => handleEditClick(item)}>Edit</button>
+        <button
+          onClick={() => toggleServiceStatus(item.id, item.is_active)}
+          className={`px-4 py-2 rounded-lg ${item.is_active ? 'bg-red-500 hover:bg-red-700 ml-2' : 'bg-green-500 hover:bg-green-700'} text-white ml-2`}
+        >
+          {item.is_active ? 'Block' : 'Unblock'}
+        </button>
+      </div>
+    )
     },
   ], []);
 
@@ -135,6 +173,24 @@ export default function Component() {
     try {
       const token = localStorage.getItem('access');
       const res = await axios.post(`${BASEUrl}vendor/addservice`, newService, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      setUserData(res.data.updated_data);
+    } catch (error) {
+      console.error('Error adding service:', error.response ? error.response.data : error.message);
+      throw error; // Ensure errors propagate to be caught in the AddVendorService component
+    }
+  };
+
+
+  const editService = async (editService) => {
+    try {
+      const token = localStorage.getItem('access');
+      const res = await axios.patch(`${BASEUrl}vendor/edit-service`, editService, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json',
@@ -257,6 +313,15 @@ export default function Component() {
      
       <div className="flex justify-end my-6 px-4">
   <AddVendorService addvendorservice={addService} />
+</div>
+
+<div className="flex justify-end my-6 px-4">
+<EditVendorService 
+            serviceData={editingService}
+            updateVendorService={editService}
+            onClose={() => setEditingService(null)}
+            
+          />
 </div>
 
 <div className="flex justify-center px-4 mb-10">

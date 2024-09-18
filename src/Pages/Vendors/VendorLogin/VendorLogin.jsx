@@ -70,6 +70,7 @@ const LoginForm = () => {
       google_signup_url="vendor/google-signup"
       google_signup_navigate_url="/vendor/home"
       forgot_pass_url = "/vendor/forgotpass"
+      isVendor 
     />
   );
 };

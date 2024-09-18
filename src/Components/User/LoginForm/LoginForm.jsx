@@ -4,18 +4,15 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
-const BASEUrl = process.env.REACT_APP_BASE_URL
+import { FaGoogle } from 'react-icons/fa'; // Import Google icon
 
-
-
-
-
+const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 const FormComponentLeft = ({
   fields,
   onSubmit,
   heading,
-  description,
+  description,  
   buttonText,
   backgroundImageUrl,
   caption,
@@ -25,7 +22,6 @@ const FormComponentLeft = ({
   google_signup_navigate_url,
   isVendor,
   forgot_pass_url,
-
 }) => {
   const [formData, setFormData] = useState(() => {
     const initialState = {};
@@ -76,12 +72,9 @@ const FormComponentLeft = ({
 
   const handleGoogleSuccess = async (credentialResponse) => {
     const token = credentialResponse.credential;
-    console.log(token)
     try {
       const response = await axios.post(BASEUrl + google_signup_url, { token });
-      console.log("Received response:", response);
 
-      // If user exists, log them in and navigate to the homepage
       if (response.status === 200) {
         const { email, username, access, refresh } = response.data;
         localStorage.setItem('email', email);
@@ -92,14 +85,14 @@ const FormComponentLeft = ({
         dispatch(set_Authentication({
           name: username,
           isAuthenticated: true,
-          isAdmin: false,  // Adjust based on your user model
-          isSuperAdmin: false,  // Adjust based on your user model
+          isAdmin: false,
+          isSuperAdmin: false,
           isVendor: isVendor,
         }));
 
         navigate(google_signup_navigate_url);
       } else {
-        // If user is new, proceed with OTP verification
+        // Handle OTP verification for new users
       }
     } catch (error) {
       console.error('Error during Google signup:', error.response || error.message);
@@ -109,7 +102,6 @@ const FormComponentLeft = ({
   const handleGoogleFailure = (error) => {
     console.error('Google signup error:', error);
   };
-
 
   return (
     <section className="h-screen flex items-stretch text-white overflow-hidden bg-gray-500">
@@ -141,19 +133,31 @@ const FormComponentLeft = ({
               >
                 {buttonText}
               </button>
-              <GoogleOAuthProvider clientId="904166899914-ifk76sjg7b682oq6pcuqkb4le1n1rjtt.apps.googleusercontent.com">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={handleGoogleFailure}
-                />
-              </GoogleOAuthProvider>
+
+              {/* Google Sign In Button */}
+              <div className="my-4 flex justify-center">
+                <GoogleOAuthProvider clientId="904166899914-ifk76sjg7b682oq6pcuqkb4le1n1rjtt.apps.googleusercontent.com">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleFailure}
+                    render={(renderProps) => (
+                      <button
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        className="flex items-center justify-center bg-red-500 text-white rounded-md w-full py-2 hover:bg-red-600 focus:outline-none"
+                      >
+                        <FaGoogle className="mr-2" /> Sign in with Google
+                      </button>
+                    )}
+                  />
+                </GoogleOAuthProvider>
+              </div>
             </div>
             {errors.general && <p className="text-red-500">{errors.general}</p>}
           </form>
           <div className="text-center sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
             <p className="mt-4 text-lg text-white">{redirectText} <a href={redirectLink} className="underline">Signup</a></p>
-            <p className="mt-4 text-lg text-white">Forgot Password ? <a href={forgot_pass_url} className="underline">Click Here</a></p>
-
+            <p className="mt-4 text-lg text-white">Forgot Password? <a href={forgot_pass_url} className="underline">Click Here</a></p>
           </div>
         </div>
       </div>

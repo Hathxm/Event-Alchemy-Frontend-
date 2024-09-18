@@ -140,8 +140,6 @@ const Contact = () => {
                 <p className="text-muted-foreground">Delicious meals and refreshments for your guests.</p>
               </div>
               <div className="flex items-center justify-between">
-                <p className="text-lg font-bold">$1,500</p>
-                <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 text-sm">Book Now</button>
               </div>
             </div>
             {/* Add more service cards as needed */}

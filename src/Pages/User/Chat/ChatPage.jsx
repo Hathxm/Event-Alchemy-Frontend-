@@ -187,7 +187,7 @@ const ChatComponent = ({ }) => {
                     <div className="w-1/3 border-r flex flex-col bg-gray-100">
                         <div className="py-2 px-3 bg-gray-200 flex justify-between items-center">
                             <div className="flex items-center">
-                                <img className="w-10 h-10 rounded-full" src="http://andressantibanez.com/res/avatar.png" alt="User Avatar" />
+                                <img className="w-10 h-10 rounded-full" src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"  alt="User Avatar" />
                             </div>
                             <div className="flex space-x-4">
                                 <FiSearch className="w-6 h-6 text-gray-600" />
@@ -202,7 +202,7 @@ const ChatComponent = ({ }) => {
                         <div className="flex-1 overflow-auto">
                             {filteredChats.map((chat) => (
                                 <div key={chat.id} onClick={() => setActiveChat(chat)} className="px-3 py-4 flex items-center bg-gray-200 cursor-pointer">
-                                    <img className="h-12 w-12 rounded-full" src={chat.manager_profile_pic} alt="Contact" />
+                                    <img className="h-12 w-12 rounded-full" src={chat.manager_profile_pic ? chat.manager_profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'} alt="Contact" />
                                     <div className="ml-4 flex-1 border-b border-gray-300 py-2">
                                         <div className="flex justify-between">
                                             <p className="text-gray-800">{chat.manager_name}</p>
@@ -225,7 +225,7 @@ const ChatComponent = ({ }) => {
                             {activeChat ? (
                                 <>
                                     <div className="flex items-center">
-                                        <img className="w-10 h-10 rounded-full" src={activeChat.manager_profile_pic} alt="Active Chat Avatar" />
+                                        <img className="w-10 h-10 rounded-full" src={activeChat.manager_profile_pic ? activeChat.manager_profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'} alt="Active Chat Avatar" />
                                         <div className="ml-3">
                                             <p className="text-gray-800">{activeChat.manager_name}</p>
                                         </div>

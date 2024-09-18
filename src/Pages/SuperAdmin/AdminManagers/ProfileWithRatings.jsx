@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../../axiosinstance/axiosinstance';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 const token = localStorage.getItem("access");
@@ -109,7 +109,6 @@ export default function Manager_Profile_Rating() {
       try {
         const response = await axios.get(`${BASEUrl}superadmin/manager-profile`, {
           params: { manager_id: id },
-          headers: { 'Authorization': `Bearer ${token}` }
         });
         setManagerData(response.data.manager);
         setBookings(response.data.bookings || []);

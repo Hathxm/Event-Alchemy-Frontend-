@@ -84,7 +84,7 @@ const ChatRooms = ({ onSelectChat }) => {
                     >
                         <img
                             className="h-12 w-12 rounded-full"
-                            src={chat.user_profile_pic || 'default-image-url'}
+                            src={chat.user_profile_pic ? chat.user_profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
                             alt="Contact"
                         />
                         <div className="ml-4 flex-1 border-b border-gray-300 py-2">

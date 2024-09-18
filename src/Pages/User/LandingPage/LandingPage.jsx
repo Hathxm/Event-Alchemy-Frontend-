@@ -75,47 +75,46 @@ const LandingPage = () => {
 
     <div className="flex flex-col min-h-screen">
     <main className="flex-1">
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="bg-background rounded-lg border p-6 flex gap-12 items-center max-w-6xl w-full mx-auto overflow-hidden">
-            <div className="flex-1">
-              <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-16 xl:grid-cols-[1fr_600px]">
-                <div className="flex flex-col justify-center space-y-6">
-
-                  <div className="space-y-4 text-center">
-                  <img
-                                    className="h-64 w-auto" 
-                                    src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
-                                    alt="Your Company"
-                                    style={{ marginLeft: '100px' }}
-                                />
-                    <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
-                      Effortless Event Management
-                    </h1>
-                    <p className="max-w-[600px] mx-auto text-gray-600 md:text-xl">
-                      Streamline your event planning with our all-in-one platform. From ticketing to venue management, we've got you covered.
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
-                    <a
-                      href="#events"
-                      className="inline-flex h-10 items-center justify-center rounded-md bg-blue-500 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                    >
-                      Explore Events
-                    </a>
-                  </div>
-                </div>
-                <div
-                  className="mx-auto rounded-xl bg-cover bg-center sm:w-full lg:order-last lg:aspect-square overflow-hidden"
-                  style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
-                >
-                  {/* This div will act as a placeholder for the dynamic background image */}
-                </div>
-              </div>
+    <section className="w-full py-12 md:py-24 lg:py-32">
+  <div className="container px-4 md:px-6">
+    <div className="bg-background rounded-lg border p-6 flex gap-12 items-center max-w-6xl w-full mx-auto overflow-hidden">
+      <div className="flex-1">
+        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-16 xl:grid-cols-[1fr_600px]">
+          <div className="flex flex-col justify-center space-y-6">
+            <div className="space-y-4 text-center">
+              <img
+                className="w-48 h-auto sm:w-64 md:w-72 lg:w-80 xl:w-96 mx-auto"
+                src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                alt="Your Company"
+              />
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
+                Effortless Event Management
+              </h1>
+              <p className="max-w-[600px] mx-auto text-gray-600 md:text-xl">
+                Streamline your event planning with our all-in-one platform. From ticketing to venue management, we've got you covered.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+              <a
+                href="#events"
+                className="inline-flex h-10 items-center justify-center rounded-md bg-blue-500 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                Explore Events
+              </a>
             </div>
           </div>
+          <div
+            className="mx-auto rounded-xl bg-cover bg-center sm:w-full lg:order-last lg:aspect-square overflow-hidden"
+            style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+          >
+            {/* This div will act as a placeholder for the dynamic background image */}
+          </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+
     
   
 

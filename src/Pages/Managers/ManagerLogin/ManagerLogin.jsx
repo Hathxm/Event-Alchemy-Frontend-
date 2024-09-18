@@ -83,13 +83,15 @@ const ManagerLogin = () => {
       // Successful login
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
+      
+      console.log(response.data)
 
       dispatch(
         set_Authentication({
           name:response.data.manager_details.username,
           isAuthenticated: response.data.manager_details.is_active,
           isAdmin: response.data.manager_details.is_Manager,
-          isSuperAdmin: response.data.manager_details.username,
+          isSuperAdmin: response.data.manager_details.is_superuser,
          
         })
       );

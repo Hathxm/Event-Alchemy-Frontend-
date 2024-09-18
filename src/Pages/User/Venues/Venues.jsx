@@ -104,7 +104,7 @@ const MyCards = () => {
               <input
                 type="search"
                 placeholder="Search by location"
-                className="flex-1 p-2 border border-gray-300 rounded"
+                className="flex-1 p-2 border border-gray-300 rounded text-black"
                 value={searchTerm}
                 onChange={handleInputChange}
               />
