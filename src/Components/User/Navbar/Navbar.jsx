@@ -87,8 +87,8 @@ function Navbar({ children }) {
                             </div>
                             <div className="flex flex-shrink-0 items-center mx-4">
                                 <img
-                                    className="h-20 w-auto"
-                                    src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                                    className="h-14 w-auto"
+                                    src="/drawing1234.svg"
                                     alt="Your Company"
                                     style={{ filter: 'invert(100%)' }}
                                 />

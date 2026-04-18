@@ -167,7 +167,7 @@ export default function Checkout() {
   const handleFinalizeBooking = async () => {
     try {
       const options = {
-        key: 'rzp_test_2Ppy65nLGqi9SS',
+        key: 'rzp_test_USjwD14i3epQF2',
         amount: amountToPay * 100,
         currency: 'INR',
         name: 'Event Management',
@@ -215,7 +215,7 @@ export default function Checkout() {
               <div className="grid gap-4">
                 <div className="flex items-start gap-4">
                   <img
-                    src={venue.image1 || '/placeholder.svg'}
+                    src={venue.image1 ? `${BASEUrl}${venue.image1.replace(/^\//, '')}` : '/placeholder.svg'}
                     width={200}
                     height={150}
                     alt="Venue Image"
@@ -248,7 +248,7 @@ export default function Checkout() {
                     >
                       <div className="flex items-start gap-4">
                         <img
-                          src={service.service_image || '/placeholder.svg'}
+                          src={service.service_image ? `${BASEUrl}${service.service_image.replace(/^\//, '')}` : '/placeholder.svg'}
                           width={100}
                           height={75}
                           alt="Service Image"

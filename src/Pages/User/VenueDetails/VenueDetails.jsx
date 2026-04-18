@@ -115,10 +115,10 @@ const VenueDetails = () => {
 
   const { venue_name, description, image1, image2, image3, image4, price_per_hour, location_name } = venueDetails;
 
-  const image1Url = `${image1}`;
-  const image2Url = `${image2}`;
-  const image3Url = `${image3}`;
-  const image4Url = `${image4}`;
+  const image1Url = `${BASEUrl}${image1.replace(/^\//, '')}`;
+  const image2Url = `${BASEUrl}${image2.replace(/^\//, '')}`;
+  const image3Url = `${BASEUrl}${image3.replace(/^\//, '')}`;
+  const image4Url = `${BASEUrl}${image4.replace(/^\//, '')}`;
 
 
   const cards = [

@@ -3,11 +3,15 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import FormComponent from '../../../Components/User/LoginForm/LoginForm'
+import { useNavigate } from 'react-router-dom';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 const base_url = "http://127.0.0.1:8000/";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+ 
 
   const loginFields = [
     {
@@ -24,7 +28,7 @@ const LoginForm = () => {
     }
   ];
 
-  const handleLogin = async (formData, navigate, setErrors) => {
+  const handleLogin = async (formData, setErrors) => {
     try {
       const response = await axios.post(`${BASEUrl}vendor/login`, formData);
 
@@ -43,10 +47,11 @@ const LoginForm = () => {
       
 
       dispatch(set_Authentication({
-        name:response.data.vendor_details.username,
-        isAuthenticated: response.data.vendor_details.is_active ,
+        name: response.data.vendor_details.username,
+        isAuthenticated: response.data.vendor_details.is_active,
         isAdmin: false,
         isSuperAdmin: response.data.vendor_details.is_superuser,
+        isVendor: response.data.vendor_details.is_vendor,
       }));
 
       navigate('/vendor/home');

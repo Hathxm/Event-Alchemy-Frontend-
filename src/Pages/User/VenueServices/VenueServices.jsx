@@ -158,7 +158,7 @@ const VenueServices = () => {
           <ServiceCard
             key={service.id}
             service={service}
-            image={service.service_image}
+            image={service.service_image ? `${BASEUrl}${service.service_image.replace(/^\//, '')}` : ''}
             isChecked={selectedServices.includes(service.id)}
             onCheckboxChange={handleCheckboxChange}
           />

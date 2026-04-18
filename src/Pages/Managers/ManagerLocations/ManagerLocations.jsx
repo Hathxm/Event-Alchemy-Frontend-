@@ -116,7 +116,7 @@ const ManagerLocations = () => {
           date={location.event_type_name}
           location={location.location_name}
           link={location.venue_name}
-          imageSrc={location.image1}
+          imageSrc={`${BASEUrl}${location.image1.replace(/^\//, '')}`}
           isLight={true}
           align={index % 2 === 0 ? 'left' : 'right'}
           description={location.description}

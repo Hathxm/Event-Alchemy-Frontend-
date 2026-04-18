@@ -22,11 +22,19 @@ const LandingPage = () => {
   }, []);
 
   // Image URLs for the first section carousel
-  const images = [
-    "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/user-landing-page-img.png",
-    "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutexperts.jpg",
-    "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutevents.avif"
+  // const images = [
+  //   "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/user-landing-page-img.png",
+  //   "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutexperts.jpg",
+  //   "https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutevents.avif"
+  // ];
+
+    const images = [
+    "https://i.pinimg.com/736x/3d/fb/14/3dfb140f81f3e8eb4a6278fedbc207a1.jpg",
+    "https://i.pinimg.com/1200x/9c/84/de/9c84ded848be4368f582b0b78ca3853b.jpg",
+    "https://i.pinimg.com/736x/83/0b/36/830b3601e2c98444cb8ca56e2e4cbb3e.jpg"
   ];
+
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -84,7 +92,7 @@ const LandingPage = () => {
             <div className="space-y-4 text-center">
               <img
                 className="w-48 h-auto sm:w-64 md:w-72 lg:w-80 xl:w-96 mx-auto"
-                src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                src="/drawing1234.svg"
                 alt="Your Company"
               />
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
@@ -140,7 +148,7 @@ const LandingPage = () => {
                     <div className="flex justify-center items-center">
                       <div className="max-w-lg mx-4 bg-white shadow-lg rounded-xl overflow-hidden">
                         <img
-                          src={event.image}
+                          src={`${BASEUrl}${event.image.replace(/^\//, '')}`}
                           alt={event.name}
                           className="w-full aspect-[4/3] overflow-hidden rounded-t-xl object-cover"
                         />

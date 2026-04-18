@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import EditUserForm from '../../User/Profile/EditUserForm';
 // import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from '../../../axiosinstance/axiosinstance';
+
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const VendorProfile = () => {
@@ -137,7 +138,7 @@ const VendorProfile = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300">
             <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl bg-white dark:bg-gray-50 dark:text-gray-800">
                 <img
-                    src={formState.profile_pic ? `${user_basic_details.profile_pic}` : "https://source.unsplash.com/150x150/?portrait?3"}
+                    src={formState.profile_pic ? (formState.profile_pic instanceof File ? URL.createObjectURL(formState.profile_pic) : `${BASEUrl}${formState.profile_pic.replace(/^\//, '')}`) : "https://source.unsplash.com/150x150/?portrait?3"}
                     alt="Profile"
                     className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square"
                 />

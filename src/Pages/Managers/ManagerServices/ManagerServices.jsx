@@ -86,7 +86,7 @@ const addService = async (newService) => {
                     <div className="flex-shrink-0 w-10 h-10">
                         <img
                             className="w-full h-full rounded-full"
-                            src={item.image ? `${item.image}` : 'https://cdn-icons-png.flaticon.com/256/11815/11815789.png'}
+                            src={item.image ? `${BASEUrl}${item.image.replace(/^\//, '')}`:''}
                             alt=""
                         />
                     </div>
