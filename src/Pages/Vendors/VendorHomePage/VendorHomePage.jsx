@@ -5,9 +5,6 @@ import axios from 'axios';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
-
-
-
 const VendorHomePage = () => {
 
   const [images, setImages] = useState([]);
@@ -17,10 +14,10 @@ const VendorHomePage = () => {
     useEffect(() => {
         // Example of using static images
         const staticImages = [
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/MG_4006-1024x683.jpg',
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/luxury_elegant_white_gold_living_room_design_3_by_mahamerutechnoart_dg1jlyz-fullview.jpg',
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/7610-interior-design-questionnaire.jpg',
-          'https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/Vendor-Carousel/contactpageimg.jpg'
+          'https://i.pinimg.com/1200x/39/51/c8/3951c87d495dead4a4df014a09e78fb6.jpg',
+          'https://i.pinimg.com/1200x/1a/ff/e7/1affe7adc028ba273066a9d29160e8c8.jpg',
+          'https://i.pinimg.com/736x/c5/79/40/c5794035137d148bdff8340f75bc4595.jpg',
+          'https://i.pinimg.com/736x/e6/4f/1e/e64f1e4f9476733064f43b218161a9e2.jpg'
         ];
         setImages(staticImages);
     
@@ -54,18 +51,20 @@ const VendorHomePage = () => {
           <div className="grid gap-6 lg:grid-cols-[1fr_550px] lg:gap-12 xl:grid-cols-[1fr_650px]">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                    <img
+              <img
                                     className="h-64 w-auto" 
-                                    src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                                    src="/EvenAlchemyLogoNoText.svg"
                                     alt="Your Company"
-                                    style={{ marginLeft: '100px' }}
                                 />
-                <h1 className="text-3xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
+                   
+               <div className='mt-4'>
+                 <h1 className="text-3xl font-bold tracking-tight sm:text-5xl xl:text-6xl">
                   Showcase Your Services on Our Open Platform
                 </h1>
-                <p className="max-w-[600px] text-gray-600 md:text-xl">
+                <p className="max-w-[600px] text-gray-600 md:text-xl mt-3">
                   Our platform connects event organizers with a wide range of vendors, making it easy to book the perfect services for any occasion.
                 </p>
+               </div>
               </div>
               <Link to="/vendor/dashboard">
                 <button className="w-full max-w-[300px] bg-blue-500 text-white px-6 py-2 rounded-full shadow hover:bg-blue-600">

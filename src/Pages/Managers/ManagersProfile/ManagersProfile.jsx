@@ -4,6 +4,8 @@ import axios from 'axios';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import EditUserForm from '../../User/Profile/EditUserForm';
 import { toast } from 'react-toastify';
+
+
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 
@@ -137,7 +139,7 @@ const ManagersProfile = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300">
             <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl bg-white dark:bg-gray-50 dark:text-gray-800">
                 <img
-                    src={formState.profile_pic ? `${user_basic_details.profile_pic}` : "https://source.unsplash.com/150x150/?portrait?3"}
+                    src={formState.profile_pic ? `${BASEUrl}${formState.profile_pic.replace(/^\//, '')}` : "https://source.unsplash.com/150x150/?portrait?3"}
                     alt="Profile"
                     className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square"
                 />

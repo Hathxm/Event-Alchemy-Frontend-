@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Home, Wrench, MapPin, MessageCircle, Users, LogOut, Bell,Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const BASEUrl = process.env.REACT_APP_BASE_URL;
+
 const ManagerSidebar = ({ children, manager_id }) => {
   const dispatch = useDispatch();
   const authentication_user = useSelector(state => state.authentication_user);
@@ -123,7 +125,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
       <Link to="/manager/profile">
         <div className="h-10 w-10 rounded-full cursor-pointer bg-gray-200 border-2 border-blue-400">
           <img
-               src={user_basic_details.profile_pic ? user_basic_details.profile_pic :'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
+               src={user_basic_details.profile_pic ? `${BASEUrl}${user_basic_details.profile_pic.replace(/^\//, '')}` :'https://cdn-icons-png.flaticon.com/256/4205/4205906.png'}
             alt="Profile"
             className="h-full w-full rounded-full object-cover"
           />

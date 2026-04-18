@@ -6,6 +6,7 @@ import { set_Authentication } from '../../../Redux/AuthenticationSlice/Authentic
 import NotificationModal from '../../Manager/NotificationModal/NotificationModal';
 import { Menu, X,  Bell, LogOut, MessageCircle,  } from 'lucide-react';
 
+const BASEUrl = process.env.REACT_APP_BASE_URL
 const VendorNavbar = ({ children, vendor_id }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const authentication_user = useSelector((state) => state.authentication_user);
@@ -88,10 +89,10 @@ console.log(vendor_id)
                   Contact
                 </NavLink>
               </div>
-              <div className="flex flex-shrink-0 items-center mx-4">
+              <div className="flex flex-shrink-0 items-center mx-4 ">
                 <img
-                  className="h-20 w-auto"
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/companylogo2.svg"
+                  className="h-14 w-auto"
+                  src="/drawing1234.svg"
                   alt="Your Company"
                   style={{ filter: 'invert(100%)' }}
                 />
@@ -133,7 +134,7 @@ console.log(vendor_id)
   !authentication_user.isSuperAdmin && (
     <img
       className="h-8 w-8 rounded-full"
-      src={user_basic_details.profile_pic ? user_basic_details.profile_pic : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
+      src={user_basic_details.profile_pic ? (user_basic_details.profile_pic instanceof File ? URL.createObjectURL(user_basic_details.profile_pic) : `${BASEUrl}${user_basic_details.profile_pic.replace(/^\//, '')}`) : 'https://cdn-icons-png.flaticon.com/256/3177/3177440.png'}
       alt="User Profile"
     />
 )}

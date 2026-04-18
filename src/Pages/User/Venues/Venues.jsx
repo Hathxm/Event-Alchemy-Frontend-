@@ -161,7 +161,7 @@ const MyCards = () => {
                 className="bg-white rounded-lg overflow-hidden shadow-lg"
               >
                 <img
-                  src={card.image1}
+                  src={card.image1 ? `${BASEUrl}${card.image1.replace(/^\//, '')}` : ''}
                   alt="Venue Image"
                   className="w-full h-48 object-cover"
                 />
