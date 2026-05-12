@@ -93,7 +93,7 @@ export default function Checkout() {
     }
   };
 
-   
+
   const handleAddMoreServices = () => {
     navigate(`/venue_services/${id}?services=${selectedServices.join(',')}`);
   };

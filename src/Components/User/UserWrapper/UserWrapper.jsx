@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import LandingPage from '../../../Pages/User/LandingPage/LandingPage';
 import Signup from '../../../Pages/User/Signup/Signup';
@@ -91,23 +91,29 @@ function UserWrapper() {
       
       <Routes>
       
-          <Route path="/" element={<Navbar><LandingPage /> </Navbar> } />
           <Route path="/signup" element={<Signup />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/forgotpass" element={<ForgotPassword />} />
           <Route path="/changepass/otp" element={<ChangePassOTP />} />
-          <Route path="/about" element={<Navbar><About/></Navbar>} />
-          <Route path="/contact" element={<Navbar><Contact></Contact></Navbar>  } />
-          <Route path="/venues/:id" element={<UserPrivateRoute><Navbar><Venues/></Navbar>   </UserPrivateRoute>} />
-          <Route path="/userprofile" element={<UserPrivateRoute><Navbar><Profile/></Navbar> </UserPrivateRoute>} />
-          <Route path="/venue_details/:id" element={<UserPrivateRoute>  <Navbar><Venuedetails/></Navbar> </UserPrivateRoute>} />
-          <Route path="/venue_services/:id" element={<UserPrivateRoute> <Navbar><VenueServices/></Navbar></UserPrivateRoute>} />
-          <Route path="/checkout/:id" element={<UserPrivateRoute> <Navbar><Checkout /></Navbar></UserPrivateRoute>} />
-          <Route path="/bookings" element={<UserPrivateRoute> <Navbar><Bookings /></Navbar></UserPrivateRoute>} />
-          <Route path="/chat" element={<UserPrivateRoute><Navbar><ChatPage /></Navbar></UserPrivateRoute>} />
-          <Route path="/reset-password" element={<UserPrivateRoute><Navbar><PasswordResetRequestForm /></Navbar></UserPrivateRoute>} />
-          <Route path="/rate-event/:id" element={<UserPrivateRoute><Navbar><Ratings /></Navbar></UserPrivateRoute>} />
+
+          <Route element={<Navbar><Outlet /></Navbar>}>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+
+              <Route element={<UserPrivateRoute><Outlet /></UserPrivateRoute>}>
+                  <Route path="/venues/:id" element={<Venues />} />
+                  <Route path="/userprofile" element={<Profile />} />
+                  <Route path="/venue_details/:id" element={<Venuedetails />} />
+                  <Route path="/venue_services/:id" element={<VenueServices />} />
+                  <Route path="/checkout/:id" element={<Checkout />} />
+                  <Route path="/bookings" element={<Bookings />} />
+                  <Route path="/chat" element={<ChatPage />} />
+                  <Route path="/reset-password" element={<PasswordResetRequestForm />} />
+                  <Route path="/rate-event/:id" element={<Ratings />} />
+              </Route>
+          </Route>
 
 
 

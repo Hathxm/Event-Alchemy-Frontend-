@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
@@ -71,11 +71,13 @@ const AdminWrapper = () => {
         <div>
             <Routes>
                 <Route path="/login" element={<AdminLogin />} />
-                <Route path="/dashboard" element={<SuperAdminPrivateRoute><AdminSidebar><AdminHome /></AdminSidebar></SuperAdminPrivateRoute>} />
-                <Route path="/users" element={<SuperAdminPrivateRoute><AdminSidebar><AdminUsers /></AdminSidebar></SuperAdminPrivateRoute>} />
-                <Route path="/managers" element={<SuperAdminPrivateRoute><AdminSidebar><AdminManagers /></AdminSidebar></SuperAdminPrivateRoute>} />
-                <Route path="/manager-profile/:id" element={<SuperAdminPrivateRoute><AdminSidebar><Manager_Profile_Rating /></AdminSidebar></SuperAdminPrivateRoute>} />
-                <Route path="/events" element={<SuperAdminPrivateRoute><AdminSidebar><AdminEvents /></AdminSidebar></SuperAdminPrivateRoute>} />
+                <Route element={<SuperAdminPrivateRoute><AdminSidebar><Outlet /></AdminSidebar></SuperAdminPrivateRoute>}>
+                    <Route path="/dashboard" element={<AdminHome />} />
+                    <Route path="/users" element={<AdminUsers />} />
+                    <Route path="/managers" element={<AdminManagers />} />
+                    <Route path="/manager-profile/:id" element={<Manager_Profile_Rating />} />
+                    <Route path="/events" element={<AdminEvents />} />
+                </Route>
             </Routes>
         </div>
     );

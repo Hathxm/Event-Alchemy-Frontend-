@@ -11,18 +11,29 @@ const BASEUrl = process.env.REACT_APP_BASE_URL
 const AdminEvents = () => {
   const [eventData, setEventData] = useState([]);
   const [filter, setFilter] = useState({ status: 'All', search: '' });
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BASEUrl}superadmin/eventmanagement/`);
-        setEventData(response.data);
+        const response = await axios.get(`${BASEUrl}superadmin/eventmanagement/`, {
+          params: { page, search: filter.search || undefined },
+        });
+        if (Array.isArray(response.data)) {
+          setEventData(response.data);
+          setTotalPages(1);
+        } else {
+          setEventData(response.data.results || []);
+          const pageSize = (response.data.results || []).length || 10;
+          setTotalPages(Math.max(1, Math.ceil((response.data.count || 0) / pageSize)));
+        }
       } catch (error) {
         console.error('Error fetching event details:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [page, filter.search]);
 
   const addEvent = async (newEvent) => {
     try {
@@ -138,7 +149,10 @@ const AdminEvents = () => {
                 placeholder="Search"
                 className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
                 value={filter.search}
-                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                onChange={(e) => {
+                  setFilter({ ...filter, search: e.target.value });
+                  setPage(1);
+                }}
               />
             </div>
             <div className="ml-auto">
@@ -148,7 +162,11 @@ const AdminEvents = () => {
         </div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <AdminTableComponent data={filteredData} columns={columns} />
+            <AdminTableComponent
+              data={filteredData}
+              columns={columns}
+              pagination={{ page, totalPages, onPageChange: setPage }}
+            />
           </div>
         </div>
       </div>

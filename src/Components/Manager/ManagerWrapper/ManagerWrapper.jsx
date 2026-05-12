@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
@@ -82,12 +82,14 @@ function ManagerWrapper() {
                 <Route path="/login" element={<ManagerLogin />} />
                 <Route path="/forgotpassword" element={<ManagerForgotPassword />} />
                 <Route path="/changepass/otp" element={<ChangePassOTP />} />
-                <Route path="/dashboard" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ManagerDashboard /> </ManagerSidebar> </ManagerPrivateRoute>} />
-                <Route path="/locations" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ManagerLocations /> </ManagerSidebar> </ManagerPrivateRoute>} />
-                <Route path="/profile" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ManagersProfile /> </ManagerSidebar> </ManagerPrivateRoute>} />
-                <Route path="/services" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ManagerServices /> </ManagerSidebar> </ManagerPrivateRoute>} />
-                <Route path="/chat" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ChatComponent /> </ManagerSidebar> </ManagerPrivateRoute>} />
-                <Route path="/vendors" element={<ManagerPrivateRoute> <ManagerSidebar manager_id={manager_id}> <ManagerVendors /> </ManagerSidebar> </ManagerPrivateRoute>} />
+                <Route element={<ManagerPrivateRoute><ManagerSidebar manager_id={manager_id}><Outlet /></ManagerSidebar></ManagerPrivateRoute>}>
+                    <Route path="/dashboard" element={<ManagerDashboard />} />
+                    <Route path="/locations" element={<ManagerLocations />} />
+                    <Route path="/profile" element={<ManagersProfile />} />
+                    <Route path="/services" element={<ManagerServices />} />
+                    <Route path="/chat" element={<ChatComponent />} />
+                    <Route path="/vendors" element={<ManagerVendors />} />
+                </Route>
             </Routes>
         </>
     );
