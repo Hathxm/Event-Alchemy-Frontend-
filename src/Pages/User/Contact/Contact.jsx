@@ -112,7 +112,7 @@ const Contact = () => {
             {/* Image Section */}
             <div className="rounded">
               <img
-                src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/contactpageimg.jpg"
+                src="https://i.pinimg.com/736x/f2/1d/17/f21d17c205d924fe2bc55c999ffac6cc.jpg"
                 width="550"
                 height="310"
                 alt="Hero"

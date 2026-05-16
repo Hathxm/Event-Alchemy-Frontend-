@@ -15,7 +15,6 @@ const FormComponentLeft = ({
   description,  
   buttonText,
   backgroundImageUrl,
-  caption,
   redirectText,
   redirectLink,
   google_signup_url,
@@ -110,32 +109,33 @@ const FormComponentLeft = ({
           <h1 className="text-4xl mb-4 text-white">{heading}</h1>
           <p className="text-lg mb-4 text-white">{description}</p>
           <form
-            className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto bg-white rounded-lg border-2 border-gray-500 p-6"
+            className="sm:w-1/2 w-full px-4 lg:px-0 mx-auto bg-white rounded-lg border-2 border-gray-500 p-6"
             onSubmit={handleSubmit}
           >
             {fields.map((field, index) => (
-              <div className="pb-2 pt-4" key={index}>
+              <div className="pb-2 pt-2" key={index}>
+                <label className='block text-left text-black mb-1 text-md capitalize font-semibold'>{field.name}</label>
                 <input
                   type={field.type}
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  placeholder={field.placeholder}
-                  className={`w-full p-2 text-lg rounded-lg bg-gray-200 border-2 border-transparent focus:outline-none text-black ${errors[field.name] ? 'border-red-500' : 'focus:border-blue-600'}`}
+                  placeholder={`Enter Your ${field.placeholder}`}
+                  className={`w-full p-2 text-sm rounded-lg bg-gray-200 border-2 border-transparent focus:outline-none text-black ${errors[field.name] ? 'border-red-500' : 'focus:border-blue-600'}`}
                 />
                 {errors[field.name] && <p className="text-red-500">{errors[field.name]}</p>}
               </div>
             ))}
-            <div className="px-4 pb-2 pt-4">
+            <div className="px-4 pb-2 pt-1">
               <button
                 type="submit"
-                className="uppercase w-full p-2 text-lg rounded-lg bg-blue-600 hover:bg-blue-700 focus:outline-none btn-primary"
+                className="uppercase w-full p-2 text-md rounded-lg bg-blue-600 hover:bg-blue-700 focus:outline-none btn-primary"
               >
                 {buttonText}
               </button>
 
               {/* Google Sign In Button */}
-              <div className="my-4 flex justify-center">
+              <div className="flex justify-center mt-3">
                 <GoogleOAuthProvider clientId="904166899914-ifk76sjg7b682oq6pcuqkb4le1n1rjtt.apps.googleusercontent.com">
                   <GoogleLogin
                     onSuccess={handleGoogleSuccess}
@@ -165,7 +165,6 @@ const FormComponentLeft = ({
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
         <div className="w-full px-24 z-10 text-center">
           <h1 className="text-5xl font-bold text-white">{heading}</h1>
-          <p className="text-3xl my-4 text-white">{caption}</p>
         </div>
       </div>
     </section>

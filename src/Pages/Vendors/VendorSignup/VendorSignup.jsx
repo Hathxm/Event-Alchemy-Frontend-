@@ -104,7 +104,7 @@ const SignupForm = () => {
       heading="Join Us Today!"
       description="Create your account and start your journey with us."
       buttonText="Signup"
-      backgroundImageUrl="https://handydallaireevents.com/wp-content/uploads/2022/10/LyTpreview__002-682x1024.jpg"
+      backgroundImageUrl="https://i.pinimg.com/1200x/cd/bd/2f/cdbd2f29daf043dc26b0cf699a2bd38a.jpg"
       caption="Create Your Account"
       redirectText="Already have an account?"
       redirectLink="/vendor/login"

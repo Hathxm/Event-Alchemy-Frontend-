@@ -17,7 +17,7 @@ const About = () => {
                   </p>
                 </div>
                 <img
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutevents.avif"
+                  src="https://i.pinimg.com/1200x/2b/9d/5e/2b9d5e88f3ec47b75d602d9011d9ac9b.jpg"
                   width="550"
                   height="310"
                   alt="Event Planning"
@@ -30,7 +30,7 @@ const About = () => {
             <div className="container px-4 md:px-6">
               <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
                 <img
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutvenue.png"
+                  src="https://i.pinimg.com/736x/7d/17/7e/7d177ef98e5ab73b8024941f7db9e4f1.jpg"
                   width="550"
                   height="310"
                   alt="Venue Selection"
@@ -65,7 +65,7 @@ const About = () => {
                   </p>
                 </div>
                 <img
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutservices.jpg"
+                  src="https://i.pinimg.com/736x/a9/cc/a8/a9cca8740d8c25432db362b4c20a5cfe.jpg"
                   width="550"
                   height="310"
                   alt="Event Services"
@@ -78,7 +78,7 @@ const About = () => {
             <div className="container px-4 md:px-6">
               <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
                 <img
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/abouttime.webp"
+                  src="https://i.pinimg.com/736x/5b/6f/97/5b6f9793e08868291e3df0681c51e6db.jpg"
                   width="550"
                   height="310"
                   alt="Event Planning Process"
@@ -115,7 +115,7 @@ const About = () => {
                   </p>
                 </div>
                 <img
-                  src="https://event-alchemy.s3.eu-north-1.amazonaws.com/Static_Medias/aboutexperts.jpg"
+                  src="https://i.pinimg.com/1200x/08/46/01/0846014e5a58dc324345c2137762113c.jpg"
                   width="550"
                   height="310"
                   alt="Why Choose Us"
@@ -135,20 +135,21 @@ const About = () => {
                     coordination. Get in touch with us today to start planning your unforgettable event.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <Link
+                <div className="flex justify-center sm:flex-row gap-4">
+                  {/* <Link
                     href="#"
                     className="inline-flex h-10 items-center justify-center bg-background rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                     prefetch={false}
                   >
                     Book Now
-                  </Link>
-                  <Link
-                    href="#"
-                    className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                    prefetch={false}
-                  >
-                    Contact Us
+                  </Link> */}
+                  <Link to="/contact">
+                    <button
+                      type="button"
+                      className="inline-flex h-10 items-center justify-center rounded-md bg-blue-600 px-8 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      Contact Us
+                    </button>
                   </Link>
                 </div>
               </div>

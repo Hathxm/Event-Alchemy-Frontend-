@@ -65,7 +65,7 @@ const SignupForm = () => {
         heading="Join Us Today!"
         description="Create your account and start your journey with us."
         buttonText="Signup"
-        backgroundImageUrl="https://handydallaireevents.com/wp-content/uploads/2022/01/Handy-Dallaire-Events-Nantucket-Weddings-1536x1024.jpg"
+        backgroundImageUrl="https://i.pinimg.com/736x/1e/78/72/1e7872bfd2b0c1a7f80597094a8e4584.jpg"
         caption="Create Your Account"
         redirectText="Already have an account?"
         redirectLink="/login"

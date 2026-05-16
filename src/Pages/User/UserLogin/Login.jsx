@@ -67,7 +67,7 @@ const LoginForm = () => {
       heading="Welcome Back!"
       description="Login to access your account."
       buttonText="Login"
-      backgroundImageUrl="https://swankeventsboston.com/wp-content/uploads/2019/07/swank-events-boston-holiday-parties.png"
+      backgroundImageUrl="https://i.pinimg.com/1200x/97/fd/c9/97fdc93cd402727c0e15f53a702bc398.jpg"
       caption="Welcome back!"
       redirectText="Don't have an account?"
       redirectLink="/signup"

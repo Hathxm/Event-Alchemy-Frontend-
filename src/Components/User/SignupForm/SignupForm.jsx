@@ -17,7 +17,6 @@ const FormComponentRight = ({
   description,
   buttonText,
   backgroundImageUrl,
-  caption,
   redirectText,
   redirectLink,
   google_signup_url,
@@ -123,7 +122,6 @@ const FormComponentRight = ({
         <div className="absolute bg-black opacity-50 inset-0 z-0"></div>
         <div className="w-full px-24 z-10 text-center">
           <h1 className="text-5xl font-bold text-white">{heading}</h1>
-          <p className="text-3xl my-4 text-white">{caption}</p>
         </div>
       </div>
       <div className="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 bg-gray-800">
@@ -131,48 +129,52 @@ const FormComponentRight = ({
           <h1 className="text-4xl text-white">{heading}</h1>
           <p className="text-lg text-white">{description}</p>
           <form
-            className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto bg-white rounded-lg border-2 border-gray-500 p-6"
+            className="sm:w-1/2 w-2/3 px-4 lg:px-0 mx-auto bg-white rounded-lg border-2 border-gray-500 p-6"
             onSubmit={handleSubmit}
           >
             {fields.map((field, index) => (
-              <div className="pb-2 pt-4" key={index}>
+              <div className="pb-2 pt-2" key={index}>
+                <label className='block text-left text-black mb-1 text-md capitalize font-semibold'>{field.name}</label>
                 <input
                   type={field.type}
                   name={field.name}
                   value={formData[field.name]}
                   onChange={handleChange}
-                  placeholder={field.placeholder}
-                  className={`w-full p-2 text-lg rounded-lg bg-gray-200 border-2 border-transparent focus:outline-none text-black ${errors[field.name] ? 'border-red-500' : 'focus:border-blue-600'}`}
+                  placeholder={`Enter Your ${field.placeholder}`}
+                  className={`w-full p-2 text-sm rounded-lg bg-gray-200 border-2 border-transparent focus:outline-none text-black ${errors[field.name] ? 'border-red-500' : 'focus:border-blue-600'}`}
                   required
                 />
                 {errors[field.name] && <p className="text-red-500">{errors[field.name]}</p>}
               </div>
             ))}
-            <div className="px-4 pb-2 pt-4">
+            <div className="px-4 pb-2 pt-2">
               <button
                 type="submit"
-                className="uppercase w-full p-2 text-lg rounded-lg bg-blue-600 hover:bg-blue-700 focus:outline-none btn-primary"
+                className="uppercase w-full p-2 text-md rounded-lg bg-blue-600 hover:bg-blue-700 focus:outline-none btn-primary"
               >
                 {buttonText}
               </button>
-              <Link to={vendor_or_user_redirect_link}>
+              {/* <Link to={vendor_or_user_redirect_link}>
                 <button
                   className="uppercase w-full p-2 text-lg rounded-lg bg-orange-600 hover:bg-blue-700 focus:outline-none btn-primary mt-1"
                 >
                   Signup As {vendor_or_user}
                 </button>
-              </Link>
-              <GoogleOAuthProvider clientId="904166899914-ifk76sjg7b682oq6pcuqkb4le1n1rjtt.apps.googleusercontent.com">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={handleGoogleFailure}
-                />
-              </GoogleOAuthProvider>
+              </Link> */}
+              <div className="flex justify-center mt-3">
+                <GoogleOAuthProvider clientId="904166899914-ifk76sjg7b682oq6pcuqkb4le1n1rjtt.apps.googleusercontent.com">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleFailure}
+                  />
+                </GoogleOAuthProvider>
+              </div>
             </div>
             {errors.general && <p className="text-red-500">{errors.general}</p>}
           </form>
           <div className="text-center sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
             <p className="mt-4 text-lg text-white">{redirectText} <a href={redirectLink} className="underline">Login</a></p>
+            <p className="mt-2 text-lg text-white">Signup As <a href={vendor_or_user_redirect_link} className="underline">{vendor_or_user}?</a></p>
           </div>
         </div>
       </div>
