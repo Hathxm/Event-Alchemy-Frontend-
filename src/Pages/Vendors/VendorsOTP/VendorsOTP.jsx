@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const VendorsOTP = () => {
-  const baseUrl = "http://127.0.0.1:8000/";
   const [otp, setOtp] = useState('');
   const [errors, setErrors] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
