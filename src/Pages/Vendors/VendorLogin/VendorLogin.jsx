@@ -5,7 +5,6 @@ import { set_Authentication } from '../../../Redux/AuthenticationSlice/Authentic
 import FormComponent from '../../../Components/User/LoginForm/LoginForm'
 import { useNavigate } from 'react-router-dom';
 const BASEUrl = process.env.REACT_APP_BASE_URL
-const base_url = "http://127.0.0.1:8000/";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
