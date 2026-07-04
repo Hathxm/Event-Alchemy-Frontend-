@@ -136,30 +136,30 @@ const ManagerDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-gray-100">
-      <main className="flex-1 p-4">
-        <div className="grid gap-8 p-4 sm:p-6 md:grid-cols-[1fr_2fr] lg:grid-cols-[2fr_3fr]">
-          <div className="flex flex-col gap-6">
+    <div className="h-[calc(100vh-4rem)] bg-gray-100 overflow-hidden">
+      <main className="h-full p-4 overflow-hidden">
+        <div className="grid gap-4 h-full md:grid-cols-[1fr_2fr] lg:grid-cols-[2fr_3fr]">
+          <div className="flex flex-col gap-4 min-h-0">
             {/* Performance Card */}
-            <div className="card bg-white rounded-lg shadow-md p-4">
-              <div className="card-header mb-4">
+            <div className="card bg-white rounded-lg shadow-md p-4 flex-1 flex flex-col min-h-0">
+              <div className="card-header mb-2">
                 <h2 className="text-lg font-semibold">Performance</h2>
-                <p className="text-gray-500">View your service performance metrics over time.</p>
+                <p className="text-gray-500 text-sm">View your service performance metrics over time.</p>
               </div>
-              <div className="card-content">
+              <div className="card-content flex-1 flex flex-col min-h-0">
                 <select
                   id="year-select"
                   value={selectedYear}
                   onChange={handleYearChange}
-                  className="mb-4 p-2 border rounded-md"
+                  className="mb-2 p-2 border rounded-md w-32"
                 >
                   <option value="" disabled>Select a year</option>
                   {yearlyData.map(item => (
                     <option key={item.year} value={item.year}>{item.year}</option>
                   ))}
                 </select>
-                <div className="h-64">
-                  <ResponsiveContainer>
+                <div className="flex-1 min-h-0">
+                  <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={chartData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
@@ -171,33 +171,33 @@ const ManagerDashboard = () => {
               </div>
             </div>
             {/* Performance Metrics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg shadow-md p-4">
-                <div className="flex justify-between items-center mb-2">
+            <div className="grid grid-cols-2 gap-3 shrink-0">
+              <div className="bg-white rounded-lg shadow-md p-3">
+                <div className="flex justify-between items-center mb-1">
                   <h3 className="text-sm font-medium">Total Bookings</h3>
                   <FontAwesomeIcon icon={faCalendarAlt} className="w-4 h-4 text-gray-500" />
                 </div>
                 <div className="text-2xl font-bold">{bookings.length}</div>
                 <p className="text-xs text-gray-500">+12.5% from last year</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-4">
-                <div className="flex justify-between items-center mb-2">
+              <div className="bg-white rounded-lg shadow-md p-3">
+                <div className="flex justify-between items-center mb-1">
                   <h3 className="text-sm font-medium">Total Revenue</h3>
                   <FontAwesomeIcon icon={faDollarSign} className="w-4 h-4 text-gray-500" />
                 </div>
                 <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</div>
                 <p className="text-xs text-gray-500">+18.2% from last year</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-4">
-                <div className="flex justify-between items-center mb-2">
+              <div className="bg-white rounded-lg shadow-md p-3">
+                <div className="flex justify-between items-center mb-1">
                   <h3 className="text-sm font-medium">Average Booking Value</h3>
                   <FontAwesomeIcon icon={faCreditCard} className="w-4 h-4 text-gray-500" />
                 </div>
                 <div className="text-2xl font-bold">₹{avgBookingValue.toFixed(2)}</div>
                 <p className="text-xs text-gray-500">+7.3% from last year</p>
               </div>
-              <div className="bg-white rounded-lg shadow-md p-4">
-                <div className="flex justify-between items-center mb-2">
+              <div className="bg-white rounded-lg shadow-md p-3">
+                <div className="flex justify-between items-center mb-1">
                   <h3 className="text-sm font-medium">Wallet Amount</h3>
                   <FontAwesomeIcon icon={faUsers} className="w-4 h-4 text-gray-500" />
                 </div>
@@ -206,12 +206,12 @@ const ManagerDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-lg shadow-md p-4 h-auto">
-            <div className="card-header mb-4">
+          <div className="bg-white rounded-lg shadow-md p-4 min-h-0 flex flex-col">
+            <div className="card-header mb-2 shrink-0">
               <h2 className="text-lg font-semibold">Bookings Overview</h2>
-              <p className="text-gray-500">List of recent bookings and actions.</p>
+              <p className="text-gray-500 text-sm">List of recent bookings and actions.</p>
             </div>
-            <div className="overflow-y-auto max-h-64">
+            <div className="overflow-y-auto flex-1 min-h-0">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
