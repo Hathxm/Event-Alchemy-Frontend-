@@ -12,6 +12,7 @@ export default function Component() {
   const [chartData, setChartData] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [yearlyData, setYearlyData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [services, setServices] = useState([]);
   const [userData, setUserData] = useState([]);
   const [bookings, setBookings] = useState([]);
