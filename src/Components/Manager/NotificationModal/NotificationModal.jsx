@@ -41,9 +41,18 @@ const NotificationModal = ({ onClose, user_id }) => {
     <div>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white p-8 rounded-lg w-1/2">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center justify-between border-b pb-3 mb-4">
             <h2 className="text-xl font-bold">Notifications</h2>
-            <button onClick={onClose} className="text-red-500">Close</button>
+            <button
+              onClick={onClose}
+              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/256/6276/6276642.png"
+                className="w-full h-full"
+                alt="Close"
+              />
+            </button>
           </div>
           {notifications.length === 0 ? (
             <p>No notifications.</p>

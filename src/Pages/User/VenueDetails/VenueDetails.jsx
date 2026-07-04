@@ -135,10 +135,10 @@ const VenueDetails = () => {
     .split('T')[0];
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8">
-          <div>
+    <div className="min-h-screen lg:min-h-0 lg:h-[calc(100vh-4rem)] lg:overflow-hidden bg-slate-50">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-8 lg:h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:h-full lg:min-h-0">
+          <div className="lg:min-h-0 lg:overflow-hidden">
             {images.length > 0 && (
               <div className="relative bg-white rounded-xl overflow-hidden shadow-sm mb-3">
                 <img
@@ -179,7 +179,7 @@ const VenueDetails = () => {
             )}
 
             {images.length > 1 && (
-              <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+              <div className="flex gap-2  overflow-x-auto pb-1">
                 {images.map((src, i) => (
                   <button
                     key={i}
@@ -200,7 +200,7 @@ const VenueDetails = () => {
               </div>
             )}
 
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-white rounded-xl shadow-sm p-2">
               <h1 className="text-3xl font-bold text-gray-900">
                 {venue.venue_name}
               </h1>
@@ -220,7 +220,7 @@ const VenueDetails = () => {
                 )}
               </div>
 
-              <div className="mt-4">
+              <div className="mt-2">
                 <span className="text-3xl font-bold text-indigo-600">
                   ${venue.price_per_hour}
                 </span>
@@ -228,7 +228,7 @@ const VenueDetails = () => {
               </div>
 
               {venue.description && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="mt-2 pt-2 border-t border-gray-200">
                   <h2 className="text-lg font-semibold text-gray-900 mb-2">
                     About This Venue
                   </h2>
@@ -240,7 +240,7 @@ const VenueDetails = () => {
             </div>
           </div>
 
-          <aside className="space-y-4 lg:sticky lg:top-4 h-fit">
+          <aside className="space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto pr-1">
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center gap-2 mb-3">
                 <Calendar className="h-5 w-5 text-indigo-600" />

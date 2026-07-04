@@ -45,13 +45,29 @@ const AdminWrapper = () => {
                     email: res.data.email,
                 })
             );
-            setIsLoading(false);
         } catch (error) {
-            if (error.response && error.response.status === 400) {
+            const status = error.response?.status;
+            if (status === 400) {
                 toast.error('You are not authorized to access this page.');
+            } else if (status === 401 || status === 403) {
+                // Stored token was rejected — clear it and reset auth so the app
+                // recovers to a logged-out state instead of hanging on the loader.
+                localStorage.removeItem('access');
+                localStorage.removeItem('refresh');
+                dispatch(
+                    set_Authentication({
+                        name: null,
+                        isAuthenticated: false,
+                        isAdmin: false,
+                        isSuperAdmin: false,
+                        isVendor: false,
+                    })
+                );
             } else {
                 console.error("Error fetching admin data:", error);
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 

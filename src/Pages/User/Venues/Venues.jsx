@@ -5,30 +5,77 @@ import { Heart, MapPin, Users, DollarSign, Search } from "lucide-react";
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
-const PRICE_PRESETS = [
-  { label: "Under $1k", min: 0, max: 1000 },
-  { label: "$1k-$3k", min: 1000, max: 3000 },
-  { label: "$3k-$5k", min: 3000, max: 5000 },
-  { label: "Over $5k", min: 5000, max: Infinity },
-];
+const PRICE_STEP = 100;
+const CAPACITY_STEP = 10;
 
-const CAPACITY_PRESETS = [
-  { label: "Up to 50", min: 0, max: 50 },
-  { label: "50-150", min: 50, max: 150 },
-  { label: "150-300", min: 150, max: 300 },
-  { label: "300+", min: 300, max: Infinity },
-];
+const roundDown = (value, step) => Math.floor(value / step) * step;
+const roundUp = (value, step) => Math.ceil(value / step) * step;
 
-const PRICE_MAX = 10000;
-const CAPACITY_MAX = 500;
+// Derive the slider bounds (min/max price & capacity) straight from the API payload
+// instead of hardcoding them, so the filters always match the venues that came back.
+const computeBounds = (venues) => {
+  if (!venues || !venues.length) {
+    return { priceMin: 0, priceMax: 0, capacityMin: 0, capacityMax: 0 };
+  }
+  const prices = venues.map((v) => Number(v.price_per_hour) || 0);
+  const capacities = venues.map((v) => Number(v.accomodation) || 0);
+
+  const priceMin = roundDown(Math.min(...prices), PRICE_STEP);
+  const priceMax = roundUp(Math.max(...prices), PRICE_STEP);
+  const capacityMin = roundDown(Math.min(...capacities), CAPACITY_STEP);
+  const capacityMax = roundUp(Math.max(...capacities), CAPACITY_STEP);
+
+  return {
+    priceMin,
+    // guard against a single venue (min === max) leaving a zero-width slider
+    priceMax: Math.max(priceMax, priceMin + PRICE_STEP),
+    capacityMin,
+    capacityMax: Math.max(capacityMax, capacityMin + CAPACITY_STEP),
+  };
+};
+
+// Split a [min, max] range into `count` contiguous buckets for the quick-filter presets.
+const buildPresets = (min, max, formatLabel, count = 4) => {
+  if (max <= min) return [];
+  const size = (max - min) / count;
+  return Array.from({ length: count }, (_, i) => {
+    const lo = i === 0 ? min : Math.round(min + size * i);
+    const hi = i === count - 1 ? max : Math.round(min + size * (i + 1));
+    return { label: formatLabel(lo, hi), min: lo, max: hi };
+  });
+};
+
+const SidebarSkeleton = () => (
+  <div className="animate-pulse">
+    <div className="flex items-center justify-between mb-6">
+      <div className="h-6 w-24 bg-gray-200 rounded" />
+      <div className="h-4 w-14 bg-gray-200 rounded" />
+    </div>
+    {[0, 1].map((section) => (
+      <div key={section} className="mb-8">
+        <div className="h-4 w-32 bg-gray-200 rounded mb-4" />
+        <div className="h-1.5 w-full bg-gray-200 rounded-full mb-3" />
+        <div className="flex justify-between mb-3">
+          <div className="h-3 w-10 bg-gray-200 rounded" />
+          <div className="h-3 w-16 bg-gray-200 rounded" />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {[0, 1, 2, 3].map((b) => (
+            <div key={b} className="h-9 bg-gray-200 rounded-md" />
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 const Venues = () => {
   const [cards, setCards] = useState([]);
   const [event_name, setEventName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [priceRange, setPriceRange] = useState(PRICE_MAX);
-  const [capacityRange, setCapacityRange] = useState(CAPACITY_MAX);
+  const [priceRange, setPriceRange] = useState(0);
+  const [capacityRange, setCapacityRange] = useState(0);
   const [pricePreset, setPricePreset] = useState(null);
   const [capacityPreset, setCapacityPreset] = useState(null);
   const [favorites, setFavorites] = useState({});
@@ -37,13 +84,21 @@ const Venues = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`${BASEUrl}venues`, {
           params: { id: id },
         });
         const { data, event_name } = response.data;
+        const nextBounds = computeBounds(data);
+
         setCards(data);
         setEventName(event_name);
+        // start the sliders spanning the full derived range (i.e. "show everything")
+        setPriceRange(nextBounds.priceMax);
+        setCapacityRange(nextBounds.capacityMax);
+        setPricePreset(null);
+        setCapacityPreset(null);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -53,10 +108,32 @@ const Venues = () => {
     fetchData();
   }, [id]);
 
+  const bounds = useMemo(() => computeBounds(cards), [cards]);
+
+  const pricePresets = useMemo(
+    () =>
+      buildPresets(
+        bounds.priceMin,
+        bounds.priceMax,
+        (lo, hi) => `$${lo.toLocaleString()} - $${hi.toLocaleString()}`
+      ),
+    [bounds]
+  );
+
+  const capacityPresets = useMemo(
+    () =>
+      buildPresets(
+        bounds.capacityMin,
+        bounds.capacityMax,
+        (lo, hi) => `${lo.toLocaleString()} - ${hi.toLocaleString()}`
+      ),
+    [bounds]
+  );
+
   const clearAll = () => {
     setSearchTerm("");
-    setPriceRange(PRICE_MAX);
-    setCapacityRange(CAPACITY_MAX);
+    setPriceRange(bounds.priceMax);
+    setCapacityRange(bounds.capacityMax);
     setPricePreset(null);
     setCapacityPreset(null);
   };
@@ -98,6 +175,10 @@ const Venues = () => {
   return (
     <div className="flex bg-gray-50 h-[calc(100vh-4rem)] overflow-hidden">
       <aside className="w-64 flex-shrink-0 bg-white shadow-sm h-full overflow-y-auto p-6">
+        {loading ? (
+          <SidebarSkeleton />
+        ) : (
+          <>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-gray-900">Filters</h2>
               <button
@@ -115,9 +196,9 @@ const Venues = () => {
               </div>
               <input
                 type="range"
-                min={0}
-                max={PRICE_MAX}
-                step={100}
+                min={bounds.priceMin}
+                max={bounds.priceMax}
+                step={PRICE_STEP}
                 value={priceRange}
                 onChange={(e) => {
                   setPriceRange(Number(e.target.value));
@@ -131,11 +212,11 @@ const Venues = () => {
                   [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-600 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md"
               />
               <div className="flex justify-between text-sm text-gray-600 mt-2 mb-3">
-                <span>$0</span>
+                <span>${bounds.priceMin.toLocaleString()}</span>
                 <span>${priceRange.toLocaleString()}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {PRICE_PRESETS.map((preset) => (
+                {pricePresets.map((preset) => (
                   <button
                     key={preset.label}
                     onClick={() =>
@@ -162,9 +243,9 @@ const Venues = () => {
               </div>
               <input
                 type="range"
-                min={0}
-                max={CAPACITY_MAX}
-                step={10}
+                min={bounds.capacityMin}
+                max={bounds.capacityMax}
+                step={CAPACITY_STEP}
                 value={capacityRange}
                 onChange={(e) => {
                   setCapacityRange(Number(e.target.value));
@@ -178,11 +259,11 @@ const Venues = () => {
                   [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-600 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md"
               />
               <div className="flex justify-between text-sm text-gray-600 mt-2 mb-3">
-                <span>0 guests</span>
-                <span>{capacityRange} guests</span>
+                <span>{bounds.capacityMin.toLocaleString()} guests</span>
+                <span>{capacityRange.toLocaleString()} guests</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {CAPACITY_PRESETS.map((preset) => (
+                {capacityPresets.map((preset) => (
                   <button
                     key={preset.label}
                     onClick={() =>
@@ -201,13 +282,8 @@ const Venues = () => {
                 ))}
               </div>
             </div>
-
-            {/* <div className="bg-amber-50 border border-amber-100 rounded-lg p-4">
-              <h4 className="font-semibold text-amber-900 mb-1">Pro Tip</h4>
-              <p className="text-sm text-amber-800">
-                Book early for popular dates to secure the best venues for your event.
-              </p>
-            </div> */}
+          </>
+        )}
       </aside>
 
       <main className="flex-1 h-full overflow-y-auto px-6 py-8">

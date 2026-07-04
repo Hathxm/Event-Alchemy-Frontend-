@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 import Form from './AddVenuesForm';
 import Editvenueform from './EditVenuesForm';
+import ManagerPageHeader from '../../../Components/Manager/ManagerPageHeader/ManagerPageHeader';
 import { toast } from 'react-toastify';
-const BASEUrl = process.env.REACT_APP_BASE_URL  
+const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
 const ManagerLocations = () => {
@@ -13,7 +14,12 @@ const ManagerLocations = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingVenue, setEditingVenue] = useState(null); // State for editing venue
+  const [search, setSearch] = useState('');
   const manager_details = useSelector((state) => state.user_basic_details);
+
+  const filteredLocations = locations.filter((location) =>
+    location.venue_name?.toLowerCase().includes(search.toLowerCase())
+  );
 
 
   useEffect(() => {
@@ -104,28 +110,35 @@ const ManagerLocations = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl text-center text-dark mb-8">Event Venues</h1>
-      <div className="d-flex justify-content-end mb-3">
-        <Form addVenue={addVenue} managerType={manager_details.manager_type} />
-      </div>
-      {locations.map((location, index) => (
-        <Card
-          key={location.id} // Use a unique key for each item
-          color={generateRandomColor()}
-          date={location.event_type_name}
-          location={location.location_name}
-          link={location.venue_name}
-          imageSrc={`${BASEUrl}${location.image1.replace(/^\//, '')}`}
-          isLight={true}
-          align={index % 2 === 0 ? 'left' : 'right'}
-          description={location.description}
-          venue_id={location.id}
-          venueData={location}
-          onEdit={() => setEditingVenue(location)} // Set editing venue
-          onDelete={() => deleteVenue(location.id)} // Add delete function
-        />
-      ))}
+    <div className="container mx-auto px-4 sm:px-7">
+      <ManagerPageHeader
+        title="Event Venues"
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search venues"
+        action={<Form addVenue={addVenue} managerType={manager_details.manager_type} />}
+      />
+      {filteredLocations.length === 0 ? (
+        <p className="text-center text-gray-500 py-10">No venues found.</p>
+      ) : (
+        filteredLocations.map((location, index) => (
+          <Card
+            key={location.id} // Use a unique key for each item
+            color={generateRandomColor()}
+            date={location.event_type_name}
+            location={location.location_name}
+            link={location.venue_name}
+            imageSrc={`${BASEUrl}${location.image1.replace(/^\//, '')}`}
+            isLight={true}
+            align={index % 2 === 0 ? 'left' : 'right'}
+            description={location.description}
+            venue_id={location.id}
+            venueData={location}
+            onEdit={() => setEditingVenue(location)} // Set editing venue
+            onDelete={() => deleteVenue(location.id)} // Add delete function
+          />
+        ))
+      )}
       {editingVenue && (
         <Editvenueform
           venueData={editingVenue}

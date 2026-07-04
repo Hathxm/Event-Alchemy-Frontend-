@@ -3,6 +3,7 @@ import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
 import { useSelector } from 'react-redux';
 import ChatComponent from '../../../Components/User/ChatComponent/ChatComponent';
+import ManagerPageHeader from '../../../Components/Manager/ManagerPageHeader/ManagerPageHeader';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';  // Import toast styles
 const BASEUrl = process.env.REACT_APP_BASE_URL
@@ -175,21 +176,11 @@ const ManagerVendors = () => {
     return (
         <div className="flex-grow flex justify-center items-center">
             <div className="container mx-auto px-4 sm:px-7">
-                <div className="py-8">
-                    <div>
-                        <h2 className="text-2xl font-semibold leading-tight">Vendor Services Available</h2>
-                    </div>
-                    <div className="my-2 flex sm:flex-row flex-col">
-                        <div className="relative">
-                            <input
-                                placeholder="Search"
-                                className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-                                value={filter.search}
-                                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <ManagerPageHeader
+                    title="Vendor Services Available"
+                    search={filter.search}
+                    onSearchChange={(value) => setFilter({ ...filter, search: value })}
+                />
                 {chatData && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-white p-4 rounded-lg w-full max-w-3xl">

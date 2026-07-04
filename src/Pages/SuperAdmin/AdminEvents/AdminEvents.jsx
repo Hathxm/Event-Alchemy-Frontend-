@@ -4,6 +4,7 @@ import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTable
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS for toast notifications
 import Form from './AddEventsForm';
+import AdminPageHeader from '../../../Components/Admin/AdminPageHeader/AdminPageHeader';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
@@ -139,27 +140,15 @@ const AdminEvents = () => {
     <div className="flex-grow flex justify-center items-center">
   
       <div className="container mx-auto px-4 sm:px-7">
-        <div className="py-8">
-          <div>
-            <h2 className="text-2xl font-semibold leading-tight">Events</h2>
-          </div>
-          <div className="my-2 flex sm:flex-row flex-col">
-            <div className="relative">
-              <input
-                placeholder="Search"
-                className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-                value={filter.search}
-                onChange={(e) => {
-                  setFilter({ ...filter, search: e.target.value });
-                  setPage(1);
-                }}
-              />
-            </div>
-            <div className="ml-auto">
-              <Form addEvent={addEvent} />
-            </div>
-          </div>
-        </div>
+        <AdminPageHeader
+          title="Events"
+          search={filter.search}
+          onSearchChange={(value) => {
+            setFilter({ ...filter, search: value });
+            setPage(1);
+          }}
+          action={<Form addEvent={addEvent} />}
+        />
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
             <AdminTableComponent

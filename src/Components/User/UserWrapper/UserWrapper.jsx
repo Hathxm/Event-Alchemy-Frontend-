@@ -62,10 +62,29 @@ function UserWrapper() {
           manager_type:null
         })
       );
-      setIsLoading(false);  // No token means no need to wait
 
     } catch (error) {
       console.log(error);
+      // The stored token was rejected (or the request failed). Clear the stale
+      // credentials and reset auth so the app falls back to a logged-out state
+      // instead of hanging on the loading screen.
+      const status = error.response?.status;
+      if (status === 401 || status === 403) {
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        dispatch(
+          set_Authentication({
+            name: null,
+            isAuthenticated: false,
+            isAdmin: false,
+            isSuperAdmin: false,
+            isVendor: false,
+          })
+        );
+      }
+    } finally {
+      // Always stop the loader so the UI renders and the user can act (e.g. log out).
+      setIsLoading(false);
     }
   };
 

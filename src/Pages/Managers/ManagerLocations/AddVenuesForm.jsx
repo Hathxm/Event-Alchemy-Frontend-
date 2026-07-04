@@ -64,10 +64,6 @@ const Form = ({ addVenue, managerType }) => {
     }
   };
 
-  const handleFileClick = () => {
-    fileInputRef.current.click();
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -120,6 +116,20 @@ const Form = ({ addVenue, managerType }) => {
     try {
       await addVenue(data);
       setShowModal(false);
+      // Reset the form so the next "Add Venue" starts blank.
+      setFormData({
+        venueName: "",
+        location: "",
+        price_per_hour: "",
+        description: "",
+        images: [],
+        accomodation: "",
+      });
+      setFileNames([]);
+      setError("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (error) {
       setError("Error adding venue, please try again");
       console.error("Error:", error);
@@ -246,23 +256,48 @@ const Form = ({ addVenue, managerType }) => {
                 </div>
                 <div>
                   <label htmlFor="images" className="block text-sm font-medium text-gray-700">Upload Images</label>
-                  <button
-                    type="button"
-                    onClick={handleFileClick}
-                    className="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-200 border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
-                  >
-                    {fileNames.length ? fileNames.map((name, index) => (
-                      <div key={index} className="truncate">{truncateFileName(name)}</div>
-                    )) : "Choose Files"}
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    name="images"
-                    type="file"
-                    multiple
-                    onChange={handleChange}
-                    className="hidden"
-                  />
+                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div className="space-y-1 text-center">
+                      <label
+                        htmlFor="images"
+                        className="cursor-pointer flex flex-col items-center"
+                      >
+                        <svg
+                          className="mx-auto h-12 w-12 text-gray-400"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 48 48"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <span className="text-sm text-gray-600">Upload files or drag and drop</span>
+                        <input
+                          ref={fileInputRef}
+                          id="images"
+                          name="images"
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="sr-only"
+                          onChange={handleChange}
+                        />
+                      </label>
+                      <p className="text-xs text-gray-600">Upload exactly 4 images (PNG, JPG, GIF up to 10MB)</p>
+                      {fileNames.length > 0 && (
+                        <div className="text-xs text-green-600">
+                          {fileNames.map((name, index) => (
+                            <div key={index} className="truncate">{truncateFileName(name)}</div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="mt-4 text-center">

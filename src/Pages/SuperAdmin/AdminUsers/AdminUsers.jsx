@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
+import AdminPageHeader from '../../../Components/Admin/AdminPageHeader/AdminPageHeader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS for toast notifications
 const BASEUrl = process.env.REACT_APP_BASE_URL;
@@ -113,20 +114,12 @@ const AdminUsers = () => {
     <>
       <div className="flex-grow flex justify-center items-center overflow-x-hidden">
         <div className="container mx-auto px-4 sm:px-7">
-          <div className="py-8">
-            <div>
-              <h2 className="text-2xl font-semibold leading-tight text-center sm:text-left">Users</h2>
-            </div>
-            <div className="my-2 flex flex-col sm:flex-row sm:justify-between">
-              <div className="relative mt-2 sm:mt-0">
-                <input
-                  placeholder="Search"
-                  className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-                  value={filter.search}
-                  onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-                />
-              </div>
-            </div>
+          <AdminPageHeader
+            title="Users"
+            search={filter.search}
+            onSearchChange={(value) => setFilter({ ...filter, search: value })}
+          />
+          <div>
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-hidden">
               <div className="inline-block min-w-full shadow rounded-lg ">
                 <AdminTableComponent data={filteredData} columns={columns} />

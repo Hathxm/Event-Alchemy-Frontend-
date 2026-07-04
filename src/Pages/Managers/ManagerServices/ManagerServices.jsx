@@ -4,6 +4,7 @@ import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
 import { useSelector } from 'react-redux';
 import AddServicesForm from './AddServiceForm';
+import ManagerPageHeader from '../../../Components/Manager/ManagerPageHeader/ManagerPageHeader';
 import { toast } from 'react-toastify';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
@@ -146,24 +147,12 @@ const addService = async (newService) => {
     return (
         <div className="flex-grow flex justify-center items-center">
             <div className="container mx-auto px-4 sm:px-7">
-                <div className="py-8">
-                    <div>
-                        <h2 className="text-2xl font-semibold leading-tight">Event Services</h2>
-                    </div>
-                    <div className="my-2 flex sm:flex-row flex-col">
-                        <div className="relative">
-                            <input
-                                placeholder="Search"
-                                className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-                                value={filter.search}
-                                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-                            />
-                        </div>
-                        <div className="ml-auto">
-                        <AddServicesForm addService={addService} />
-                        </div>
-                    </div>
-                </div>
+                <ManagerPageHeader
+                    title="Event Services"
+                    search={filter.search}
+                    onSearchChange={(value) => setFilter({ ...filter, search: value })}
+                    action={<AddServicesForm addService={addService} />}
+                />
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
                         <AdminTableComponent data={filteredData} columns={columns} />
