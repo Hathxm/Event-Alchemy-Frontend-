@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { Heart, MapPin, Users, DollarSign, Search } from "lucide-react";
+import PageHeading from "../../../Components/Common/PageHeading/PageHeading";
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
@@ -183,7 +184,7 @@ const Venues = () => {
               <h2 className="text-xl font-bold text-gray-900">Filters</h2>
               <button
                 onClick={clearAll}
-                className="text-sm text-blue-600 hover:text-blue-800"
+                className="text-sm text-gray-800 hover:text-gray-600"
               >
                 Clear all
               </button>
@@ -191,7 +192,7 @@ const Venues = () => {
 
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-3">
-                <DollarSign className="h-4 w-4 text-blue-600" />
+                <DollarSign className="h-4 w-4 text-gray-800" />
                 <h4 className="font-semibold text-gray-900">Price Range</h4>
               </div>
               <input
@@ -204,12 +205,7 @@ const Venues = () => {
                   setPriceRange(Number(e.target.value));
                   setPricePreset(null);
                 }}
-                className="w-full appearance-none bg-transparent cursor-pointer focus:outline-none
-                  [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-gradient-to-r [&::-webkit-slider-runnable-track]:from-blue-100 [&::-webkit-slider-runnable-track]:to-blue-500
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:-mt-[5px] [&::-webkit-slider-thumb]:transition-transform hover:[&::-webkit-slider-thumb]:scale-110
-                  [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-blue-500
-                  [&::-moz-range-progress]:h-1.5 [&::-moz-range-progress]:rounded-full [&::-moz-range-progress]:bg-blue-100
-                  [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-600 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md"
+                className="w-full h-1.5 cursor-pointer accent-gray-800"
               />
               <div className="flex justify-between text-sm text-gray-600 mt-2 mb-3">
                 <span>${bounds.priceMin.toLocaleString()}</span>
@@ -226,7 +222,7 @@ const Venues = () => {
                     }
                     className={`px-3 py-2 text-sm rounded-md border transition ${
                       pricePreset?.label === preset.label
-                        ? "border-blue-600 bg-blue-50 text-blue-700"
+                        ? "border-gray-800 bg-gray-100 text-gray-900"
                         : "border-gray-200 text-gray-700 hover:border-gray-300"
                     }`}
                   >
@@ -238,7 +234,7 @@ const Venues = () => {
 
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-3">
-                <Users className="h-4 w-4 text-blue-600" />
+                <Users className="h-4 w-4 text-gray-800" />
                 <h4 className=" font-semibold text-gray-900">Guest Capacity</h4>
               </div>
               <input
@@ -251,12 +247,7 @@ const Venues = () => {
                   setCapacityRange(Number(e.target.value));
                   setCapacityPreset(null);
                 }}
-                className="w-full appearance-none bg-transparent cursor-pointer focus:outline-none
-                  [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-gradient-to-r [&::-webkit-slider-runnable-track]:from-blue-100 [&::-webkit-slider-runnable-track]:to-blue-500
-                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:-mt-[5px] [&::-webkit-slider-thumb]:transition-transform hover:[&::-webkit-slider-thumb]:scale-110
-                  [&::-moz-range-track]:h-1.5 [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-blue-500
-                  [&::-moz-range-progress]:h-1.5 [&::-moz-range-progress]:rounded-full [&::-moz-range-progress]:bg-blue-100
-                  [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-blue-600 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:shadow-md"
+                className="w-full h-1.5 cursor-pointer accent-gray-800"
               />
               <div className="flex justify-between text-sm text-gray-600 mt-2 mb-3">
                 <span>{bounds.capacityMin.toLocaleString()} guests</span>
@@ -273,7 +264,7 @@ const Venues = () => {
                     }
                     className={`px-3 py-2 text-sm rounded-md border transition ${
                       capacityPreset?.label === preset.label
-                        ? "border-blue-600 bg-blue-50 text-blue-700"
+                        ? "border-gray-800 bg-gray-100 text-gray-900"
                         : "border-gray-200 text-gray-700 hover:border-gray-300"
                     }`}
                   >
@@ -287,31 +278,28 @@ const Venues = () => {
       </aside>
 
       <main className="flex-1 h-full overflow-y-auto px-6 py-8">
+        <PageHeading
+          title={`Find Your Perfect Venue${event_name ? ` for ${event_name}` : ""}`}
+          subtitle={
+            loading
+              ? "Loading venues..."
+              : `${filteredCards.length} venue${
+                  filteredCards.length === 1 ? "" : "s"
+                } available matching your criteria`
+          }
+        />
+
         <div className="mb-6 max-w-2xl">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
               type="search"
               placeholder="Search venues by name or location"
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-        </div>
-
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Find Your Perfect Venue
-            {event_name ? ` for ${event_name}` : ""}
-          </h1>
-          <p className="text-gray-600 mt-1">
-            {loading
-              ? "Loading venues..."
-              : `${filteredCards.length} venue${
-                  filteredCards.length === 1 ? "" : "s"
-                } available matching your criteria`}
-          </p>
         </div>
 
             {loading ? (
@@ -357,33 +345,27 @@ const Venues = () => {
                       </h3>
 
                       <div className="flex items-center gap-1 text-gray-600 text-xs mb-2">
-                        <MapPin className="h-3.5 w-3.5 text-blue-600 flex-shrink-0" />
+                        <MapPin className="h-3.5 w-3.5 text-gray-800 flex-shrink-0" />
                         <span className="truncate">{card.location_name}</span>
                       </div>
 
                       <div className="flex items-end justify-between mb-3">
                         <div className="flex items-center gap-1 text-gray-700 text-xs">
-                          <Users className="h-3.5 w-3.5 text-blue-600 flex-shrink-0" />
+                          <Users className="h-3.5 w-3.5 text-gray-800 flex-shrink-0" />
                           <span>{card.accomodation}</span>
                         </div>
                         <div className="text-right">
-                          <div className="text-base font-bold text-blue-600 leading-tight">
+                          <div className="text-base font-bold text-gray-800 leading-tight">
                             ${Number(card.price_per_hour).toLocaleString()}
                           </div>
                           <div className="text-[10px] text-gray-500">per hour</div>
                         </div>
                       </div>
 
-                      <div className="mt-auto grid grid-cols-2 gap-1.5">
+                      <div className="mt-auto">
                         <Link
-                          to={`/venue_details/${card.id}`}
-                          className="px-2 py-1.5 text-xs text-center border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 no-underline"
-                        >
-                          View
-                        </Link>
-                        <Link
-                          to={`/venue_details/${card.id}`}
-                          className="px-2 py-1.5 text-xs text-center bg-blue-600 hover:bg-blue-700 text-white rounded-md no-underline"
+                          to={`/venue_details/${card.id}?event=${id}`}
+                          className="block w-full px-2 py-1.5 text-xs text-center bg-gray-800 hover:bg-gray-700 text-white rounded-md no-underline"
                         >
                           Book Now
                         </Link>

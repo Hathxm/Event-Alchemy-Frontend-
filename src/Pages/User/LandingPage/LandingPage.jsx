@@ -105,7 +105,7 @@ const LandingPage = () => {
             <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
               <a
                 href="#events"
-                className="inline-flex h-10 items-center justify-center rounded-md bg-blue-500 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                className="no-underline inline-flex h-10 items-center justify-center rounded-md bg-gray-800 px-6 text-sm font-medium text-white shadow transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
                 Explore Events
               </a>
@@ -161,14 +161,14 @@ const LandingPage = () => {
                             {event.description.length > 200 && (
                               <button
                                 onClick={() => toggleDescription(index)}
-                                className="text-blue-500 underline focus:outline-none"
+                                className="text-gray-800 underline focus:outline-none"
                               >
                                 {expandedDescription === index ? 'Read Less' : 'Read More'}
                               </button>
                             )}
                             <button
                               onClick={() => handleLearnMoreClick(event.id)}
-                              className="flex items-center bg-blue-500 text-white px-6 py-2 rounded-full shadow hover:bg-blue-600 focus:outline-none"
+                              className="flex items-center bg-gray-800 text-white px-6 py-2 rounded-md shadow hover:bg-gray-700 focus:outline-none"
                             >
                               View Venues
                               <svg

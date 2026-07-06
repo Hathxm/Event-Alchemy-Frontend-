@@ -4,6 +4,14 @@ import ChatComponent from '../../../Components/User/ChatComponent/ChatComponent'
 import { Link  } from 'react-router-dom';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
+// API media paths are relative (e.g. "/media/venue.jpg"); prefix them with the API
+// base URL. Absolute URLs (e.g. Google profile pics) are returned unchanged.
+const buildImageUrl = (path, fallback) => {
+  if (!path) return fallback;
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${BASEUrl}${path.replace(/^\//, '')}`;
+};
+
 
 export default function UserBookings() {
     const [bookings, setBookings] = useState([]);
@@ -207,11 +215,9 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
                         <h3 className="text-lg font-semibold mb-2">Venue</h3>
                         <div className="flex items-center gap-2">
                             <img
-                                src={booking.venue?.image1 || '/placeholder.svg'}
-                                width={80}
-                                height={80}
+                                src={buildImageUrl(booking.venue?.image1, 'https://via.placeholder.com/80?text=Venue')}
                                 alt="Venue Image"
-                                className="rounded-md"
+                                className="w-20 h-20 rounded-md object-cover bg-gray-100 flex-shrink-0"
                             />
                             <div>
                                 <p className="font-medium">{booking.venue?.venue_name || "Venue Name"}</p>
@@ -224,7 +230,7 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
                         <ul className="space-y-2">
                             {booking.services?.map((service, index) => (
                                 <li key={index} className="flex items-center gap-2">
-                                    <CheckIcon className="w-5 h-5 text-blue-500" />
+                                    <CheckIcon className="w-5 h-5 text-gray-800" />
                                     <span>{service.service_name}</span>
                                 </li>
                             ))}
@@ -236,7 +242,7 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
                             <div className="rounded-full overflow-hidden w-12 h-12 border">
                                 <img
                                     className="w-full h-full object-cover"
-                                    src={booking.manager?.profile_pic || '/placeholder-user.jpg'}
+                                    src={buildImageUrl(booking.manager?.profile_pic, 'https://cdn-icons-png.flaticon.com/256/4205/4205906.png')}
                                     alt="Avatar"
                                 />
                             </div>
@@ -245,7 +251,7 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
                                 <p className="text-gray-500">{booking.manager?.email || "Manager Email"}</p>
                                 <p className="text-gray-500">{booking.manager?.phone || "Manager Phone"}</p>
                                 <button
-                                    className='btn-sm bg-blue-500 text-white rounded'
+                                    className='btn-sm bg-gray-800 hover:bg-gray-700 text-white rounded'
                                     onClick={handleConnectClick}
                                 >
                                     Connect

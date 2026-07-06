@@ -102,7 +102,7 @@ const Contact = () => {
                 ) : (
                   <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 text-sm"
+                    className="w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 text-sm"
                   >
                     Submit
                   </button>
@@ -123,29 +123,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Event Services Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="space-y-4 text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Our Event Services</h2>
-            <p className="max-w-[700px] mx-auto text-muted-foreground md:text-xl lg:text-base xl:text-xl">
-              Browse our selection of event services provided by our trusted vendors.
-            </p>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {/* Service Card Components */}
-            <div className="bg-white p-6 rounded-lg shadow-lg space-y-4 border border-gray-300">
-              <div className="space-y-2">
-                <h3 className="text-lg font-bold">Catering</h3>
-                <p className="text-muted-foreground">Delicious meals and refreshments for your guests.</p>
-              </div>
-              <div className="flex items-center justify-between">
-              </div>
-            </div>
-            {/* Add more service cards as needed */}
-          </div>
-        </div>
-      </section>
+    
     </div>
   );
 };
