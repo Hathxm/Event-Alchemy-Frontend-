@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   MapPin,
   Users,
@@ -39,6 +39,10 @@ const VenueDetails = () => {
   const [activeImage, setActiveImage] = useState(0);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // The event id is threaded through from the Venues page so the services
+  // lookup stays tied to the event (not the individual venue/location).
+  const eventId = searchParams.get('event');
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -107,7 +111,7 @@ const VenueDetails = () => {
       shift: selectedShiftDetails,
     };
     localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
-    navigate(`/venue_services/${id}`);
+    navigate(`/venue_services/${id}${eventId ? `?event=${eventId}` : ''}`);
   };
 
   if (loading) {
@@ -186,7 +190,7 @@ const VenueDetails = () => {
                     onClick={() => setActiveImage(i)}
                     className={`flex-shrink-0 h-16 w-24 rounded-md overflow-hidden border-2 transition ${
                       i === activeImage
-                        ? 'border-indigo-600'
+                        ? 'border-gray-800'
                         : 'border-transparent hover:border-gray-300'
                     }`}
                   >
@@ -208,20 +212,20 @@ const VenueDetails = () => {
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3 text-gray-600 text-sm">
                 {venue.location_name && (
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-indigo-600" />
+                    <MapPin className="h-4 w-4 text-gray-800" />
                     <span>{venue.location_name}</span>
                   </div>
                 )}
                 {venue.accomodation != null && (
                   <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-indigo-600" />
+                    <Users className="h-4 w-4 text-gray-800" />
                     <span>Accommodates up to {venue.accomodation} guests</span>
                   </div>
                 )}
               </div>
 
               <div className="mt-2">
-                <span className="text-3xl font-bold text-indigo-600">
+                <span className="text-3xl font-bold text-gray-800">
                   ${venue.price_per_hour}
                 </span>
                 <span className="text-sm text-gray-500 ml-1">/hour</span>
@@ -243,7 +247,7 @@ const VenueDetails = () => {
           <aside className="space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto pr-1">
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center gap-2 mb-3">
-                <Calendar className="h-5 w-5 text-indigo-600" />
+                <Calendar className="h-5 w-5 text-gray-800" />
                 <h2 className="text-lg font-bold text-gray-900">Select Date</h2>
               </div>
               <input
@@ -251,7 +255,7 @@ const VenueDetails = () => {
                 value={selectedDate}
                 onChange={handleDateChange}
                 min={minDate}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-800"
               />
               <p className="text-xs text-gray-500 mt-2">
                 Bookings must be at least 3 days in advance.
@@ -260,7 +264,7 @@ const VenueDetails = () => {
 
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="flex items-center gap-2 mb-3">
-                <Clock className="h-5 w-5 text-indigo-600" />
+                <Clock className="h-5 w-5 text-gray-800" />
                 <h2 className="text-lg font-bold text-gray-900">Select Shift</h2>
               </div>
 
@@ -283,7 +287,7 @@ const VenueDetails = () => {
                           !shift.available
                             ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed'
                             : isSelected
-                            ? 'border-indigo-600 bg-indigo-50'
+                            ? 'border-gray-800 bg-gray-100'
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
@@ -310,7 +314,7 @@ const VenueDetails = () => {
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <div className="text-sm text-gray-600">Price per shift</div>
                 <div className="mt-1 flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-indigo-600">
+                  <span className="text-2xl font-bold text-gray-800">
                     ${shiftPrice.toLocaleString()}
                   </span>
                   <span className="text-sm text-gray-500">
@@ -331,7 +335,7 @@ const VenueDetails = () => {
               <button
                 onClick={handleBooking}
                 disabled={!selectedDate || !selectedShift}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition"
+                className="w-full bg-gray-800 hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition"
               >
                 Proceed to Booking
               </button>

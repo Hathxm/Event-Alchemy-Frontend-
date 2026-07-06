@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Ensure you import the CSS for
 import Form from './AddEventsForm';
 import AdminPageHeader from '../../../Components/Admin/AdminPageHeader/AdminPageHeader';
 const BASEUrl = process.env.REACT_APP_BASE_URL
+const PAGE_SIZE = 5;
 
 
 
@@ -19,15 +20,14 @@ const AdminEvents = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASEUrl}superadmin/eventmanagement/`, {
-          params: { page, search: filter.search || undefined },
+          params: { page, page_size: PAGE_SIZE, search: filter.search || undefined },
         });
         if (Array.isArray(response.data)) {
           setEventData(response.data);
           setTotalPages(1);
         } else {
           setEventData(response.data.results || []);
-          const pageSize = (response.data.results || []).length || 10;
-          setTotalPages(Math.max(1, Math.ceil((response.data.count || 0) / pageSize)));
+          setTotalPages(Math.max(1, Math.ceil((response.data.count || 0) / PAGE_SIZE)));
         }
       } catch (error) {
         console.error('Error fetching event details:', error);
