@@ -17,7 +17,6 @@ const VendorChatComponent = ({ user_id }) => {
     const socketRef = useRef(null);
     const messagesEndRef = useRef(null);
     const fileInputRef = useRef(null);
-    const base_url = 'http://127.0.0.1:8000';
 
     // Fetch users on component mount
     useEffect(() => {
@@ -135,11 +134,6 @@ const VendorChatComponent = ({ user_id }) => {
         });
 
         return grouped;
-    };
-
-    // Handle file view
-    const handleFileView = (url) => {
-        window.open(url, '_blank');
     };
 
     return (

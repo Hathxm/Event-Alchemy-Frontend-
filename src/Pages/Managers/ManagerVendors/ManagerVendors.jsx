@@ -10,7 +10,7 @@ const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const ManagerVendors = () => {
     const [vendorData, setVendorData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const [filter, setFilter] = useState({ status: 'All', search: '' });
     const managerDetails = useSelector(state => state.user_basic_details);
     const [chatData, setChatData] = useState(null);
@@ -149,7 +149,10 @@ const ManagerVendors = () => {
             ),
         },
 
-      
+        // handleConnectClick/toggleVendorStatus are referenced by the column
+        // accessors; they're stable enough for this table and adding them here
+        // would hit a TDZ (handleConnectClick is declared below).
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     ], [toggleVendorStatus]);
 
     const filteredData = useMemo(() => {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { Heart, MapPin, Users, DollarSign, Search } from "lucide-react";
 import PageHeading from "../../../Components/Common/PageHeading/PageHeading";
+import Loader from "../../../Components/Common/Loader/Loader";
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
@@ -303,7 +304,7 @@ const Venues = () => {
         </div>
 
             {loading ? (
-              <div className="text-center py-20 text-gray-500">Loading...</div>
+              <Loader fullScreen={false} />
             ) : filteredCards.length === 0 ? (
               <div className="text-center py-20 text-gray-500 bg-white rounded-xl">
                 No venues match your filters. Try clearing some.

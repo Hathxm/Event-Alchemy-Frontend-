@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../../axiosinstance/axiosinstance';
+import Loader from '../../../Components/Common/Loader/Loader';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
-const token = localStorage.getItem("access");
 
 // Avatar Component
 function Avatar({ className, children }) {
@@ -118,14 +118,14 @@ export default function Manager_Profile_Rating() {
     };
 
     fetchManagerData();
-  }, [id, token]);
+  }, [id]);
 
   // Calculate total rating based on bookings
   const totalRating = bookings.reduce((sum, booking) => sum + booking.rating, 0) / bookings.length;
   const roundedRating = Math.round(totalRating * 10) / 10; // Round to one decimal place
 
   if (!managerData) {
-    return <div>Loading...</div>;
+    return <Loader fullScreen={false} />;
   }
 
   return (

@@ -9,7 +9,7 @@ const BASEUrl = process.env.REACT_APP_BASE_URL;
 const AdminUsers = () => {
   const [userData, setUserData] = useState([]);
   const [filter, setFilter] = useState({ status: 'All', search: '' });
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize] = useState(10);
 
   const toggleUserStatus = async (userId, currentStatus) => {
     try {

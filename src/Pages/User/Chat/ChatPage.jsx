@@ -7,7 +7,7 @@ const BASEUrl = process.env.REACT_APP_BASE_URL;
 const socket = process.env.REACT_APP_SOCKET_URL;
 
 
-const ChatComponent = ({ }) => {
+const ChatComponent = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [chats, setChats] = useState([]);
@@ -173,10 +173,6 @@ const ChatComponent = ({ }) => {
         });
 
         return grouped;
-    };
-
-    const handleFileView = (url) => {
-        window.open(url, '_blank');
     };
 
     return (

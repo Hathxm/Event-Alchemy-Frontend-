@@ -65,12 +65,13 @@ export default function Checkout() {
     } else {
       navigate('/')
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (bookingDetails) {
       calculateAmountToPay();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookingDetails, services]);
 
   const calculateAmountToPay = () => {

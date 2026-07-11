@@ -1,5 +1,5 @@
 // Services.jsx
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ const BASEUrl = process.env.REACT_APP_BASE_URL
 
 const Services = () => {
     const [serviceData, setServiceData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [, setLoading] = useState(true);
     const [filter, setFilter] = useState({ status: 'All', search: '' });
     const managerDetails = useSelector(state => state.user_basic_details);
 
@@ -40,11 +40,11 @@ const Services = () => {
     }, [managerDetails.manager_type]);
 
     
-    const toggleServiceStatus = async (serviceId, currentStatus) => {
+    const toggleServiceStatus = useCallback(async (serviceId, currentStatus) => {
         try {
             const newStatus = !currentStatus; // Toggle the status
             const response = await axios.patch(`${BASEUrl}managers/serviceManagement/`, { serviceId: serviceId, is_deleted: newStatus });
-    
+
             if (response.status === 200) {
                 setServiceData(prevServiceData =>
                     prevServiceData.map(service =>
@@ -59,7 +59,7 @@ const Services = () => {
             console.error('Error toggling service status:', error);
             toast.error('An error occurred while updating the service status.');
         }
-    };
+    }, []);
 
 
 const addService = async (newService) => {

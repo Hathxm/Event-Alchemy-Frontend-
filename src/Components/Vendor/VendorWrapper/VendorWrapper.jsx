@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../Common/Loader/Loader';
+import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
 import axios from '../../../axiosinstance/axiosinstance';
@@ -22,8 +23,6 @@ const BASEUrl = process.env.REACT_APP_BASE_URL;
 
 function VendorWrapper() {
   const dispatch = useDispatch();
-  const authentication_user = useSelector(state => state.authentication_user);
-  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [vendor_id, set_vendor_id] = useState(null);
 
@@ -93,10 +92,11 @@ function VendorWrapper() {
     } else {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

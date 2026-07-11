@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import AdminTableComponent from '../../../Components/Admin/AdminTable/AdminTableComponent';
 import AddManagerForm from './AddManagerForm';
@@ -26,18 +26,18 @@ const AdminManagers = () => {
     fetchData();
   }, []);
 
-  const toggleUserStatus = async (userId, currentStatus) => {
+  const toggleUserStatus = useCallback(async (userId, currentStatus) => {
     try {
       const newStatus = !currentStatus;
       await axios.patch(`${BASEUrl}superadmin/managermanagement`, { userId: userId, is_active: newStatus });
-  
+
       // Update the userData state
       setUserData(prevUserData =>
         prevUserData.map(user =>
           user.id === userId ? { ...user, is_active: newStatus } : user
         )
       );
-  
+
       // Show success toast
       toast.success(`User has been ${newStatus ? 'unblocked' : 'blocked'} successfully.`);
     } catch (error) {
@@ -45,7 +45,7 @@ const AdminManagers = () => {
       // Show error toast
       toast.error('Failed to toggle user status.');
     }
-  };
+  }, []);
 
   const addManager = async (newManager) => {
     try {
@@ -85,7 +85,7 @@ const AdminManagers = () => {
             />
           </div>
           <div className="ml-3">
-            <a className="text-gray-900 whitespace-no-wrap"> <Link to={`/admin/manager-profile/${item.id}`}>{item.username}</Link></a>
+            <Link className="text-gray-900 whitespace-no-wrap" to={`/admin/manager-profile/${item.id}`}>{item.username}</Link>
           </div>
         </div>
       ),

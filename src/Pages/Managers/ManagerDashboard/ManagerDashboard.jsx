@@ -26,7 +26,7 @@ const ManagerDashboard = () => {
   const [chartData, setChartData] = useState(initialData);
   const [yearlyData, setYearlyData] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [totalBookings, setTotalBookings] = useState(0);
+  const [, setTotalBookings] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [avgBookingValue, setAvgBookingValue] = useState(0);
   const [wallet_amt, setwallet_amt] = useState(0);
@@ -99,6 +99,7 @@ const ManagerDashboard = () => {
 
   useEffect(() => {
     fetchDashboardData(selectedYear);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedYear]);
 
   const handleYearChange = (e) => {

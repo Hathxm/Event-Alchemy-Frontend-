@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import isAuthVendor from '../../utils/IsAuthVendor';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 

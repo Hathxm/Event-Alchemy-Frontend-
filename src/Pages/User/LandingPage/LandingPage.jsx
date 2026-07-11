@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const BASEUrl = process.env.REACT_APP_BASE_URL;
+
 const LandingPage = () => {
   const navigate = useNavigate();
   const [eventData, setEventData] = useState([]);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [expandedDescription, setExpandedDescription] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const BASEUrl = process.env.REACT_APP_BASE_URL
 
   useEffect(() => {
     axios
@@ -214,9 +215,11 @@ const LandingPage = () => {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full items-center px-4 md:px-6 bg-gray-800 text-white">
         <p className="text-xs">&copy; 2024 Event Management. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#" className="text-xs hover:underline">
             Terms of Service
           </a>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#" className="text-xs hover:underline">
             Privacy Policy
           </a>

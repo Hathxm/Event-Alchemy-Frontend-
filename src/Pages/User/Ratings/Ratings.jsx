@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from '../../../Components/Common/Loader/Loader';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
 
@@ -90,7 +91,7 @@ const Ratings = () => {
   };
 
   if (!booking) {
-    return <p>Loading...</p>;
+    return <Loader fullScreen={false} />;
   }
 
   return (

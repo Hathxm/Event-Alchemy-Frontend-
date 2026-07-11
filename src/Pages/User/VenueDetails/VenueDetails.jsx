@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import Loader from '../../../Components/Common/Loader/Loader';
 import {
   MapPin,
   Users,
@@ -115,7 +116,7 @@ const VenueDetails = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-20 text-gray-500">Loading...</div>;
+    return <Loader fullScreen={false} />;
   }
   if (!venue) {
     return <div className="text-center py-20 text-gray-500">No data available</div>;

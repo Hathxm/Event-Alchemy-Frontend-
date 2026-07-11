@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ChatComponent from '../../../Components/User/ChatComponent/ChatComponent';
 import { Link  } from 'react-router-dom';
+import Loader from '../../../Components/Common/Loader/Loader';
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 // API media paths are relative (e.g. "/media/venue.jpg"); prefix them with the API
@@ -41,7 +42,7 @@ export default function UserBookings() {
         fetchBookingsForUser();
     }, [token]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader fullScreen={false} />;
     if (error) return <p>Error: {error}</p>;
 
     return (
@@ -216,7 +217,7 @@ function BookingCard({ booking, userId, setChatData, sendername }) {
                         <div className="flex items-center gap-2">
                             <img
                                 src={buildImageUrl(booking.venue?.image1, 'https://via.placeholder.com/80?text=Venue')}
-                                alt="Venue Image"
+                                alt="Venue"
                                 className="w-20 h-20 rounded-md object-cover bg-gray-100 flex-shrink-0"
                             />
                             <div>
