@@ -12,7 +12,7 @@ const BASEUrl = process.env.REACT_APP_BASE_URL
 const ManagerLocations = () => {
   
   const [locations, setLocations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [editingVenue, setEditingVenue] = useState(null); // State for editing venue
   const [search, setSearch] = useState('');
   const manager_details = useSelector((state) => state.user_basic_details);
@@ -165,15 +165,15 @@ const Card = ({ color, date, location, link, imageSrc, isLight = false, align = 
     <article className={`postcard flex flex-col md:flex-row mb-8 rounded-lg shadow-md overflow-hidden relative ${baseClass} group ${align === 'left' ? 'md:flex-row' : 'md:flex-row-reverse'}  `}>
       <div className="w-full md:w-1/4 relative overflow-hidden">
         <div className="relative h-0 pb-56 md:pb-0 md:h-full">
-          <img src={imageSrc} alt="Image Title" className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-110" />
+          <img src={imageSrc} alt={link} className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-110" />
         </div>
       </div>
       <div className="p-6 flex flex-col justify-between w-full md:w-3/4">
         <h1 className={`text-xl font-semibold mb-2 ${titleClass}`}>
-          <a href="#" className="hover:no-underline relative">
+          <span className="hover:no-underline relative">
             {link}
             <div className={`h-1 w-12 rounded-sm transition-all duration-300 mt-1 group-hover:w-1/5 ${barClass}`}></div>
-          </a>
+          </span>
         </h1>
         <div className="text-sm mb-2">
           <time dateTime={date}>

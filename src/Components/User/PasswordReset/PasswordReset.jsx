@@ -9,7 +9,7 @@ const PasswordResetRequestForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${BASEUrl}auth/password_reset/`, { email });
+            await axios.post(`${BASEUrl}auth/password_reset/`, { email });
             setMessage('Password reset email sent. Please check your inbox.');
         } catch (error) {
             console.error('Error:', error);

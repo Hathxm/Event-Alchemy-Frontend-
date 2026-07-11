@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import Loader from '../../Common/Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import LandingPage from '../../../Pages/User/LandingPage/LandingPage';
 import Signup from '../../../Pages/User/Signup/Signup';
@@ -95,11 +96,12 @@ function UserWrapper() {
     } else {
       setIsLoading(false);  // No token means no need to wait
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, authentication_user]);
 
   // Show loading indicator or null while fetching user data
   if (isLoading) {
-    return <div>Loading...</div>;  // You can replace this with a better loading UI
+    return <Loader />;
   }
 
   

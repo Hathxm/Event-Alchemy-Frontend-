@@ -133,6 +133,7 @@ const ManagersProfile = () => {
 
     useEffect(() => {
         fetchUserData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
 
     return (

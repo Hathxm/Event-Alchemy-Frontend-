@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate } from 'react-router-dom';
 import isAuthAdmin from '../../utils/IsAuthAdmin';
 import { useState,useEffect } from 'react';
+import Loader from '../Common/Loader/Loader';
 
 const SuperAdminPrivateRoute = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,8 +19,7 @@ const SuperAdminPrivateRoute = ({children}) => {
     }, []);
 
   if (isLoading) {
-    // Handle loading state, you might show a loading spinner
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   

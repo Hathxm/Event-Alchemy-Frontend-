@@ -3,9 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import NotificationModal from '../NotificationModal/NotificationModal';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, Wrench, MapPin, MessageCircle, Users, LogOut, Bell,Calendar } from 'lucide-react';
+import { Home, Wrench, MapPin, MessageCircle, Users, LogOut, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
@@ -16,7 +15,7 @@ const ManagerSidebar = ({ children, manager_id }) => {
   const user_basic_details = useSelector(state => state.user_basic_details);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications] = useState([]);
 
   const logout = () => {
     localStorage.clear();

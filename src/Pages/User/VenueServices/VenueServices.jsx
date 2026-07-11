@@ -4,6 +4,7 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Check, X, Star } from "lucide-react";
 import PageHeading from "../../../Components/Common/PageHeading/PageHeading";
 import SummaryPanel from "../../../Components/Common/SummaryPanel/SummaryPanel";
+import Loader from "../../../Components/Common/Loader/Loader";
 const BASEUrl = process.env.REACT_APP_BASE_URL
 
 // ServiceCard component — a compact selectable card with a corner checkmark,
@@ -82,18 +83,18 @@ const VenueServices = () => {
   const [selectedServices, setSelectedServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams(); // venue id — kept for the checkout route
+  const { id } = useParams(); // venue id — used for the services lookup and checkout
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  // Services are looked up by the event id (threaded from the Venues page), so
-  // every location within the same event returns the same service list.
+  // The event id is preserved from the Venues page only to thread it through to
+  // checkout; the services themselves are looked up by the venue id.
   const eventId = searchParams.get("event");
 
   useEffect(() => {
     const fetchVenueServices = async () => {
       try {
         const response = await axios.get(`${BASEUrl}venue_services`, {
-          params: { id: eventId || id },
+          params: { id },
         });
         setServices(response.data);
         setLoading(false);
@@ -104,7 +105,7 @@ const VenueServices = () => {
     };
 
     fetchVenueServices();
-  }, [id, eventId]);
+  }, [id]);
 
   useEffect(() => {
     const servicesParam = searchParams.get("services");
@@ -129,7 +130,7 @@ const VenueServices = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-20 text-gray-500">Loading...</div>;
+    return <Loader fullScreen={false} />;
   }
   if (error) {
     return <div className="text-center py-20 text-gray-500">Error: {error}</div>;

@@ -13,7 +13,6 @@ const VendorNavbar = ({ children, vendor_id }) => {
   const user_basic_details = useSelector((state) => state.user_basic_details);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const logout = () => {

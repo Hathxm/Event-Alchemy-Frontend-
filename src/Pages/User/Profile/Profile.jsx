@@ -8,7 +8,6 @@ const BASEUrl = process.env.REACT_APP_BASE_URL
 
 
 const Profile = () => {
-    const baseURL = 'http://127.0.0.1:8000';
     const accessToken = localStorage.getItem('access');
     const dispatch = useDispatch();
     const user_basic_details = useSelector(state => state.user_basic_details);
@@ -131,6 +130,7 @@ const Profile = () => {
 
     useEffect(() => {
         fetchUserData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken]);
 
     return (

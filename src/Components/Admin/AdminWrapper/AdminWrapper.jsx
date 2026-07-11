@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import Loader from '../../Common/Loader/Loader';
+import { Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
@@ -11,7 +12,7 @@ import AdminUsers from '../../../Pages/SuperAdmin/AdminUsers/AdminUsers';
 import AdminManagers from '../../../Pages/SuperAdmin/AdminManagers/AdminManagers';
 import AdminEvents from '../../../Pages/SuperAdmin/AdminEvents/AdminEvents';
 import SuperAdminPrivateRoute from '../SuperAdminPrivateRoute';
-import Manager_Profile_Rating from '../../../Pages/SuperAdmin/AdminManagers/ProfileWithRatings';
+import ManagerProfileRating from '../../../Pages/SuperAdmin/AdminManagers/ProfileWithRatings';
 import { toast } from 'react-toastify';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL;
@@ -77,10 +78,11 @@ const AdminWrapper = () => {
         } else {
             setIsLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname, authentication_user]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
 
     return (
@@ -91,7 +93,7 @@ const AdminWrapper = () => {
                     <Route path="/dashboard" element={<AdminHome />} />
                     <Route path="/users" element={<AdminUsers />} />
                     <Route path="/managers" element={<AdminManagers />} />
-                    <Route path="/manager-profile/:id" element={<Manager_Profile_Rating />} />
+                    <Route path="/manager-profile/:id" element={<ManagerProfileRating />} />
                     <Route path="/events" element={<AdminEvents />} />
                 </Route>
             </Routes>

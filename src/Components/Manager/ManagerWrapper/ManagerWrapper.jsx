@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import Loader from '../../Common/Loader/Loader';
+import { Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
 import { set_user_basic_details } from '../../../Redux/UserDetails/UserdetailsSlice';
@@ -86,10 +87,11 @@ function ManagerWrapper() {
         } else {
             setIsLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname, authentication_user]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
 
     return (

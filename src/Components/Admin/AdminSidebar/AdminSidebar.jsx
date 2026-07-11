@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NotificationModal from "../AdminNotificationModal/AdminNotificationModal";
 import { set_Authentication } from '../../../Redux/AuthenticationSlice/AuthenticationSlice';
-import { Bell, Users, UserCheck, Calendar, LogOut, Settings } from 'lucide-react';
+import { Bell, Users, UserCheck, Calendar, LogOut } from 'lucide-react';
 
 const BASEUrl = process.env.REACT_APP_BASE_URL
 

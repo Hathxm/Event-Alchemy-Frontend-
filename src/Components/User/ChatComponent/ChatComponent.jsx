@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import { FiSend, FiPaperclip, FiEye, FiDownload } from 'react-icons/fi';
-import axios from 'axios';
 import moment from 'moment';
 const BASEUrl = process.env.REACT_APP_BASE_URL
-const socket = process.env.REACT_APP_SOCKET_URL;
 
 
 
